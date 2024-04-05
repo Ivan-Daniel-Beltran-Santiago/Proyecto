@@ -44,7 +44,7 @@ class AlumnoGrupoController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             try {
-                const clase = yield database_1.default.query("SELECT * FROM clase c JOIN grupo g ON c.id_grupo = g.id_grupo WHERE c.id_alumno=? GROUP BY g.id_grupo;", id);
+                const clase = yield database_1.default.query("SELECT c.id_clase, g.id_grupo, g.nombre_grupo FROM clase c JOIN grupo g ON c.id_grupo = g.id_grupo WHERE c.id_alumno=? GROUP BY c.id_clase, g.id_grupo, g.nombre_grupo;", id);
                 res.json(clase);
             }
             catch (error) {

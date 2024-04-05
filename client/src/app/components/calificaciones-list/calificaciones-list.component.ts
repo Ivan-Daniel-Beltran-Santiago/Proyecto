@@ -139,25 +139,6 @@ export class CalificacionesListComponent implements AfterViewInit {
    // const cell = ws["getCell"](2, 1);
     //cell.setStyle({ alignment: { horizontal: "center" } });
     XLSX.writeFile(wb, 'Calificaciones Globales.xlsx');
-    
-
-    /*
-   // Obtenemos los datos de la tabla
-  const data = this.table.querySelectorAll("tr").map((row: { querySelectorAll: (arg0: string) => any; }) => {
-    const cells = row.querySelectorAll("td");
-    return cells.map((cell: { textContent: any; }) => cell.textContent);
-  });
-
-  // Generamos el archivo Excel
-  const workbook = XLSX.utils.book_new();
-  const worksheet = workbook.addWorksheet("Horario");
-  worksheet.fromArray(data, {
-    header: true,
-  });
-
-  // Guardamos el archivo Excel
-  workbook.writeFile("horario.xlsx");
-  */
   }
 
   getAllCalif() {

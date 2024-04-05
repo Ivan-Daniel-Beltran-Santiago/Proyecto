@@ -2,7 +2,7 @@
   <div style="width: 100%;">
     <label for="location" class="block text-sm font-medium text-gray-700">Seleccione la etiqueta a asignar a los archivos:</label>
     <select id="location" name="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-        (change)="onSelectOption()">
+        (change)="onSelectOption($event)">
       <option disabled selected value="">Selecciona una opción</option>
       <option *ngFor="let tag of tags">{{ tag }}</option> <!-- Genera opciones dinámicamente -->
     </select>
@@ -31,7 +31,7 @@
         </select>
       </div>
       <div style="margin-top: 25px;">
-        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Asignar etiqueta</button>
+        <button *ngIf="atLeastOneChecked" type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-200" (click)="assignTags()">Asignar etiqueta(s)</button>
       </div>  
     </div>
     <div class="assign-tags_column">
@@ -46,7 +46,6 @@
         </div>          
       </fieldset>
       <br />
-      <button *ngIf="atLeastOneChecked" type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-200">Asignar etiqueta(s)</button>
     </div>
   </div>
 </div>

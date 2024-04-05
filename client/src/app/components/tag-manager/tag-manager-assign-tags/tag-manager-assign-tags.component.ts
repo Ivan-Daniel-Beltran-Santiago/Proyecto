@@ -22,9 +22,24 @@ export class TagManagerAssignTagsComponent implements OnInit {
     private tagManagerService: TagManagerService
   ) {}
 
-  onSelectOption() {
-    this.optionSelected = true;
-    this.checkIfChecked();
+  onSelectOption(event: any) {
+    if (event && event.target) { // Verificar si event y event.target son definidos
+      const selectedOption = event.target.value;
+      const selectedTag = this.tags.find(tag => tag === selectedOption);
+      if (selectedTag) {
+        // Modifica esta línea para proporcionar el tipo "Curso"
+        this.tagManagerService.getTagIdByName(selectedTag, 'Curso').subscribe(
+          (tagId) => {
+            console.log('ID de la etiqueta:', tagId);
+            console.log('Nombre de la etiqueta:', selectedTag);
+            console.log('Tipo de la etiqueta: Curso');
+          },
+          (err) => console.error(err)
+        );
+      }
+      this.optionSelected = true;
+      this.checkIfChecked();
+    }
   }
 
   ngOnInit(): void {
@@ -35,7 +50,11 @@ export class TagManagerAssignTagsComponent implements OnInit {
   getFiles() {
     this.materialesService.getFiles().subscribe(
       (files) => {
-        this.arrayFiles = files;
+        this.arrayFiles = files.map((file, index) => ({
+          id: index + 1, // Podrías asignar un ID único a cada archivo aquí
+          name: file.name,
+          type: file.type // Asegúrate de tener el tipo de archivo disponible aquí
+        }));
         // Inicialmente, mostrar todos los archivos sin filtrar
         this.filteredFiles = [...this.arrayFiles];
         // Verificar si hay al menos un archivo seleccionado
@@ -43,7 +62,7 @@ export class TagManagerAssignTagsComponent implements OnInit {
       },
       (err) => console.error(err)
     );
-  }
+  }  
 
   getAllTags() {
     this.tagManagerService.getTags().subscribe(
@@ -131,6 +150,16 @@ export class TagManagerAssignTagsComponent implements OnInit {
         return 'jpg,png';
       default:
         return null;
+    }
+  }
+
+  assignTags() {
+    for (const file of this.filteredFiles) {
+      if (file.checked) {
+        console.log('ID del archivo:', file.id); // Suponiendo que cada archivo tiene un campo 'id'
+        console.log('Nombre del archivo:', file.name);
+        console.log('Tipo del archivo:', file.type);
+      }
     }
   }
 }
