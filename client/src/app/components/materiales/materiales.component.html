@@ -59,11 +59,11 @@
                   <span class="text-indigo-600"></span>
                 </h2>
                 <h2 class="text-3xl text-gray-800 font-bold">
-                  <span class="text-indigo-600">{{ file.name }}</span>
+                  <span class="text-indigo-600">{{ file.name.nombre }}</span>
                 </h2>
                 <a
                   class="mt-4 text-gray-600"
-                  [href]="getFileUrl(file.name)"
+                  [href]="getFileUrl(file.name.nombre)"
                   target="_blank"
                   >Haz click para ver el archivo</a
                 >
@@ -71,7 +71,7 @@
                 <br />
                 <br />
                 <button
-                  (click)="deleteFile(file.name)"
+                  (click)="deleteFile(file.name.nombre)"
                   data-ripple-light="true"
                   data-popover-target="popover"
                   class="middle none center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

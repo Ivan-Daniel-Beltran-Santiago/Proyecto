@@ -17,7 +17,7 @@ export class TagManagerAssignTagsComponent implements OnInit {
   selectedFileType: string | null = null;
   tags: string[] = []; // Variable para almacenar las etiquetas
   location: string = '';
-  selectedTag: string | null = null; // Nueva propiedad para almacenar la etiqueta seleccionada
+  selectedTag: number | null = null; // Nueva propiedad para almacenar la etiqueta seleccionada
 
   constructor(
     private materialesService: MaterialesServicesService,
@@ -35,6 +35,7 @@ export class TagManagerAssignTagsComponent implements OnInit {
           (tagId) => {
             console.log('ID de la etiqueta:', tagId);
             console.log('Nombre de la etiqueta:', selectedOption);
+            this.selectedTag = tagId;
           },
           (err) => console.error(err)
         );
@@ -163,8 +164,10 @@ export class TagManagerAssignTagsComponent implements OnInit {
 
     const tagData = {
       tagName: this.selectedTag,
-      fileIds: selectedFiles.map(file => file.id)
+      fileIds: selectedFiles.map(file => {file.id; console.log(file.id)})
     };
+
+    console.log(this.selectedTag)
 
     this.tagManagerService.assignTags(tagData).subscribe(
       () => {
@@ -176,7 +179,7 @@ export class TagManagerAssignTagsComponent implements OnInit {
   }
 
   logCheckedFileIds() {
-    const checkedFileIds = this.filteredFiles.filter(file => file.checked).map(file => file.id);
+    const checkedFileIds = this.filteredFiles.filter(file => file.checked).map(file => file.name.id);
     console.log('ID(s) de archivo(s) marcado(s):', checkedFileIds);
     console.log(this.filteredFiles);
   }
