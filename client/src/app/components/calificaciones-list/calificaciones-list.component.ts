@@ -38,19 +38,14 @@ export class CalificacionesListComponent implements AfterViewInit {
   };
   click: boolean = false;
 
-  
-  
-  
-  
-
   filterPost = '';
   rol = this.authService.getRoleFromToken();
   id: any = this.authService.getIdFromToken();
   isAdmin = this.authService.isAdmin();
   isMaestro = this.authService.isMaestro();
-  promedio : number = 0.0;
-  acumulador : number = 0;
-  contador : number = 0;
+  promedio: number = 0.0;
+  acumulador: number = 0;
+  contador: number = 0;
 
   isAlumno: boolean = false;
 
@@ -74,7 +69,6 @@ export class CalificacionesListComponent implements AfterViewInit {
       (err) => console.error(err)
     );
     console.log(this.calif.a2);
-
   }
 
   onClickButton(id: number) {
@@ -132,11 +126,12 @@ export class CalificacionesListComponent implements AfterViewInit {
     this.getCalificaciones(id);
   }
   exportarAExcel() {
-    
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.tabla.nativeElement);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(
+      this.tabla.nativeElement
+    );
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Horario');
-   // const cell = ws["getCell"](2, 1);
+    // const cell = ws["getCell"](2, 1);
     //cell.setStyle({ alignment: { horizontal: "center" } });
     XLSX.writeFile(wb, 'Calificaciones Globales.xlsx');
   }
@@ -145,12 +140,17 @@ export class CalificacionesListComponent implements AfterViewInit {
     this.calificacionesService.getAllCalificaciones().subscribe(
       (res) => {
         this.arrayAllCalificaciones = res;
-        for (let index = 0; index < this.arrayAllCalificaciones[0].length; index++) {
-          this.acumulador = this.arrayAllCalificaciones[0][index].calificacion+ this.acumulador;
-          this.contador+=1;
-          
+        for (
+          let index = 0;
+          index < this.arrayAllCalificaciones[0].length;
+          index++
+        ) {
+          this.acumulador =
+            this.arrayAllCalificaciones[0][index].calificacion +
+            this.acumulador;
+          this.contador += 1;
         }
-        this.promedio = this.acumulador/this.contador;
+        this.promedio = this.acumulador / this.contador;
         console.log(this.promedio);
         console.log(this.arrayAllCalificaciones[0]);
       },
@@ -225,21 +225,18 @@ export class CalificacionesListComponent implements AfterViewInit {
     return maestro ? maestro.calificacion : '';
   }
 
-  obtenerAlumno(id_alumno:string){
-   
+  obtenerAlumno(id_alumno: string) {
     const alumno = this.arrayAlumnos[0].find(
-      (m: { id_user: number }) => m.id_user.toString()=== id_alumno
+      (m: { id_user: number }) => m.id_user.toString() === id_alumno
     );
 
     return alumno ? `${alumno.first_nameU} ${alumno.last_nameU}` : '';
   }
 
-  obtenerGrupo(id_grupo:string){
-    
+  obtenerGrupo(id_grupo: string) {
     const grupo = this.arrayClases[0].find(
-      (m: { id_grupo: number }) => m.id_grupo.toString()=== id_grupo
+      (m: { id_grupo: number }) => m.id_grupo.toString() === id_grupo
     );
-   
 
     return grupo ? `${grupo.nombre_grupo}` : '';
   }

@@ -7,9 +7,7 @@ import { Horario } from 'src/app/models/horarios';
 })
 export class HorariosService {
   API_URL = 'http://localhost:3000';
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   //OBTENER HORARIOS
 
@@ -17,52 +15,55 @@ export class HorariosService {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.get(`${this.API_URL}/horario`,{ headers:header });
+    return this.http.get(`${this.API_URL}/horario`, { headers: header });
   }
 
   //OBTENER HORARIO ESPECIFICO
-  getHorario(id: string){
+  getHorario(id: string) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.get(`${this.API_URL}/horario/${id}`,{ headers:header });
-
+    return this.http.get(`${this.API_URL}/horario/${id}`, { headers: header });
   }
 
-  getHorarioMaestro(id: string){
+  getHorarioMaestro(id: string) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.get(`${this.API_URL}/horarioMaestro/${id}`,{ headers:header });
-
+    return this.http.get(`${this.API_URL}/horarioMaestro/${id}`, {
+      headers: header,
+    });
   }
 
   //GUARDAR HORARIO
 
-  saveHorario(horario: Horario){
+  saveHorario(horario: Horario) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.post(`${this.API_URL}/horario`,horario,{ headers:header });
+    return this.http.post(`${this.API_URL}/horario`, horario, {
+      headers: header,
+    });
   }
 
-
-
   //BORRAR HORARIO
-  deleteHorario(id : string) {
+  deleteHorario(id: string) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.delete(`${this.API_URL}/horario/${id}`,{ headers:header });
+    return this.http.delete(`${this.API_URL}/horario/${id}`, {
+      headers: header,
+    });
   }
 
   //ACTUALIZAR HORARIO
 
-  updateHorario(id : number|undefined, updatedHorario:Horario){
+  updateHorario(id: number | undefined, updatedHorario: Horario) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.put(`${this.API_URL}/horario/${id}`,updatedHorario,{ headers:header });
+    return this.http.put(`${this.API_URL}/horario/${id}`, updatedHorario, {
+      headers: header,
+    });
   }
-
 }

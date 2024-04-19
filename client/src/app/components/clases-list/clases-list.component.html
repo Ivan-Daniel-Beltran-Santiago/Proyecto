@@ -11,8 +11,6 @@
       <app-menu></app-menu>
     </header>
     <h4 style="text-align: center">Clases</h4>
-
-    <!-- This example requires Tailwind CSS v2.0+ -->
     <ul
       role="list"
       class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
@@ -35,10 +33,19 @@
 
             <dd class="text-gray-500 text-sm">{{ clase.Idioma }} <br /></dd>
             <dd class="text-gray-500 text-sm">
-              {{ clase.fecha_inicio.substring(0, 10) }}--{{
-                clase.fecha_final.substring(0, 10)
+              {{
+                clase.fecha_inicio
+                  ? clase.fecha_inicio.substring(0, 10)
+                  : "Fecha de inicio no definida"
+              }}
+              --
+              {{
+                clase.fecha_final
+                  ? clase.fecha_final.substring(0, 10)
+                  : "Fecha final no definida"
               }}
             </dd>
+
             <h4 class="mt-6 text-gray-900 text-sm font-medium">Category</h4>
             <dd class="text-gray-500 text-sm">{{ clase.categoria }} <br /></dd>
             <h4 class="mt-6 text-gray-900 text-sm font-medium">Teachers</h4>

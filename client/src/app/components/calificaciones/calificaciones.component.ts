@@ -27,7 +27,7 @@ export class CalificacionesComponent implements OnInit {
   rol = this.authService.getRoleFromToken();
   isAdmin = this.authService.isAdmin();
   isMaestro = this.authService.isMaestro();
-  id=this.authService.getIdFromToken();
+  id = this.authService.getIdFromToken();
   isAlumno: boolean = false;
   nombreAlumno: any;
   promedio: number = 0.0;
@@ -97,20 +97,6 @@ export class CalificacionesComponent implements OnInit {
     this.calificacion.id_alumno = idA;
     this.calificacion.fecha_calif = fecha;
     console.log(idG);
-
-    /*
-    this.calificacionesService
-      .getCalificacion(idG.toString(), id.toString())
-      .subscribe((res) => {
-        this.calificaciones = res;
-        for (let i = 0; i < this.calificaciones[0].length; i++) {
-          objeto[i] = this.calificaciones[0][i];
-        }
-        console.log(objeto);
-        this.calificaciones = objeto[0];
-        console.log(id);
-      });
-      */
   }
 
   updateCalificacion() {
@@ -215,7 +201,7 @@ export class CalificacionesComponent implements OnInit {
 
             if (this.fechas.length == 0) {
               this.fechas.push(
-                this.calificaciones[0][i].fecha_calif.substring(10, 0)
+                this.calificaciones[0][i].fecha_calif.substring(15, 0)
               );
             } else {
               if (
@@ -292,11 +278,15 @@ export class CalificacionesComponent implements OnInit {
   }
 
   obtenerAlumno(idAlumno: string): any {
-    const alumno = this.arrayAlumno[0].find(
-      (m: { id_user: number }) => m.id_user.toString() === idAlumno
-    );
+    if (this.arrayAlumno && this.arrayAlumno.length > 0) {
+      const alumno = this.arrayAlumno[0].find(
+        (m: { id_user: number }) => m.id_user.toString() === idAlumno
+      );
 
-    return alumno ? `${alumno.first_nameU} ${alumno.last_nameU}` : '';
+      return alumno ? `${alumno.first_nameU} ${alumno.last_nameU}` : '';
+    } else {
+      return '';
+    }
   }
 
   exportarAPDF(): void {

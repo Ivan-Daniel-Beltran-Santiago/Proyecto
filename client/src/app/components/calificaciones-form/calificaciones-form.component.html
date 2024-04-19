@@ -47,13 +47,7 @@
                     scope="col"
                     class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
-                    Last Name
-                  </th>
-                  <th
-                    scope="col"
-                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    Second Last Name
+                    Last Name(s)
                   </th>
                   <th
                     scope="col"
@@ -82,14 +76,8 @@
                 <td
                   class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                 >
-                  {{ alumno.last_nameU }}
+                  {{ alumno.last_nameU }} {{ alumno.last_nameU2 }}
                 </td>
-                <td
-                  class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
-                >
-                  {{ alumno.last_nameU2 }}
-                </td>
-
                 <td
                   class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                 >
@@ -125,24 +113,5 @@
         </div>
       </div>
     </div>
-
-    <!-- 
-    <form [formGroup]="formulario">
-      <label for="email">Correo Electrónico:</label>
-      <input type="text" id="email" formControlName="email">
-    
-      <div *ngIf="formulario.get('email')?.invalid && (formulario.get('email')?.dirty || formulario.get('email')?.touched)">
-        <div *ngIf="formulario.get('email')?.errors?.['required']">
-          El correo electrónico es requerido.
-        </div>
-        <div *ngIf="formulario.get('email')?.errors?.['email']">
-          Ingresa un correo electrónico válido.
-        </div>
-      </div>
-      
-    
-      <button type="submit" [disabled]="formulario.invalid">Enviar</button>
-    </form>
-    -->
   </body>
 </html>

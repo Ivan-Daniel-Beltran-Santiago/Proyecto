@@ -35,7 +35,6 @@ class HorarioController {
     //const dia = req.body.dia;
     const grupo = req.body.id_grupo;
     let semana = req.body.semana;
-    
 
     try {
       let c_grupo = await db.query(
@@ -73,7 +72,6 @@ class HorarioController {
         if (req.body.semana == null || req.body.semana == 0) {
           res.status(400).send("Favor de Introducir la semana:");
         } else {
-
           try {
             await db.query("INSERT INTO horarios SET ?", [req.body]);
             res.json({ text: "Horario Created" });
@@ -83,40 +81,34 @@ class HorarioController {
           req.body.semana = 2;
           try {
             await db.query("INSERT INTO horarios SET ?", [req.body]);
-            
           } catch (error) {
             //res.status(400).send("Error al ejecutar la consulta MySQL:");
           }
           req.body.semana = 3;
           try {
             await db.query("INSERT INTO horarios SET ?", [req.body]);
-            
           } catch (error) {
             //res.status(400).send("Error al ejecutar la consulta MySQL:");
           }
           req.body.semana = 4;
           try {
             await db.query("INSERT INTO horarios SET ?", [req.body]);
-            
           } catch (error) {
             //res.status(400).send("Error al ejecutar la consulta MySQL:");
           }
         }
-      } 
-      
-        else if (
+      } else if (
         diferenciaHoras == 4 &&
         diferenciaMinutos == 240 &&
         categ == "Saturday"
         //num == 0
       ) {
-        req.body.semana=1;
+        req.body.semana = 1;
         req.body.Horas_Trab = 4;
         if (req.body.semana == null || req.body.semana == 0) {
-          console.log("asdas")
+          console.log("asdas");
           res.status(400).send("Favor de Introducir la semana:");
         } else {
-          
           try {
             await db.query("INSERT INTO horarios SET ?", [req.body]);
             res.json({ text: "Horario Created" });
@@ -124,29 +116,20 @@ class HorarioController {
             res.status(400).send("Error al ejecutar la consulta MySQL:");
           }
 
-          req.body.semana=2;
+          req.body.semana = 2;
           try {
             await db.query("INSERT INTO horarios SET ?", [req.body]);
-          
-          } catch (error) {
-           
-          }
+          } catch (error) {}
 
-          req.body.semana=3;
+          req.body.semana = 3;
           try {
             await db.query("INSERT INTO horarios SET ?", [req.body]);
-            
-          } catch (error) {
-            
-          }
+          } catch (error) {}
 
-          req.body.semana=4;
+          req.body.semana = 4;
           try {
             await db.query("INSERT INTO horarios SET ?", [req.body]);
-           
-          } catch (error) {
-            
-          }
+          } catch (error) {}
         }
       } else {
         res.status(400).json({

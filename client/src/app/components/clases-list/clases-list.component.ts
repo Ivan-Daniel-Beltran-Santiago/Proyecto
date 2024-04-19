@@ -30,17 +30,16 @@ export class ClasesListComponent implements OnInit {
 
   grupo: Grupo = {
     nombre_grupo: '',
-    fecha_inicio:'',
-    fecha_revision:'',
-    fecha_final:'',
-    
+    fecha_inicio: '',
+    fecha_revision: '',
+    fecha_final: '',
   };
 
   clase: Clase = {
     id_grupo: 0,
     id_alumno: 0,
     fecha_baja: '',
-    fecha_inscripcion:''
+    fecha_inscripcion: '',
   };
 
   constructor(
@@ -54,9 +53,8 @@ export class ClasesListComponent implements OnInit {
   ngOnInit() {
     this.getClases();
     this.getMaestro();
-    this.getAlumnosBaja();    
+    this.getAlumnosBaja();
     this.fechaHoy();
-   
   }
 
   nombreUsuario = this.authService.getNameFromToken();
@@ -66,15 +64,15 @@ export class ClasesListComponent implements OnInit {
     this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
   }
 
-  fechaHoy(){
+  fechaHoy() {
     const fechaOriginal: Date = new Date();
     if (fechaOriginal !== undefined) {
-        const año: number = fechaOriginal.getFullYear();
-        const mes: string = String(fechaOriginal.getMonth() + 1).padStart(2, '0');
-        const día: string = String(fechaOriginal.getDate()).padStart(2, '0');
-        const fechaFormateada: string = `${año}-${mes}-${día}`;
-        console.log(fechaFormateada);
-        this.clase.fecha_baja = fechaFormateada;
+      const año: number = fechaOriginal.getFullYear();
+      const mes: string = String(fechaOriginal.getMonth() + 1).padStart(2, '0');
+      const día: string = String(fechaOriginal.getDate()).padStart(2, '0');
+      const fechaFormateada: string = `${año}-${mes}-${día}`;
+      console.log(fechaFormateada);
+      this.clase.fecha_baja = fechaFormateada;
     }
   }
 
@@ -149,8 +147,6 @@ export class ClasesListComponent implements OnInit {
   }
 
   getAlumnosBaja() {
-  
-
     this.alumnoGrupoService.getAlumnosBaja().subscribe(
       (res) => {
         this.arrayAlumnos_Baja = res;
@@ -160,11 +156,10 @@ export class ClasesListComponent implements OnInit {
     );
   }
 
-  reinscribir(id:number,idG:number){
-
+  reinscribir(id: number, idG: number) {
     Swal.fire({
       title: 'Reinscribir Alumno?',
-      text: "This student will be !",
+      text: 'This student will be !',
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -174,15 +169,23 @@ export class ClasesListComponent implements OnInit {
       if (result.isConfirmed) {
         const fechaOriginal: Date = new Date();
         if (fechaOriginal !== undefined) {
-            const año: number = fechaOriginal.getFullYear();
-            const mes: string = String(fechaOriginal.getMonth() + 1).padStart(2, '0');
-            const día: string = String(fechaOriginal.getDate()).padStart(2, '0');
-            const fechaFormateada: string = `${año}-${mes}-${día}`;
-            console.log(fechaFormateada);
-            this.clase.fecha_inscripcion = fechaFormateada;
+          const año: number = fechaOriginal.getFullYear();
+          const mes: string = String(fechaOriginal.getMonth() + 1).padStart(
+            2,
+            '0'
+          );
+          const día: string = String(fechaOriginal.getDate()).padStart(2, '0');
+          const fechaFormateada: string = `${año}-${mes}-${día}`;
+          console.log(fechaFormateada);
+          this.clase.fecha_inscripcion = fechaFormateada;
         }
-    
-        this.alumnoGrupoService.reinscribirAlumnoClase(this.clase.fecha_inscripcion,id.toString(),idG.toString())
+
+        this.alumnoGrupoService
+          .reinscribirAlumnoClase(
+            this.clase.fecha_inscripcion,
+            id.toString(),
+            idG.toString()
+          )
           .subscribe(
             (res) => {
               console.log(res);
@@ -207,10 +210,6 @@ export class ClasesListComponent implements OnInit {
         });
       }
     });
-   
-
-  
-
   }
 
   borrarAlumno(id: number, idG: number) {
@@ -229,7 +228,6 @@ export class ClasesListComponent implements OnInit {
             id.toString(),
             idG.toString(),
             this.clase.fecha_baja
-            
           )
           .subscribe(
             (res) => {
@@ -258,32 +256,30 @@ export class ClasesListComponent implements OnInit {
   }
 
   obtenerNombreMaestro(idMaestro: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-
-    const maestro = this.arrayMaestros[0].find(
-      (m: { id_user: number }) => m.id_user === idMaestro
-    );
-    return maestro
-      ? `${maestro.first_nameU} ${maestro.last_nameU}`
-      : 'Maestro no encontrado';
+    // Verificar si arrayMaestros[0] está definido
+    if (this.arrayMaestros && this.arrayMaestros[0]) {
+      const maestro = this.arrayMaestros[0].find(
+        (m: { id_user: number }) => m.id_user === idMaestro
+      );
+      return maestro
+        ? `${maestro.first_nameU} ${maestro.last_nameU}`
+        : 'Maestro no encontrado';
+    } else {
+      return 'Maestro no encontrado';
+    }
   }
 
-  
-
   obtenerNombreMaestro2(idMaestro: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-
-    const maestro = this.arrayMaestros[0].find(
-      (m: { id_user: number }) => m.id_user === idMaestro
-    );
-    return maestro
-      ? `${maestro.first_nameU} ${maestro.last_nameU}`
-      : 'Maestro no encontrado';
+    // Verificar si arrayMaestros[0] está definido
+    if (this.arrayMaestros && this.arrayMaestros[0]) {
+      const maestro = this.arrayMaestros[0].find(
+        (m: { id_user: number }) => m.id_user === idMaestro
+      );
+      return maestro
+        ? `${maestro.first_nameU} ${maestro.last_nameU}`
+        : 'Maestro no encontrado';
+    } else {
+      return 'Maestro no encontrado';
+    }
   }
 }

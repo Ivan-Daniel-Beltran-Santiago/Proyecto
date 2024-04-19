@@ -5,143 +5,186 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-
   <body>
     <header>
       <app-menu></app-menu>
     </header>
     <h4 style="text-align: center">Crear horarios</h4>
     <form>
-     
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="overflow-hidden">
+              <h5>Clases</h5>
 
-      
+              <table class="min-w-full">
+                <thead class="bg-white border-b">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      ID
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      Nombre Grupo
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      Categoria
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      Maestro 1
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      Maestro 2
+                    </th>
 
+                    <th
+                      scope="col"
+                      class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tr
+                  class="bg-gray-100 border-b"
+                  *ngFor="let clase of arrayClases[0]"
+                >
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                  >
+                    {{ clase.id_grupo }}
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                  >
+                    {{ clase.nombre_grupo }}
+                  </td>
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    {{ clase.categoria }}
+                  </td>
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    {{ obtenerNombreMaestro(clase.id_maestro) }}
+                  </td>
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    {{ obtenerNombreMaestro(clase.id_maestro2) }}
+                  </td>
 
-
-
-<div class="flex flex-col">
-  <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-      <div class="overflow-hidden">
-        <h5>Clases</h5>
-
-        <table class="min-w-full">
-          <thead class="bg-white border-b">
-            <tr>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                ID
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Nombre Grupo
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Categoria
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Maestro 1
-              </th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Maestro 2
-              </th>
-
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tr class="bg-gray-100 border-b" *ngFor="let clase of arrayClases[0]">
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-              {{ clase.id_grupo }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-              {{ clase.nombre_grupo }}
-            </td>
-            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-              {{ clase.categoria }}
-            </td>
-            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-              {{obtenerNombreMaestro(clase.id_maestro)}}
-            </td>
-            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-              {{obtenerNombreMaestro(clase.id_maestro2)}}
-            </td>
-
-            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-              <!-- component -->
-              <button (click)="escogerGrupo(clase.id_grupo)" data-ripple-light="true" data-popover-target="popover"
-                class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                ESCOGER
-              </button>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<h5 style="margin-left:30px">Clase Seleccionado</h5>
-  <div class="field" style="margin-left:30px">
-    <div class="control">
-      <p>ID:</p>
-      <input type="text" [(ngModel)]="horario.id_grupo" style="width: 0px; " disabled />{{
-     horario.id_grupo}} 
-    </div>
-  </div>
-
-<!--
-<div class="field">
-  <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Day</label>
-  <div class="control">
-    <div class="select">
-      <select [(ngModel)]="horario.dia" name="dia" required>
-        <option>Select Day</option>
-        <option value="Monday-Thursday">Monday - Thursday</option> 
-        <option value = "Saturday">Saturday</option>     
-      </select>
-    </div>
-  </div>
-</div>
--->
-
-<div *ngIf="edit">
-  <div class="field">
-    <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Semana</label>
-    <div class="control">
-      <div class="select">
-        <select [(ngModel)]="horario.semana" name="grupo" required>
-          <option>Select Group</option>
-          <option value="1">Semana 1</option>
-          <option value="2">Semana 2</option>
-          <option value="3">Semana 3</option>
-          <option value="4">Semana 4</option>
-
-          
-
-        </select>
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    <!-- component -->
+                    <button
+                      (click)="escogerGrupo(clase.id_grupo)"
+                      data-ripple-light="true"
+                      data-popover-target="popover"
+                      class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    >
+                      ESCOGER
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 
-    </div>
-  </div>
-</div>
-<div>
-  <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Start Time</label>
-  <input type="time" name="Hora_inicio" id="email" [(ngModel)]="horario.Hora_inicio" style="width:150px" placeholder="example@example.com" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-</div>
+      <h5 style="margin-left: 30px">Clase Seleccionado</h5>
+      <div class="field" style="margin-left: 30px">
+        <div class="control">
+          <p>ID:</p>
+          <input
+            type="text"
+            [(ngModel)]="horario.id_grupo"
+            [ngModelOptions]="{ standalone: true }"
+            style="width: 0px"
+            disabled
+          />{{ horario.id_grupo }}
+        </div>
+      </div>
+      <div *ngIf="edit">
+        <div class="field">
+          <label
+            for="email"
+            class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+            >Semana</label
+          >
+          <div class="control">
+            <div class="select">
+              <select [(ngModel)]="horario.semana" name="semana" required>
+                <option>Select Group</option>
+                <option value="1">Semana 1</option>
+                <option value="2">Semana 2</option>
+                <option value="3">Semana 3</option>
+                <option value="4">Semana 4</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label
+          for="email"
+          class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+          >Start Time</label
+        >
+        <input
+          type="time"
+          name="Hora_inicio"
+          id="email"
+          [(ngModel)]="horario.Hora_inicio"
+          style="width: 150px"
+          placeholder="example@example.com"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+        />
+      </div>
 
-<div>
-  <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-200">End Time</label>
-  <input type="time" name="Hora_final" id="email" [(ngModel)]="horario.Hora_final" style="width:150px" placeholder="example@example.com" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-</div>
+      <div>
+        <label
+          for="email"
+          class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+          >End Time</label
+        >
+        <input
+          type="time"
+          name="Hora_final"
+          id="email"
+          [(ngModel)]="horario.Hora_final"
+          style="width: 150px"
+          placeholder="example@example.com"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+        />
+      </div>
 
-   
-
-    <div class="mt-6">
-      <button style="width:340px; margin-left:40%" (click)=" edit ? updateHorario():saveHorario()" 
-          class=" px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+      <div class="mt-6">
+        <button
+          style="width: 340px; margin-left: 40%"
+          (click)="edit ? updateHorario() : saveHorario()"
+          class="px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+        >
           Save
-      </button>
-  </div>
-</form>
+        </button>
+      </div>
+    </form>
   </body>
 </html>

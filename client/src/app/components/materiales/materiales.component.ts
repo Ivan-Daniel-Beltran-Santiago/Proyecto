@@ -263,38 +263,50 @@ export class MaterialesComponent {
     let filteredFiles = this.allFiles; // Inicialmente, todos los archivos están visibles
 
     // Aplicar el filtro por tipo de archivo seleccionado
-    const fileTypeFilter = (document.getElementById('location') as HTMLSelectElement).value;
+    const fileTypeFilter = (
+      document.getElementById('location') as HTMLSelectElement
+    ).value;
     if (fileTypeFilter && fileTypeFilter !== '') {
-        if (fileTypeFilter === 'Documento Word') {
-            filteredFiles = filteredFiles.filter((file: any) => file.name.toLowerCase().endsWith('.docx'));
-        } else if (fileTypeFilter === 'PDF') {
-            filteredFiles = filteredFiles.filter((file: any) => file.name.toLowerCase().endsWith('.pdf'));
-        } else if (fileTypeFilter === 'Audio') {
-            filteredFiles = filteredFiles.filter((file: any) => file.name.toLowerCase().endsWith('.mp3'));
-        } else if (fileTypeFilter === 'Video') {
-            filteredFiles = filteredFiles.filter((file: any) => file.name.toLowerCase().endsWith('.mp4'));
-        } else if (fileTypeFilter === 'PowerPoint') {
-            filteredFiles = filteredFiles.filter((file: any) => file.name.toLowerCase().endsWith('.pptx'));
-        } else if (fileTypeFilter === 'Imagen') {
-            filteredFiles = filteredFiles.filter((file: any) => {
-                const extension = file.name.toLowerCase().split('.').pop();
-                return ['jpg', 'jpeg', 'png'].includes(extension);
-            });
-        }
+      if (fileTypeFilter === 'Documento Word') {
+        filteredFiles = filteredFiles.filter((file: any) =>
+          file.name.toLowerCase().endsWith('.docx')
+        );
+      } else if (fileTypeFilter === 'PDF') {
+        filteredFiles = filteredFiles.filter((file: any) =>
+          file.name.toLowerCase().endsWith('.pdf')
+        );
+      } else if (fileTypeFilter === 'Audio') {
+        filteredFiles = filteredFiles.filter((file: any) =>
+          file.name.toLowerCase().endsWith('.mp3')
+        );
+      } else if (fileTypeFilter === 'Video') {
+        filteredFiles = filteredFiles.filter((file: any) =>
+          file.name.toLowerCase().endsWith('.mp4')
+        );
+      } else if (fileTypeFilter === 'PowerPoint') {
+        filteredFiles = filteredFiles.filter((file: any) =>
+          file.name.toLowerCase().endsWith('.pptx')
+        );
+      } else if (fileTypeFilter === 'Imagen') {
+        filteredFiles = filteredFiles.filter((file: any) => {
+          const extension = file.name.toLowerCase().split('.').pop();
+          return ['jpg', 'jpeg', 'png'].includes(extension);
+        });
+      }
     }
 
     // Aplicar la búsqueda de texto sobre los archivos filtrados por tipo de archivo
     if (searchText.trim()) {
-        filteredFiles = filteredFiles.filter((file: any) => {
-            return file.name.toLowerCase().includes(searchText.toLowerCase());
-        });
+      filteredFiles = filteredFiles.filter((file: any) => {
+        return file.name.toLowerCase().includes(searchText.toLowerCase());
+      });
     }
 
     // Actualizar la lista de archivos para mostrar solo los archivos que pasaron los filtros
     this.arrayFiles = filteredFiles;
-}
+  }
 
-filterFilesByType(event: Event) {
+  filterFilesByType(event: Event) {
     const target = event.target as HTMLSelectElement;
     const fileType = target.value;
 
@@ -330,15 +342,15 @@ filterFilesByType(event: Event) {
         );
       } else if (fileType === 'Imagen') {
         // Filtrar por tipo de archivo de imagen (JPEG o PNG)
-        this.arrayFiles = this.allFiles.filter((file: any) =>
-          file.name.toLowerCase().endsWith('.jpg') ||
-          file.name.toLowerCase().endsWith('.jpeg') ||
-          file.name.toLowerCase().endsWith('.png')
+        this.arrayFiles = this.allFiles.filter(
+          (file: any) =>
+            file.name.toLowerCase().endsWith('.jpg') ||
+            file.name.toLowerCase().endsWith('.jpeg') ||
+            file.name.toLowerCase().endsWith('.png')
         );
       }
     }
-}
-
+  }
 
   toggleTagManager() {
     this.showTagManager = !this.showTagManager;

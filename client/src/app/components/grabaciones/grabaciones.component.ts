@@ -6,7 +6,7 @@ import { MaestrosService } from 'src/app/services/maestros/maestros.service';
 import { AlumnoGruposService } from 'src/app/services/alumnoGrupos/alumno-grupos.service';
 import { Grabacion } from 'src/app/models/grabaciones';
 import Swal from 'sweetalert2';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-grabaciones',
@@ -18,14 +18,14 @@ export class GrabacionesComponent {
   arrayGrabaciones: any = [];
 
   arrayClases: any = [];
-  arrayMaestros : any = [];
+  arrayMaestros: any = [];
   rol = this.authService.getRoleFromToken();
   id: any = this.authService.getIdFromToken();
-  isAlumno:boolean = false;
+  isAlumno: boolean = false;
   isMaestro = this.authService.isMaestro();
   mostrarGrab: boolean = false;
   obtenerGrab: boolean = false;
-  agregarGrab : boolean = false;
+  agregarGrab: boolean = false;
   grabacion: Grabacion = {
     titulo: '',
     URL: '',
@@ -50,13 +50,15 @@ export class GrabacionesComponent {
     this.getMaestros();
 
     const params = this.activatedRoute.snapshot.params;
-    if (params['id']&&params['id2']) {
-      this.obtenerGrab=true;
-      this.grabacionesService.getGrabacionFecha(params['id'],params['id2']).subscribe((res) => {
-        this.arrayGrabaciones = res;
+    if (params['id'] && params['id2']) {
+      this.obtenerGrab = true;
+      this.grabacionesService
+        .getGrabacionFecha(params['id'], params['id2'])
+        .subscribe((res) => {
+          this.arrayGrabaciones = res;
 
-        console.log(this.arrayGrabaciones[0]);
-      });
+          console.log(this.arrayGrabaciones[0]);
+        });
     }
   }
 
@@ -68,7 +70,6 @@ export class GrabacionesComponent {
   }
 
   obtenerGrabaciones() {
-    
     this.grabacionesService.getGrabaciones().subscribe(
       (res) => {
         this.arrayGrabaciones = res;
@@ -106,7 +107,7 @@ export class GrabacionesComponent {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: ''+err.error.msg,
+              text: '' + err.error.msg,
               footer: '<a href="#">Why do I have this issue?</a>',
             });
           }
@@ -116,18 +117,17 @@ export class GrabacionesComponent {
   }
 
   obtenerClases() {
-    if(this.rol=="1"){
-      this.isAlumno=true;
+    if (this.rol == '1') {
+      this.isAlumno = true;
       this.alumnosGrupoService.getClases(this.id).subscribe(
         (res) => {
           this.arrayClases = res;
-         console.log(this.arrayClases[0]);
+          console.log(this.arrayClases[0]);
         },
-  
+
         (err) => console.error(err)
       );
-    } else
-    if (this.rol == '2') {
+    } else if (this.rol == '2') {
       this.clasesHorarioService.getClaseHorario(this.id).subscribe(
         (res) => {
           this.arrayClases = res;
@@ -148,8 +148,8 @@ export class GrabacionesComponent {
     }
   }
 
- getGrabaciones(id: number) {
-  this.obtenerGrab=false;
+  getGrabaciones(id: number) {
+    this.obtenerGrab = false;
     console.log(id);
     this.mostrarGrab = true;
     this.grabacionesService.getGrabacion(id.toString()).subscribe(
@@ -162,18 +162,15 @@ export class GrabacionesComponent {
     );
   }
 
-
-
   escogerClase(id: number) {
-    
     this.grabacion.id_clase = id;
   }
 
-  agregarNuevaG(){
-    this.agregarGrab=true;
+  agregarNuevaG() {
+    this.agregarGrab = true;
   }
 
-  getMaestros(){
+  getMaestros() {
     this.maestrosService.getMaestros().subscribe(
       (res) => {
         this.arrayMaestros = res;
@@ -185,41 +182,39 @@ export class GrabacionesComponent {
   }
 
   obtenerNombreMaestro(idMaestro: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-    
-      const maestro = this.arrayMaestros[0].find((m: {id_user:number}) => m.id_user === idMaestro);
+    if (this.arrayMaestros[0]) {
+      const maestro = this.arrayMaestros[0].find(
+        (m: { id_user: number }) => m.id_user === idMaestro
+      );
       return maestro ? `${maestro.first_nameU} ${maestro.last_nameU}` : 'Maestro no encontrado';
-    
-
-    
-  }
+    } else {
+      return 'Array de maestros no definido';
+    }
+  }  
 
   obtenerNombreMaestro2(idMaestro: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-    
-      const maestro = this.arrayMaestros[0].find((m: {id_user:number}) => m.id_user === idMaestro);
-      return maestro ? `${maestro.first_nameU} ${maestro.last_nameU}` : 'Maestro no encontrado';
-    
-
-    
+    if (this.arrayMaestros && this.arrayMaestros.length > 0) {
+      const maestro = this.arrayMaestros[0].find(
+        (m: { id_user: number }) => m.id_user === idMaestro
+      );
+      return maestro
+        ? `${maestro.first_nameU} ${maestro.last_nameU}`
+        : 'Maestro no encontrado';
+    } else {
+      return 'Array de maestros no definido';
+    }
   }
+  
   obtenerNombreGrupo(idClase: number): string {
     // Encuentra la clase correspondiente al id_grupo
     //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
 
     // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-    
-      const grupo = this.arrayClases[0].find((m: {id_clase:number}) => m.id_clase === idClase);
-      return grupo ? `${grupo.nombre_grupo} ` : 'Grupo no encontrado';
-    
 
-    
+    const grupo = this.arrayClases[0].find(
+      (m: { id_clase: number }) => m.id_clase === idClase
+    );
+    return grupo ? `${grupo.nombre_grupo} ` : 'Grupo no encontrado';
   }
 
   obtenerIdNombreGrupo(idClase: number): string {
@@ -227,12 +222,13 @@ export class GrabacionesComponent {
     //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
 
     // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-    
-      const grupo = this.arrayClases[0].find((m: {id_clase:number}) => m.id_clase === idClase);
-      return grupo ? `ID: ${grupo.id_grupo}---Name--${grupo.nombre_grupo} ` : 'Ninguna clase seleccionada';
-    
 
-    
+    const grupo = this.arrayClases[0].find(
+      (m: { id_clase: number }) => m.id_clase === idClase
+    );
+    return grupo
+      ? `ID: ${grupo.id_grupo}---Name--${grupo.nombre_grupo} `
+      : 'Ninguna clase seleccionada';
   }
 
   eliminarGrabacion(id_grabacion: string) {
@@ -256,7 +252,6 @@ export class GrabacionesComponent {
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
-            
             });
           }
         );

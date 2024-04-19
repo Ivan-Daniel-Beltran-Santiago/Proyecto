@@ -5,19 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-
   <body>
     <header>
       <app-menu></app-menu>
     </header>
     <h4 style="text-align: center">Agregar clases</h4>
-
     <div class="flex flex-col">
       <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
         <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
           <div class="overflow-hidden">
             <h5>Grupos</h5>
-
             <input
               [(ngModel)]="filterPost"
               type="text"
@@ -160,7 +157,6 @@
     >
       Agregar grupo
     </button>
-
     <h6 *ngIf="agregarGrupo" style="margin-left: 30px">Ingresar Nuevo Grupo</h6>
     <input
       *ngIf="agregarGrupo"
@@ -172,7 +168,6 @@
       placeholder="New Group Name"
       class="block w-full px-4 py1 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
     />
-
     <h5 *ngIf="agregarGrupo" style="margin-left: 30px">Categoria del Grupo</h5>
     <div class="select" *ngIf="agregarGrupo" style="margin-left: 30px">
       <select [(ngModel)]="grupo.categoria" name="horario.id_maestro" required>
@@ -181,7 +176,6 @@
         <option value="Saturday">Saturday</option>
       </select>
     </div>
-
     <div *ngIf="agregarGrupo" style="margin-left: 30px" class="field">
       <label
         for="email"
@@ -199,7 +193,6 @@
         </div>
       </div>
     </div>
-
     <div *ngIf="agregarGrupo" style="margin-left: 30px; margin-top: 20px">
       <label
         for="email"
@@ -217,7 +210,6 @@
         class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
       />
     </div>
-
     <div *ngIf="agregarGrupo" style="margin-left: 30px; margin-top: 20px">
       <label
         for="email"
@@ -235,7 +227,6 @@
         class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
       />
     </div>
-
     <div *ngIf="agregarGrupo" style="margin-left: 30px; margin-top: 20px">
       <label
         for="email"
@@ -253,7 +244,6 @@
         class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
       />
     </div>
-
     <h5 *ngIf="agregarGrupo" style="margin-left: 30px">Numero de Maestros</h5>
     <div *ngIf="agregarGrupo" class="select" style="margin-left: 30px">
       <select [(ngModel)]="numeroMaes" name="horario.id_maestro" required>
@@ -262,8 +252,6 @@
         <option value="2">2</option>
       </select>
     </div>
-
-    <!-- This example requires Tailwind CSS v2.0+ -->
     <button
       *ngIf="agregarGrupo"
       style="margin-left: 40px"
@@ -320,7 +308,6 @@
         </div>
       </div>
     </div>
-
     <button
       *ngIf="seleccion1 || seleccion2"
       (click)="guardarGrupo()"
@@ -330,7 +317,6 @@
     >
       Guardar Grupo
     </button>
-
     <h5 style="margin-left: 30px">Grupo Seleccionado</h5>
     <div class="field" style="margin-left: 30px">
       <div class="control">
@@ -344,7 +330,6 @@
         {{ obtenerNombreMaestro2(clase.id_grupo) }}
       </div>
     </div>
-
     <h5>Alumnos</h5>
     <input
       [(ngModel)]="filterPost"
@@ -371,15 +356,8 @@
                     scope="col"
                     class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
-                    Last Name
+                    Last Name(s)
                   </th>
-                  <th
-                    scope="col"
-                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    Second Last Name
-                  </th>
-
                   <th
                     scope="col"
                     class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
@@ -400,14 +378,8 @@
                 <td
                   class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                 >
-                  {{ alumno.last_nameU }}
+                  {{ alumno.last_nameU }} {{ alumno.last_nameU2 }}
                 </td>
-                <td
-                  class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
-                >
-                  {{ alumno.last_nameU2 }}
-                </td>
-
                 <td
                   class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                 >
@@ -421,7 +393,6 @@
                     Agregar
                   </button>
                 </td>
-
                 <td
                   class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap"
                 ></td>

@@ -4,7 +4,6 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  
 } from '@angular/core';
 import { HorariosService } from 'src/app/services/horarios/horarios.service';
 import { MaestrosService } from 'src/app/services/maestros/maestros.service';
@@ -50,20 +49,18 @@ export class HorariosComponent implements OnInit {
   public dia: boolean = true;
   isAdmin = this.authService.isAdmin();
   isMaestro = this.authService.isMaestro();
-  
   nombreUsuario = this.authService.getNameFromToken();
+  
   ngOnInit() {
     this.obtenerHorarios();
     this.obtenerClases();
     this.obtenerMaestros();
     this.obtenerGrupos();
-   
   }
 
   logout(): void {
     this.authService.removeToken(); // Elimina el token al cerrar sesión
     this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
-    
   }
 
   obtenerClases() {
@@ -78,6 +75,7 @@ export class HorariosComponent implements OnInit {
       (err) => console.error(err)
     );
   }
+
   obtenerMaestros() {
     let objeto: any = {};
 
@@ -85,16 +83,6 @@ export class HorariosComponent implements OnInit {
       (res) => {
         this.arrayMaestros = res;
         console.log(this.arrayMaestros[0]);
-
-        /*
-        for (let i = 0; i < this.arrayMaestros[0].length; i++) {
-          objeto[i] = this.arrayMaestros[0][i];
-          let nombre = objeto[i].first_nameU;
-          this.idm2 = objeto[i].id_user;
-          console.log(nombre);
-          this.nombre = nombre;
-        }
-        */
       },
 
       (err) => console.error(err)
@@ -106,7 +94,6 @@ export class HorariosComponent implements OnInit {
       this.horariosService.getHorarioMaestro(this.id).subscribe(
         (res) => {
           this.arrayHorarios = res;
-
           console.log(this.arrayHorarios[0]);
         },
 
@@ -116,22 +103,20 @@ export class HorariosComponent implements OnInit {
       this.horariosService.getHorarios().subscribe(
         (res) => {
           this.arrayHorarios = res;
-
           console.log(this.arrayHorarios[0]);
         },
 
         (err) => console.error(err)
       );
-    } else {this.router.navigate(['/alumnos']);} 
-      
-    
+    } else {
+      this.router.navigate(['/alumnos']);
+    }
   }
 
   obtenerGrupos() {
     this.gruposService.getGrupos().subscribe(
       (res) => {
         this.arrayGrupos = res;
-
         console.log(this.arrayGrupos[0]);
       },
 
@@ -140,32 +125,12 @@ export class HorariosComponent implements OnInit {
   }
 
   exportarAExcel() {
-    
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.tabla.nativeElement);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(
+      this.tabla.nativeElement
+    );
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Horario');
-   // const cell = ws["getCell"](2, 1);
-    //cell.setStyle({ alignment: { horizontal: "center" } });
     XLSX.writeFile(wb, 'horario.xlsx');
-    
-
-    /*
-   // Obtenemos los datos de la tabla
-  const data = this.table.querySelectorAll("tr").map((row: { querySelectorAll: (arg0: string) => any; }) => {
-    const cells = row.querySelectorAll("td");
-    return cells.map((cell: { textContent: any; }) => cell.textContent);
-  });
-
-  // Generamos el archivo Excel
-  const workbook = XLSX.utils.book_new();
-  const worksheet = workbook.addWorksheet("Horario");
-  worksheet.fromArray(data, {
-    header: true,
-  });
-
-  // Guardamos el archivo Excel
-  workbook.writeFile("horario.xlsx");
-  */
   }
 
   private obtenerDatosParaExportar(): any[][] {
@@ -194,32 +159,41 @@ export class HorariosComponent implements OnInit {
   }
 
   obtenerGrupo(idGrupo: number): string {
+    if (!this.arrayGrupos || this.arrayGrupos.length === 0) {
+      return 'No hay grupos disponibles';
+    }
     const grupo = this.arrayGrupos[0].find(
       (m: { id_grupo: number }) => m.id_grupo === idGrupo
     );
     return grupo ? `${grupo.nombre_grupo}` : 'Grupo no encontrado';
   }
 
-  obtenerNombreMaestro(idGrupo: number): string {
+  obtenerNombreMaestro(
+    idGrupo: number,
+    clases: any[],
+    usuarios: any[]
+  ): string {
     // Encuentra la clase correspondiente al id_grupo
-    const clase = this.arrayClases[0].find(
-      (c: { id_grupo: number }) => c.id_grupo === idGrupo
-    );
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-    if (clase) {
-      const maestro = this.arrayMaestros[0].find(
-        (m: { id_user: number }) => m.id_user === clase.id_maestro
-      );
-      return maestro
-        ? `${maestro.first_nameU} ${maestro.last_nameU}`
-        : 'Maestro no encontrado';
+    if (!clases || !usuarios) {
+      return ''; // Manejo de caso donde clases o usuarios sean undefined
     }
 
-    return 'Clase no encontrada';
+    const clase = clases.find((c) => c.id_grupo === idGrupo);
+
+    if (clase) {
+      const idMaestro = clase.id_maestro;
+      const usuario = usuarios.find((u) => u.id_user === idMaestro);
+      return usuario ? usuario.first_nameU : '';
+    }
+
+    return '';
   }
 
   obtenerNombreMaestro2(idGrupo: number): string {
+    if (!this.arrayClases[0] || !this.arrayMaestros[0]) {
+      return 'Datos no disponibles';
+    }
+
     // Encuentra la clase correspondiente al id_grupo
     const clase = this.arrayClases[0].find(
       (c: { id_grupo: number }) => c.id_grupo === idGrupo
@@ -265,7 +239,6 @@ export class HorariosComponent implements OnInit {
         );
         Swal.fire({
           title: 'Deleted!',
-
           text: 'The user has been deleted.',
           icon: 'success',
         });

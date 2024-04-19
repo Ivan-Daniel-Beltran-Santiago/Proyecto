@@ -65,16 +65,29 @@ class MaterialController {
             }));
         };
         this.uploadsDirectory = path_1.default.join(__dirname, '../../uploads');
+        /*
+        getFiles =(req:Request, res:Response) => {
+          fs.readdir(this.uploadsDirectory, (err, files) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send('Error al obtener la lista de archivos.');
+            } else {
+              res.json(files);
+            }
+          });
+        };
+        */
         this.getFiles = (req, res) => {
-            fs_1.default.readdir(this.uploadsDirectory, (err, files) => {
+            fs_1.default.readdir(this.uploadsDirectory, (err, files) => __awaiter(this, void 0, void 0, function* () {
                 if (err) {
                     console.error(err);
                     res.status(500).send('Error al obtener la lista de archivos.');
                 }
                 else {
-                    res.json(files);
+                    const listaArchivos = yield database_1.default.query('SELECT id, nombre FROM archivos WHERE nombre IN (?)', [files]);
+                    res.json(listaArchivos[0]);
                 }
-            });
+            }));
         };
         this.deleteFile = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const filename = req.params.filename;

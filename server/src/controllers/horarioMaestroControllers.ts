@@ -13,12 +13,10 @@ class MaestroHorarioController {
     const { id } = req.params;
     const horario = await db.query(
       "select * from horarios h JOIN grupo g ON h.id_grupo = g.id_grupo WHERE g.id_maestro=? OR g.id_maestro2=?;",
-      [id,id]
+      [id, id]
     );
     res.json(horario);
   }
-
-
 }
 
 export const maestrohorarioController = new MaestroHorarioController();

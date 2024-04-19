@@ -61,9 +61,12 @@ class TagController {
                 const { name } = req.params;
                 let query = "SELECT id FROM Etiquetas WHERE nombre = ?";
                 // Si el tipo es un curso o un módulo, agrega la condición del tipo
-                if (req.query.type === 'Curso' || req.query.type === 'Módulo') {
+                if (req.query.type === "Curso" || req.query.type === "Módulo") {
                     query += " AND tipo = ?";
-                    const result = yield database_1.default.query(query, [name, req.query.type]);
+                    const result = yield database_1.default.query(query, [
+                        name,
+                        req.query.type,
+                    ]);
                     if (result[0].length > 0) {
                         res.json(result[0][0].id);
                     }
@@ -72,7 +75,13 @@ class TagController {
                     }
                 }
                 else {
-                    res.status(400).json({ error: "Tipo de etiqueta no válido" });
+                    const result = yield database_1.default.query(query, [name]);
+                    if (result[0].length > 0) {
+                        res.json(result[0][0].id);
+                    }
+                    else {
+                        res.json(null); // Devuelve null si no se encuentra el curso o módulo
+                    }
                 }
             }
             catch (error) {
@@ -98,7 +107,7 @@ class TagController {
             try {
                 const result = yield database_1.default.query("SELECT nombre FROM Etiquetas");
                 if (Array.isArray(result[0])) {
-                    const tags = result[0].map(tag => tag.nombre);
+                    const tags = result[0].map((tag) => tag.nombre);
                     res.json(tags);
                 }
                 else {
@@ -131,7 +140,9 @@ class TagController {
                 yield deleteChildTags(tagId);
                 // Eliminar la etiqueta principal
                 yield database_1.default.query("DELETE FROM Etiquetas WHERE nombre = ?", [name]);
-                res.status(200).json({ message: "Etiqueta y etiquetas hijo eliminadas exitosamente" });
+                res
+                    .status(200)
+                    .json({ message: "Etiqueta y etiquetas hijo eliminadas exitosamente" });
             }
             catch (error) {
                 console.error("Error al eliminar la etiqueta y etiquetas hijo:", error);
@@ -144,7 +155,7 @@ class TagController {
             try {
                 const courses = yield database_1.default.query("SELECT DISTINCT nombre FROM Etiquetas WHERE tipo = 'Curso'");
                 if (Array.isArray(courses[0])) {
-                    const courseNames = courses[0].map(course => course.nombre);
+                    const courseNames = courses[0].map((course) => course.nombre);
                     res.json(courseNames);
                 }
                 else {
@@ -162,8 +173,13 @@ class TagController {
             try {
                 const { oldName } = req.params;
                 const { newName } = req.body;
-                yield database_1.default.query("UPDATE Etiquetas SET nombre = ? WHERE nombre = ?", [newName, oldName]);
-                res.status(200).json({ message: "Nombre de etiqueta actualizado exitosamente" });
+                yield database_1.default.query("UPDATE Etiquetas SET nombre = ? WHERE nombre = ?", [
+                    newName,
+                    oldName,
+                ]);
+                res
+                    .status(200)
+                    .json({ message: "Nombre de etiqueta actualizado exitosamente" });
             }
             catch (error) {
                 console.error("Error al actualizar el nombre de la etiqueta:", error);
@@ -203,7 +219,11 @@ class TagController {
                 query += " WHERE nombre = ?";
                 params.push(name);
                 yield database_1.default.query(query, params);
-                res.status(200).json({ message: "Tipo y padre_id de etiqueta actualizados exitosamente" });
+                res
+                    .status(200)
+                    .json({
+                    message: "Tipo y padre_id de etiqueta actualizados exitosamente",
+                });
             }
             catch (error) {
                 console.error("Error al actualizar el tipo y padre_id de la etiqueta:", error);

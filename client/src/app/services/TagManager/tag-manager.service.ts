@@ -52,4 +52,8 @@ export class TagManagerService {
   updateTagTypeAndParentId(tagName: string, type: string, parentId: number | null): Observable<any> {
     return this.http.put(`${this.API_URL}/tags/type-parent/${tagName}`, { type, parentId });
   }  
+
+  assignTags(tagData: any): Observable<any> {
+    return this.http.post(`${this.API_URL}/assign-tags`, tagData);
+  }
 }

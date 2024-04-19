@@ -64,13 +64,15 @@ export class LoginComponent {
         if(rol==1)this.router.navigate(['/grabaciones']);
       },
       error: (error: any) => {
-        // Manejar el error aquí
+        let errorMessage = 'An error occurred while logging in';
+        if (error && error.err && error.err.msg) {
+          errorMessage = error.err.msg;
+        }
         Swal.fire({
           icon: 'error',
-          title: 'Oops... error inicio de sesion',
-          text: ''+error.err.msg,
+          title: 'Oops... login error',
+          text: errorMessage,
         });
-        // Puedes mostrar un mensaje de error al usuario o realizar otras acciones necesarias
       },
     });
   }

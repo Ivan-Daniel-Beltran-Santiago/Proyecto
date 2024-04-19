@@ -22,13 +22,7 @@
               <thead class="bg-white border-b">
                 <tr>
                   <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                    First Name
-                  </th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                    Last Name
-                  </th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                    Second Last Name
+                    Username
                   </th>
                   <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                     Telephone Number
@@ -52,14 +46,7 @@
               </thead>
               <tbody>
                 <tr class="bg-gray-100 border-b" *ngFor="let user of arrayusers[0]|filter:filterPost">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ user.first_nameU }}</td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    
-                  {{ user.last_nameU }}
-                  </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    {{ user.last_nameU2 }}
-                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ user.last_nameU }} {{ user.last_nameU2 }} {{ user.first_nameU }}</td>
                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     {{ user.telephoneU}}
                   </td>
@@ -114,11 +101,3 @@
     </div>
 </body>
 </html>
-
-
-  
-  
-  
-  
-  
-  

@@ -51,22 +51,35 @@ class TagController {
       const { name } = req.params;
       let query = "SELECT id FROM Etiquetas WHERE nombre = ?";
       // Si el tipo es un curso o un módulo, agrega la condición del tipo
-      if (req.query.type === 'Curso' || req.query.type === 'Módulo') {
+      if (req.query.type === "Curso" || req.query.type === "Módulo") {
         query += " AND tipo = ?";
-        const result = await db.query<RowDataPacket[]>(query, [name, req.query.type]);
+        const result = await db.query<RowDataPacket[]>(query, [
+          name,
+          req.query.type,
+        ]);
+
         if (result[0].length > 0) {
           res.json(result[0][0].id);
         } else {
           res.json(null); // Devuelve null si no se encuentra el curso o módulo
         }
       } else {
-        res.status(400).json({ error: "Tipo de etiqueta no válido" });
+        const result = await db.query<RowDataPacket[]>(query, [name]);
+
+        if (result[0].length > 0) {
+          res.json(result[0][0].id);
+        } else {
+          res.json(null); // Devuelve null si no se encuentra el curso o módulo
+        }
       }
     } catch (error) {
-      console.error("Error al obtener el ID del curso o módulo por nombre:", error);
+      console.error(
+        "Error al obtener el ID del curso o módulo por nombre:",
+        error
+      );
       res.status(500).json({ error: "Error interno del servidor" });
     }
-  }  
+  }
 
   async getModules(req, res) {
     try {
@@ -82,12 +95,10 @@ class TagController {
 
   async getAllTags(req, res) {
     try {
-      const result = await db.query(
-        "SELECT nombre FROM Etiquetas"
-      );
-  
+      const result = await db.query("SELECT nombre FROM Etiquetas");
+
       if (Array.isArray(result[0])) {
-        const tags = result[0].map(tag => tag.nombre);
+        const tags = result[0].map((tag) => tag.nombre);
         res.json(tags);
       } else {
         res.status(500).json({ error: "Error interno del servidor" });
@@ -96,38 +107,46 @@ class TagController {
       console.error("Error al obtener las etiquetas:", error);
       res.status(500).json({ error: "Error interno del servidor" });
     }
-  }  
+  }
 
   async deleteTag(req: Request, res: Response): Promise<void> {
     try {
       const { name } = req.params;
-  
+
       // Función recursiva para eliminar etiquetas hijo
       const deleteChildTags = async (tagId: number) => {
         // Buscar y eliminar las etiquetas hijo
-        const childTagsToDelete = await db.query<RowDataPacket[]>("SELECT id FROM Etiquetas WHERE padre_id = ?", [tagId]);
+        const childTagsToDelete = await db.query<RowDataPacket[]>(
+          "SELECT id FROM Etiquetas WHERE padre_id = ?",
+          [tagId]
+        );
         for (const childTag of childTagsToDelete[0]) {
           await deleteChildTags(childTag.id);
           await db.query("DELETE FROM Etiquetas WHERE id = ?", [childTag.id]);
         }
       };
-  
+
       // Buscar el ID de la etiqueta a eliminar
-      const tagToDelete = await db.query<RowDataPacket[]>("SELECT id FROM Etiquetas WHERE nombre = ?", [name]);
+      const tagToDelete = await db.query<RowDataPacket[]>(
+        "SELECT id FROM Etiquetas WHERE nombre = ?",
+        [name]
+      );
       const tagId = tagToDelete[0][0].id; // Accede al primer elemento del primer array
-  
+
       // Llamar a la función recursiva para eliminar las etiquetas hijo
       await deleteChildTags(tagId);
-  
+
       // Eliminar la etiqueta principal
       await db.query("DELETE FROM Etiquetas WHERE nombre = ?", [name]);
-  
-      res.status(200).json({ message: "Etiqueta y etiquetas hijo eliminadas exitosamente" });
+
+      res
+        .status(200)
+        .json({ message: "Etiqueta y etiquetas hijo eliminadas exitosamente" });
     } catch (error) {
       console.error("Error al eliminar la etiqueta y etiquetas hijo:", error);
       res.status(500).json({ error: "Error interno del servidor" });
     }
-  }  
+  }
 
   async getCourses(req, res) {
     try {
@@ -135,7 +154,7 @@ class TagController {
         "SELECT DISTINCT nombre FROM Etiquetas WHERE tipo = 'Curso'"
       );
       if (Array.isArray(courses[0])) {
-        const courseNames = courses[0].map(course => course.nombre);
+        const courseNames = courses[0].map((course) => course.nombre);
         res.json(courseNames);
       } else {
         res.status(500).json({ error: "Error interno del servidor" });
@@ -144,69 +163,84 @@ class TagController {
       console.error("Error al obtener los cursos:", error);
       res.status(500).json({ error: "Error interno del servidor" });
     }
-  }   
+  }
 
   async updateTagName(req: Request, res: Response): Promise<void> {
     try {
       const { oldName } = req.params;
       const { newName } = req.body;
-  
-      await db.query(
-        "UPDATE Etiquetas SET nombre = ? WHERE nombre = ?",
-        [newName, oldName]
-      );
-  
-      res.status(200).json({ message: "Nombre de etiqueta actualizado exitosamente" });
+
+      await db.query("UPDATE Etiquetas SET nombre = ? WHERE nombre = ?", [
+        newName,
+        oldName,
+      ]);
+
+      res
+        .status(200)
+        .json({ message: "Nombre de etiqueta actualizado exitosamente" });
     } catch (error) {
       console.error("Error al actualizar el nombre de la etiqueta:", error);
       res.status(500).json({ error: "Error interno del servidor" });
     }
-  }  
+  }
 
   async updateTagTypeAndParentId(req: Request, res: Response): Promise<void> {
     try {
       const { name } = req.params;
       const { type, parentId } = req.body;
-  
+
       // Función recursiva para eliminar etiquetas hijo
       const deleteChildTags = async (tagId: number) => {
         // Buscar y eliminar las etiquetas hijo
-        const childTagsToDelete = await db.query<RowDataPacket[]>("SELECT id FROM Etiquetas WHERE padre_id = ?", [tagId]);
+        const childTagsToDelete = await db.query<RowDataPacket[]>(
+          "SELECT id FROM Etiquetas WHERE padre_id = ?",
+          [tagId]
+        );
         for (const childTag of childTagsToDelete[0]) {
           await deleteChildTags(childTag.id);
           await db.query("DELETE FROM Etiquetas WHERE id = ?", [childTag.id]);
         }
       };
-  
+
       // Buscar el ID de la etiqueta a actualizar
-      const tagToUpdate = await db.query<RowDataPacket[]>("SELECT id FROM Etiquetas WHERE nombre = ?", [name]);
+      const tagToUpdate = await db.query<RowDataPacket[]>(
+        "SELECT id FROM Etiquetas WHERE nombre = ?",
+        [name]
+      );
       const tagId = tagToUpdate[0][0].id; // Accede al primer elemento del primer array
-  
+
       // Llamar a la función recursiva para eliminar las etiquetas hijo
       await deleteChildTags(tagId);
-  
+
       // Actualizar el tipo de etiqueta y el padre_id
       let query = "UPDATE Etiquetas SET tipo = ?";
       const params = [type];
-      
+
       if (parentId === null || parentId === undefined) {
         query += ", padre_id = NULL";
       } else {
         query += ", padre_id = ?";
         params.push(parentId);
       }
-  
+
       query += " WHERE nombre = ?";
       params.push(name);
-  
+
       await db.query(query, params);
-  
-      res.status(200).json({ message: "Tipo y padre_id de etiqueta actualizados exitosamente" });
+
+      res
+        .status(200)
+        .json({
+          message: "Tipo y padre_id de etiqueta actualizados exitosamente",
+        });
     } catch (error) {
-      console.error("Error al actualizar el tipo y padre_id de la etiqueta:", error);
+      console.error(
+        "Error al actualizar el tipo y padre_id de la etiqueta:",
+        error
+      );
       res.status(500).json({ error: "Error interno del servidor" });
     }
-  }  
+  }
 }
 
 export default new TagController();

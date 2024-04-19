@@ -32,7 +32,7 @@
             <dt class="sr-only">Title</dt>
             <dd class="text-gray-500 text-sm">{{ clase.Idioma }} <br /></dd>
             <h4 class="mt-6 text-gray-900 text-sm font-medium">Category</h4>
-            
+
             <dd class="text-gray-500 text-sm">{{ clase.categoria }} <br /></dd>
             <h4 *ngIf="isAdmin" class="mt-6 text-gray-900 text-sm font-medium">
               Teachers
@@ -71,46 +71,46 @@
     </ul>
 
     <div *ngIf="obtenerGrab">
-    <div *ngFor="let grabaciones of arrayGrabaciones[0]">
-      <div class="bg-gray-100 lg:py-12">
-        <div
-          class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg"
-        >
-          <div class="lg:w-1/2">
-            <div
-              class="h-64 bg-cover lg:rounded-lg lg:h-full"
-              style="
-                background-image: url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
-              "
-            ></div>
-          </div>
-          <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
-            <h2 class="text-3xl text-gray-800 font-bold">
-              <span class="text-indigo-600"
-                >CLASS : {{ obtenerNombreGrupo(grabaciones.id_clase) }}</span
+      <div *ngFor="let grabaciones of arrayGrabaciones[0]">
+        <div class="bg-gray-100 lg:py-12">
+          <div
+            class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg"
+          >
+            <div class="lg:w-1/2">
+              <div
+                class="h-64 bg-cover lg:rounded-lg lg:h-full"
+                style="
+                  background-image: url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
+                "
+              ></div>
+            </div>
+            <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
+              <h2 class="text-3xl text-gray-800 font-bold">
+                <span class="text-indigo-600"
+                  >CLASS : {{ obtenerNombreGrupo(grabaciones.id_clase) }}</span
+                >
+              </h2>
+              <h2 class="text-3xl text-gray-800 font-bold">
+                <span class="text-indigo-600"
+                  >TOPIC : {{ grabaciones.titulo }}</span
+                >
+              </h2>
+              <p>
+                <span class="text-indigo-600"
+                  >UPLOAD DATE {{ grabaciones.fecha }}</span
+                >
+              </p>
+              <a
+                href="{{ grabaciones.URL }}"
+                target="_blank"
+                class="mt-4 text-gray-600"
+                >Haga click para ver la clase</a
               >
-            </h2>
-            <h2 class="text-3xl text-gray-800 font-bold">
-              <span class="text-indigo-600"
-                >TOPIC : {{ grabaciones.titulo }}</span
-              >
-            </h2>
-            <p>
-              <span class="text-indigo-600"
-                >UPLOAD DATE {{ grabaciones.fecha }}</span
-              >
-            </p>
-            <a
-              href="{{ grabaciones.URL }}"
-              target="_blank"
-              class="mt-4 text-gray-600"
-              >Haga click para ver la clase</a
-            >
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
     <div *ngIf="agregarGrab">
       <h6 style="margin-left: 30px">Topic</h6>
       <input
@@ -228,13 +228,13 @@
                     *ngIf="isAdmin"
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                   >
-                    {{ obtenerNombreMaestro( clase.id_maestro) }}
+                    {{ obtenerNombreMaestro(clase.id_maestro) }}
                   </td>
                   <td
                     *ngIf="isAdmin"
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                   >
-                  {{ obtenerNombreMaestro( clase.id_maestro) }}
+                    {{ obtenerNombreMaestro(clase.id_maestro) }}
                   </td>
 
                   <td
@@ -252,19 +252,17 @@
                   </td>
                 </tr>
               </table>
-         
             </div>
           </div>
         </div>
       </div>
-      <h5 style="margin-left:30px">Clase Seleccionada</h5>
-    <div class="field" style="margin-left:30px">
-      <div class="control">
-        
-        {{obtenerIdNombreGrupo(grabacion.id_clase)}}
+      <h5 style="margin-left: 30px">Clase Seleccionada</h5>
+      <div class="field" style="margin-left: 30px">
+        <div class="control">
+          {{ obtenerIdNombreGrupo(grabacion.id_clase) }}
+        </div>
       </div>
-    </div>
-   
+
       <br />
       <button
         (click)="guardarGrabaciones()"
@@ -323,20 +321,18 @@
                 class="mt-4 text-gray-600"
                 >Haga click para ver la clase</a
               >
-              <br>
-             
-              <br>
-              <br>
+              <br />
 
-           
+              <br />
+              <br />
+
               <button
-              data-ripple-light="true"
-              (click)="eliminarGrabacion(grabaciones.id_grabaciones)"
-              data-popover-target="popover"
-              class="middle none center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              
+                data-ripple-light="true"
+                (click)="eliminarGrabacion(grabaciones.id_grabaciones)"
+                data-popover-target="popover"
+                class="middle none center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               >
-              DELETE
+                DELETE
               </button>
             </div>
           </div>

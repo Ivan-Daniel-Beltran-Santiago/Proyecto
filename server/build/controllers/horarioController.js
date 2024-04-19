@@ -134,20 +134,17 @@ class HorarioController {
                         try {
                             yield database_1.default.query("INSERT INTO horarios SET ?", [req.body]);
                         }
-                        catch (error) {
-                        }
+                        catch (error) { }
                         req.body.semana = 3;
                         try {
                             yield database_1.default.query("INSERT INTO horarios SET ?", [req.body]);
                         }
-                        catch (error) {
-                        }
+                        catch (error) { }
                         req.body.semana = 4;
                         try {
                             yield database_1.default.query("INSERT INTO horarios SET ?", [req.body]);
                         }
-                        catch (error) {
-                        }
+                        catch (error) { }
                     }
                 }
                 else {

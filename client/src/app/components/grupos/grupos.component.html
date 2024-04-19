@@ -1,92 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-  <header>
-    <app-menu></app-menu>
-  </header>
-  <br>
-        
-      <button style="margin-bottom: 20px;" routerLink="/clases-list" data-ripple-light="true" data-popover-target="popover"
-      class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+  </head>
+  <body>
+    <header>
+      <app-menu></app-menu>
+    </header>
+    <br />
+
+    <button
+      style="margin-bottom: 20px"
+      routerLink="/clases-list"
+      data-ripple-light="true"
+      data-popover-target="popover"
+      class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+    >
       Agregar nuevo grupo
     </button>
-        <div class="flex flex-col">
-       
-        
-        <!-- This example requires Tailwind CSS v2.0+ -->
-        <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <li class="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200" *ngFor="let grupos of arrayGrupos[0]">
-            <div class="flex-1 flex flex-col p-8">
-              <img class="w-32 h-32 flex-shrink-0 mx-auto rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-              <h3 class="mt-6 text-gray-900 text-sm font-medium">{{grupos.nombre_grupo}}</h3>
-              <dl class="mt-1 flex-grow flex flex-col justify-between">
-                <dd class="text-gray-500 text-sm">{{grupos.fecha_inicio.substring(0,10)}}--{{grupos.fecha_final.substring(0,10)}}</dd>          
-                <h4 class="mt-6 text-gray-900 text-sm font-medium">Category</h4>
-                <dd class="text-gray-500 text-sm">{{grupos.categoria}}</dd>
-                <dt class="sr-only">Role</dt>
-                <h3 class="mt-6 text-gray-900 text-sm font-medium">Teachers</h3>
-                <dd class="mt-3">
-                  <span class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">{{obtenerNombreMaestro(grupos.id_maestro)}}</span><br><br>
-                  <span class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">{{obtenerNombreMaestro2(grupos.id_maestro2)}}</span>
-                </dd>
-              </dl>
-            </div>
-            <div>
-              <div class="-mt-px flex divide-x divide-gray-200">
-                <div class="w-0 flex-1 flex">
-                  <a 
-                    (click)="obtenerGrupo(grupos.id_grupo)"
-                    class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center bg-blue-300  py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
-                    <!-- Heroicon name: solid/mail -->
-                    
-                    <span class="ml-3 text-gray-800 text-xs font-medium ">Update Group</span>
-                  </a>
-                </div>
+    <div class="flex flex-col">
+      <!-- This example requires Tailwind CSS v2.0+ -->
+      <ul
+        role="list"
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+      >
+        <li
+          class="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
+          *ngFor="let grupos of arrayGrupos[0]"
+        >
+          <div class="flex-1 flex flex-col p-8">
+            <img
+              class="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+              alt=""
+            />
+            <h3 class="mt-6 text-gray-900 text-sm font-medium">
+              {{ grupos.nombre_grupo }}
+            </h3>
+            <dl class="mt-1 flex-grow flex flex-col justify-between">
+              <dd class="text-gray-500 text-sm">
+                {{ grupos.fecha_inicio.substring(0, 10) }}--{{
+                  grupos.fecha_final.substring(0, 10)
+                }}
+              </dd>
+              <h4 class="mt-6 text-gray-900 text-sm font-medium">Category</h4>
+              <dd class="text-gray-500 text-sm">{{ grupos.categoria }}</dd>
+              <dt class="sr-only">Role</dt>
+              <h3 class="mt-6 text-gray-900 text-sm font-medium">Teachers</h3>
+              <dd class="mt-3">
+                <span
+                  class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full"
+                  >{{ obtenerNombreMaestro(grupos.id_maestro) }}</span
+                ><br /><br />
+                <span
+                  class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full"
+                  >{{ obtenerNombreMaestro2(grupos.id_maestro2) }}</span
+                >
+              </dd>
+            </dl>
+          </div>
+          <div>
+            <div class="-mt-px flex divide-x divide-gray-200">
+              <div class="w-0 flex-1 flex">
+                <a
+                  (click)="obtenerGrupo(grupos.id_grupo)"
+                  class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center bg-blue-300 py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                >
+                  <!-- Heroicon name: solid/mail -->
 
-                <div class="w-0 flex-1 flex">
-                  <a (click)="eliminarGrupo(grupos.id_grupo)"
-                    class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center bg-red-300  py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
-                    <!-- Heroicon name: solid/mail -->
-      
-                    <span class="ml-3 text-gray-800 text-xs font-medium ">Delete Group</span>
-                  </a>
-                </div>
-         
+                  <span class="ml-3 text-gray-800 text-xs font-medium"
+                    >Update Group</span
+                  >
+                </a>
+              </div>
+
+              <div class="w-0 flex-1 flex">
+                <a
+                  (click)="eliminarGrupo(grupos.id_grupo)"
+                  class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center bg-red-300 py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                >
+                  <!-- Heroicon name: solid/mail -->
+
+                  <span class="ml-3 text-gray-800 text-xs font-medium"
+                    >Delete Group</span
+                  >
+                </a>
               </div>
             </div>
-          </li>
-        
-        
-        
-          <!-- More people... -->
-          
-        </ul>
+          </div>
+        </li>
 
-        <div *ngIf="edit">
+        <!-- More people... -->
+      </ul>
 
-        <h6 >Nombre del Grupo</h6>
-        <input type="text" name="last_name" [(ngModel)]="grupo.nombre_grupo"
-          style="height: 35px; width: 150px" id="password" placeholder="New Group Name"
-          class="block w-full px-4 py1 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-      
-      
-      
-        <h5 >Categoria del Grupo</h5>
-        <div class="select" >
-          <select [(ngModel)]="grupo.categoria" name="horario.id_maestro" required>
+      <div *ngIf="edit">
+        <h6>Nombre del Grupo</h6>
+        <input
+          type="text"
+          name="last_name"
+          [(ngModel)]="grupo.nombre_grupo"
+          style="height: 35px; width: 150px"
+          id="password"
+          placeholder="New Group Name"
+          class="block w-full px-4 py1 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+        />
+
+        <h5>Categoria del Grupo</h5>
+        <div class="select">
+          <select
+            [(ngModel)]="grupo.categoria"
+            name="horario.id_maestro"
+            required
+          >
             <option>Select Category</option>
             <option value="Monday-Thursday">Monday Thursday</option>
             <option value="Saturday">Saturday</option>
           </select>
         </div>
-      
+
         <div class="field">
-          <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Language</label>
+          <label
+            for="email"
+            class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+            >Language</label
+          >
           <div class="control">
             <div class="select">
               <select [(ngModel)]="grupo.Idioma" name="idioma" required>
@@ -99,14 +138,13 @@
           </div>
         </div>
 
-     <div  style=" margin-top: 20px;">
+        <div style="margin-top: 20px">
           <label
             for="email"
             class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
             >Fecha</label
           >
           <input
-          
             type="date"
             name="Hora_inicio"
             id="email"
@@ -118,7 +156,7 @@
           />
         </div>
 
-        <div style=" margin-top: 20px;">
+        <div style="margin-top: 20px">
           <label
             for="email"
             class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
@@ -131,25 +169,28 @@
             [(ngModel)]="grupo.fecha_final"
             style="width: 150px"
             placeholder="example@example.com"
-            
             class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
           />
         </div>
-      
-      
-      
+
         <!-- This example requires Tailwind CSS v2.0+ -->
-      
-        <div  class="Maestros1">
+
+        <div class="Maestros1">
           <h5>Maestros</h5>
-         
-          
+
           <div class="field" style="margin-top: 25px">
             <div class="control">
               <div class="select">
-                <select [(ngModel)]="grupo.id_maestro" name="horario.id_maestro" required>
+                <select
+                  [(ngModel)]="grupo.id_maestro"
+                  name="horario.id_maestro"
+                  required
+                >
                   <option>Select Teacher</option>
-                  <option *ngFor="let maestro of arrayMaestros[0]" value="{{ maestro.id_user }}">
+                  <option
+                    *ngFor="let maestro of arrayMaestros[0]"
+                    value="{{ maestro.id_user }}"
+                  >
                     {{ maestro.first_nameU }} {{ maestro.last_nameU }}
                   </option>
                 </select>
@@ -157,32 +198,45 @@
             </div>
           </div>
         </div>
-        
-        <div class="field" style="margin-top: 25px" >
+
+        <div class="field" style="margin-top: 25px">
           <div class="control">
             <div class="select">
-              <select [(ngModel)]="grupo.id_maestro2" name="horario.id_maestro" required>
+              <select
+                [(ngModel)]="grupo.id_maestro2"
+                name="horario.id_maestro"
+                required
+              >
                 <option>Select Teacher</option>
-                <option *ngFor="let maestro of arrayMaestros[0]" value="{{ maestro.id_user }}">
+                <option
+                  *ngFor="let maestro of arrayMaestros[0]"
+                  value="{{ maestro.id_user }}"
+                >
                   {{ maestro.first_nameU }} {{ maestro.last_nameU }}
                 </option>
               </select>
             </div>
           </div>
         </div>
-      
-        <button (click)="actualizarGrupo()"  data-ripple-light="true" data-popover-target="popover"
-          class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+
+        <button
+          (click)="actualizarGrupo()"
+          data-ripple-light="true"
+          data-popover-target="popover"
+          class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        >
           Guardar Grupo
         </button>
-        <button style="margin-left:40px" (click)="recargar()"  data-ripple-light="true" data-popover-target="popover"
-        class="middle none center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-       Volver
-      </button>
-        </div>
-        
-  </div>
-</body>
+        <button
+          style="margin-left: 40px"
+          (click)="recargar()"
+          data-ripple-light="true"
+          data-popover-target="popover"
+          class="middle none center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        >
+          Volver
+        </button>
+      </div>
+    </div>
+  </body>
 </html>
-
-

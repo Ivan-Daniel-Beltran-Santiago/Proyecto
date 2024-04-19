@@ -16,6 +16,8 @@ export class TagManagerAssignTagsComponent implements OnInit {
   searchTerm: string = '';
   selectedFileType: string | null = null;
   tags: string[] = []; // Variable para almacenar las etiquetas
+  location: string = '';
+  selectedTag: string | null = null; // Nueva propiedad para almacenar la etiqueta seleccionada
 
   constructor(
     private materialesService: MaterialesServicesService,
@@ -23,16 +25,16 @@ export class TagManagerAssignTagsComponent implements OnInit {
   ) {}
 
   onSelectOption(event: any) {
-    if (event && event.target) { // Verificar si event y event.target son definidos
+    if (event && event.target) {
       const selectedOption = event.target.value;
-      const selectedTag = this.tags.find(tag => tag === selectedOption);
-      if (selectedTag) {
-        // Modifica esta línea para proporcionar el tipo "Curso"
-        this.tagManagerService.getTagIdByName(selectedTag, 'Curso').subscribe(
+      this.selectedTag = event.target.value;
+      const selectedIndex = this.tags.findIndex(tag => tag === selectedOption); // Encontrar el índice del elemento seleccionado
+      const selectedTagType = this.tags[selectedIndex]; // Obtener el tipo de etiqueta correspondiente al índice encontrado
+      if (selectedTagType) {
+        this.tagManagerService.getTagIdByName(selectedOption, selectedOption).subscribe(
           (tagId) => {
             console.log('ID de la etiqueta:', tagId);
-            console.log('Nombre de la etiqueta:', selectedTag);
-            console.log('Tipo de la etiqueta: Curso');
+            console.log('Nombre de la etiqueta:', selectedOption);
           },
           (err) => console.error(err)
         );
@@ -41,6 +43,7 @@ export class TagManagerAssignTagsComponent implements OnInit {
       this.checkIfChecked();
     }
   }
+  
 
   ngOnInit(): void {
     this.getFiles();
@@ -50,11 +53,11 @@ export class TagManagerAssignTagsComponent implements OnInit {
   getFiles() {
     this.materialesService.getFiles().subscribe(
       (files) => {
-        this.arrayFiles = files.map((file, index) => ({
-          id: index + 1, // Podrías asignar un ID único a cada archivo aquí
-          name: file.name,
-          type: file.type // Asegúrate de tener el tipo de archivo disponible aquí
+        this.arrayFiles = files.map((file) => ({
+          id: file.name.id, // Usa el ID proporcionado por la base de datos
+          name: file.name.nombre
         }));
+        console.log(this.arrayFiles);
         // Inicialmente, mostrar todos los archivos sin filtrar
         this.filteredFiles = [...this.arrayFiles];
         // Verificar si hay al menos un archivo seleccionado
@@ -62,7 +65,8 @@ export class TagManagerAssignTagsComponent implements OnInit {
       },
       (err) => console.error(err)
     );
-  }  
+  }
+  
 
   getAllTags() {
     this.tagManagerService.getTags().subscribe(
@@ -154,12 +158,26 @@ export class TagManagerAssignTagsComponent implements OnInit {
   }
 
   assignTags() {
-    for (const file of this.filteredFiles) {
-      if (file.checked) {
-        console.log('ID del archivo:', file.id); // Suponiendo que cada archivo tiene un campo 'id'
-        console.log('Nombre del archivo:', file.name);
-        console.log('Tipo del archivo:', file.type);
-      }
-    }
+    const selectedFiles = this.filteredFiles.filter(file => file.checked);
+    if (selectedFiles.length === 0 || !this.selectedTag) return;
+
+    const tagData = {
+      tagName: this.selectedTag,
+      fileIds: selectedFiles.map(file => file.id)
+    };
+
+    this.tagManagerService.assignTags(tagData).subscribe(
+      () => {
+        console.log('Etiquetas asignadas exitosamente');
+        // Puedes realizar alguna acción adicional si es necesario, como actualizar la lista de archivos, etc.
+      },
+      (err) => console.error('Error al asignar etiquetas:', err)
+    );
+  }
+
+  logCheckedFileIds() {
+    const checkedFileIds = this.filteredFiles.filter(file => file.checked).map(file => file.id);
+    console.log('ID(s) de archivo(s) marcado(s):', checkedFileIds);
+    console.log(this.filteredFiles);
   }
 }

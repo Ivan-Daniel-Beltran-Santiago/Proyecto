@@ -59,6 +59,7 @@ class MaterialController {
 
   uploadsDirectory = path.join(__dirname, '../../uploads');
 
+  /*
   getFiles =(req:Request, res:Response) => {
     fs.readdir(this.uploadsDirectory, (err, files) => {
       if (err) {
@@ -66,6 +67,19 @@ class MaterialController {
         res.status(500).send('Error al obtener la lista de archivos.');
       } else {
         res.json(files);
+      }
+    });
+  };
+  */
+
+  getFiles = (req: Request, res: Response) => {
+    fs.readdir(this.uploadsDirectory, async (err, files) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener la lista de archivos.');
+      } else {
+         const listaArchivos = await db.query('SELECT id, nombre FROM archivos WHERE nombre IN (?)', [files]);
+        res.json(listaArchivos[0]); 
       }
     });
   };
