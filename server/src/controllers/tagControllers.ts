@@ -228,16 +228,31 @@ class TagController {
 
       await db.query(query, params);
 
-      res
-        .status(200)
-        .json({
-          message: "Tipo y padre_id de etiqueta actualizados exitosamente",
-        });
+      res.status(200).json({
+        message: "Tipo y padre_id de etiqueta actualizados exitosamente",
+      });
     } catch (error) {
       console.error(
         "Error al actualizar el tipo y padre_id de la etiqueta:",
         error
       );
+      res.status(500).json({ error: "Error interno del servidor" });
+    }
+  }
+
+  async assignTags(req: Request, res: Response): Promise<void> {
+    try {
+      const { tagId, fileIds } = req.body;
+      // Itera sobre los IDs de archivos y realiza la asignación de etiquetas para cada uno
+      for (const fileId of fileIds) {
+        await db.query(
+          "INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)",
+          [fileId, tagId]
+        );
+      }
+      res.status(200).json({ message: "Etiquetas asignadas exitosamente" });
+    } catch (error) {
+      console.error("Error al asignar etiquetas:", error);
       res.status(500).json({ error: "Error interno del servidor" });
     }
   }

@@ -19,4 +19,6 @@ router.get('/courses', tagController.getCourses);
 router.put('/:oldName', tagController.updateTagName);
 router.put('/type-parent/:name', tagController.updateTagTypeAndParentId);
 
+router.post('/assign-tags', tagController.assignTags);
+
 export default router;

@@ -219,14 +219,28 @@ class TagController {
                 query += " WHERE nombre = ?";
                 params.push(name);
                 yield database_1.default.query(query, params);
-                res
-                    .status(200)
-                    .json({
+                res.status(200).json({
                     message: "Tipo y padre_id de etiqueta actualizados exitosamente",
                 });
             }
             catch (error) {
                 console.error("Error al actualizar el tipo y padre_id de la etiqueta:", error);
+                res.status(500).json({ error: "Error interno del servidor" });
+            }
+        });
+    }
+    assignTags(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { tagId, fileIds } = req.body;
+                // Itera sobre los IDs de archivos y realiza la asignación de etiquetas para cada uno
+                for (const fileId of fileIds) {
+                    yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, tagId]);
+                }
+                res.status(200).json({ message: "Etiquetas asignadas exitosamente" });
+            }
+            catch (error) {
+                console.error("Error al asignar etiquetas:", error);
                 res.status(500).json({ error: "Error interno del servidor" });
             }
         });
