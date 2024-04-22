@@ -5,11 +5,11 @@ import { RowDataPacket } from "mysql2";
 class TagController {
   async createTag(req: Request, res: Response): Promise<void> {
     console.log("Recibida solicitud para crear etiqueta");
-    try {
+    try { 
       const { name, type, parent_id } = req.body;
       await db.query(
         "INSERT INTO Etiquetas (nombre, tipo, padre_id) VALUES (?, ?, ?)",
-        [name, type, parent_id]
+        [name, type, parent_id] 
       );
       res.status(201).json({ message: "Etiqueta creada exitosamente" });
     } catch (error) {
@@ -237,10 +237,11 @@ class TagController {
         error
       );
       res.status(500).json({ error: "Error interno del servidor" });
-    }
+    } 
   }
 
   async assignTags(req: Request, res: Response): Promise<void> {
+    console.log(req.body.tagData)
     try {
       const { tagId, fileIds } = req.body;
       // Itera sobre los IDs de archivos y realiza la asignación de etiquetas para cada uno
@@ -252,6 +253,7 @@ class TagController {
       }
       res.status(200).json({ message: "Etiquetas asignadas exitosamente" });
     } catch (error) {
+      console.log(req)
       console.error("Error al asignar etiquetas:", error);
       res.status(500).json({ error: "Error interno del servidor" });
     }

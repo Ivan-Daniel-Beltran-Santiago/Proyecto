@@ -162,12 +162,10 @@ export class TagManagerAssignTagsComponent implements OnInit {
     const selectedFiles = this.filteredFiles.filter(file => file.checked);
     if (selectedFiles.length === 0 || !this.selectedTag) return;
 
-    const tagData = {
+    var tagData = {
       tagName: this.selectedTag,
-      fileIds: selectedFiles.map(file => {file.id; console.log(file.id)})
+      fileIds: selectedFiles.map(file => file.id)
     };
-
-    console.log(this.selectedTag)
 
     this.tagManagerService.assignTags(tagData).subscribe(
       () => {

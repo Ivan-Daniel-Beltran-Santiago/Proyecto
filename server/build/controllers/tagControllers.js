@@ -231,6 +231,7 @@ class TagController {
     }
     assignTags(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body.tagData);
             try {
                 const { tagId, fileIds } = req.body;
                 // Itera sobre los IDs de archivos y realiza la asignación de etiquetas para cada uno
@@ -240,6 +241,7 @@ class TagController {
                 res.status(200).json({ message: "Etiquetas asignadas exitosamente" });
             }
             catch (error) {
+                console.log(req);
                 console.error("Error al asignar etiquetas:", error);
                 res.status(500).json({ error: "Error interno del servidor" });
             }
