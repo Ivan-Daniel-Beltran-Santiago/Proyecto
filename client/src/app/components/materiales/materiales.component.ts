@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ClasesHorariosService } from 'src/app/services/clasesHorarios/clases-horarios.service';
 import { MaestrosService } from 'src/app/services/maestros/maestros.service';
 import { MaterialesServicesService } from 'src/app/services/materiales/materiales-services.service';
-import { TagManagerComponent } from 'src/app/components/tag-manager/tag-manager.component';
 import Swal from 'sweetalert2';
 import JSZip from 'jszip';
 
@@ -54,7 +53,7 @@ export class MaterialesComponent {
     this.getClases();
     this.getMaestro();
     this.materialService.getFiles().subscribe((files) => {
-      this.arrayFiles = files;
+      this.arrayFiles = this.processFiles(files);
       this.allFiles = files;
     });
   }
@@ -155,6 +154,11 @@ export class MaterialesComponent {
 
   getFileUrl(filename: string): string {
     return `http://localhost:3000/uploads/${filename}`;
+  }
+
+  viewFile(filename: string) {
+    const fileUrl = this.getFileUrl(filename);
+    window.open(fileUrl, '_blank'); // Abre el archivo en una nueva pestaña del navegador
   }
 
   getMaestro() {
@@ -356,5 +360,36 @@ export class MaterialesComponent {
 
   toggleTagManager() {
     this.showTagManager = !this.showTagManager;
+  }
+
+  getFileType(filename: string): string {
+    const extension = filename.split('.').pop()?.toLowerCase();
+    switch (extension) {
+      case 'pdf':
+        return 'PDF';
+      case 'mp3':
+        return 'Audio';
+      case 'jpg':
+      case 'jpeg':
+      case 'png':
+        return 'Imagen';
+      case 'docx':
+        return 'Documento Word';
+      case 'mp4':
+      case 'mpeg':
+        return 'Video';
+      case 'pptx':
+        return 'PowerPoint';
+      default:
+        return 'Desconocido';
+    }
+  }
+
+  // Método para procesar los archivos y establecer su tipo
+  processFiles(files: any[]) {
+    return files.map((file) => ({
+      ...file,
+      type: this.getFileType(file.name.nombre),
+    }));
   }
 }

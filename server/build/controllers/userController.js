@@ -67,8 +67,7 @@ class UserController {
           Nuestros clientes son los mas importante para nosotros. 
           Acceso a la plataforma
           email: ${email}
-          contraseña : ` +
-                        pass,
+          contraseña : ` + pass,
                 };
                 nodemailer_config_1.default.sendMail(mailOptions, (error, info) => {
                     if (error) {
@@ -119,8 +118,7 @@ class UserController {
                     text: `Se ha actualizado tu perfil tu nuevo acceso a la 
           plataforma 
           email: ${email}
-          contraseña : ` +
-                        contraNueva,
+          contraseña : ` + contraNueva,
                 };
                 nodemailer_config_1.default.sendMail(mailOptions, (error, info) => {
                     if (error) {
@@ -135,12 +133,12 @@ class UserController {
             }
             catch (error) {
                 res.status(400).json({
-                    msg: 'Favor de llenar todos los datos '
+                    msg: "Favor de llenar todos los datos ",
                 });
             }
         });
     }
-    //SENTENCIA PARA INICIAR SESION 
+    //SENTENCIA PARA INICIAR SESION
     loginUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             //validar contraseña
@@ -158,7 +156,6 @@ class UserController {
                 let role = JSON.parse(JSON.stringify(rol[0]));
                 console.log(data[0]);
                 console.log(role[0]);
-                //console.log(password[0]);
                 if (!data[0]) {
                     return res.status(400).json({
                         msg: "No existe correo en la base de datos",
@@ -172,7 +169,7 @@ class UserController {
                 console.log(passwordValid);
                 if (!passwordValid) {
                     return res.status(400).json({
-                        msg: 'Password incorrecta'
+                        msg: "Password incorrecta",
                     });
                 }
                 //Generamos Token
@@ -188,7 +185,7 @@ class UserController {
             catch (error) {
                 console.error("Error al ejecutar la consulta MySQL:", error);
                 return res.status(500).json({
-                    msg: 'Error Interno del Servidor'
+                    msg: "Error Interno del Servidor",
                 });
             }
         });

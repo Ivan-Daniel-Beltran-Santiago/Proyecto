@@ -1,67 +1,203 @@
 /* materiales.component.css */
 
-/* Estilos para el modal o capa flotante */
-.file-image {
-  flex: 1;
-  background-size: contain;
-  background-repeat: no-repeat; 
-  background-position: center;
-  height: 200px; /* Altura predeterminada de la imagen */
-  margin-top: 25px;
+.tag-manager-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.tag-manager-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .tag-manager-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
+.tag-manager-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
 
-  .grid_columns {
-    display: flex;
-    grid-template-columns: 1fr 4fr; /* Cambia la proporción de columnas según tus necesidades */
-    gap: 20px; /* Ajusta el espacio entre columnas */
-  }
-  
-  .filter_column {
-    padding-top: 1rem;
-    padding-left: 1.5rem;
-    flex: 1;
-  }
-  
-  .document_viewer {
-    flex: 4;
-  }
+.grid_columns {
+  display: flex;
+  grid-template-columns: 1fr 5fr; /* Cambia la proporción de columnas según tus necesidades */
+  gap: 20px; /* Ajusta el espacio entre columnas */
+}
 
-  .file_search {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .search_icon {
-    position: absolute;
-    right: 10px; /* Ajusta el espacio entre el icono y el borde derecho */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px; /* Ajusta el tamaño del icono según tus necesidades */
-    height: 20px;
-    background-image: url('https://cdn3.iconfinder.com/data/icons/feather-5/24/search-512.png'); /* Enlace de imagen del icono de búsqueda */
-    background-size: cover;
-    cursor: pointer;
-  }
-  
-  #searchInput {
-    padding-right: 30px; /* Ajusta el espacio a la derecha del input para acomodar el icono */
-  }
+.filter_column {
+  padding-top: 1rem;
+  padding-left: 1.5rem;
+  flex: 1;
+  background-color: #dddddd;
+}
+
+.document_viewer {
+  flex: 5;
+}
+
+.file_search {
+  position: relative;
+  display: inline-block;
+  background-color: white;
+  margin-right: 1em;
+}
+
+.search_icon {
+  position: absolute;
+  right: 10px; /* Ajusta el espacio entre el icono y el borde derecho */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; /* Ajusta el tamaño del icono según tus necesidades */
+  height: 20px;
+  background-image: url("https://cdn3.iconfinder.com/data/icons/feather-5/24/search-512.png"); /* Enlace de imagen del icono de búsqueda */
+  background-size: cover;
+  cursor: pointer;
+}
+
+#searchInput {
+  padding-right: 30px; /* Ajusta el espacio a la derecha del input para acomodar el icono */
+}
+
+.new_document_viewer {
+  float: left;
+  width: 23%;
+  border-radius: 3%;
+  margin: 1%;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.new_document_viewer:hover {
+  box-shadow: 2px 2px 3px 4px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 2px 2px 3px 4px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 2px 2px 3px 4px rgba(0, 0, 0, 0.5);
+}
+
+.image-box {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 2% 2% 0 0;
+}
+
+.images {
+  scale: 0.8;
+  height: 15em;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 2% 2% 0 0;
+  transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  -o-transition: all 1s ease;
+}
+
+.images:hover {
+  transform: scale(1.1);
+  overflow: hidden;
+  border-radius: 2%;
+  cursor: pointer;
+}
+
+.text-box {
+  width: 100%;
+  float: left;
+  border: 0.01em solid #dddbdb;
+  border-radius: 0 0 2% 2%;
+  padding: 1em;
+}
+
+h2,
+h3 {
+  float: left;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin: 0.2em auto;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+}
+
+h3 {
+  font-size: 1em;
+  padding-bottom: 0.4em;
+}
+
+.item,
+.file_type {
+  clear: left;
+  width: 100%;
+  text-align: center;
+}
+
+.file_type {
+  color: Grey;
+}
+
+.text_box button {
+  margin-left: 5%;
+  border: none;
+  border-radius: 10px;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: darkred;
+  text-align: center;
+  cursor: pointer;
+  width: 90%;
+  font-size: 18px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.tag_panel {
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+  padding-bottom: 0.4em;
+}
+
+.tag {
+  background-color: grey;
+  font-size: 0.8em;
+  color: white;
+}
+
+button {
+  padding: 2%;
+  background-color: #dfd;
+  border: none;
+  border-radius: 2%;
+}
+
+.text_box button:hover {
+  bottom: 0.1em;
+  opacity: 0.7;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.text_box button:active {
+  bottom: 0;
+  background-color: #fdf;
+}
+
+.file-row {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay suficiente espacio en la fila */
+  justify-content: space-between; /* Alinea los elementos a lo largo del contenedor con espacios entre ellos */
+}
+
+.button-container {
+  margin-top: auto; /* Empuja el contenedor de botones hacia la parte inferior del text_box */
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container button {
+  width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
+  margin-bottom: 0.5em; /* Espacio entre los botones */
+}

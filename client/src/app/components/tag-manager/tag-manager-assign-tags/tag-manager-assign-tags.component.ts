@@ -28,23 +28,26 @@ export class TagManagerAssignTagsComponent implements OnInit {
     if (event && event.target) {
       const selectedOption = event.target.value;
       this.selectedTag = event.target.value;
-      const selectedIndex = this.tags.findIndex(tag => tag === selectedOption); // Encontrar el índice del elemento seleccionado
+      const selectedIndex = this.tags.findIndex(
+        (tag) => tag === selectedOption
+      ); // Encontrar el índice del elemento seleccionado
       const selectedTagType = this.tags[selectedIndex]; // Obtener el tipo de etiqueta correspondiente al índice encontrado
       if (selectedTagType) {
-        this.tagManagerService.getTagIdByName(selectedOption, selectedOption).subscribe(
-          (tagId) => {
-            console.log('ID de la etiqueta:', tagId);
-            console.log('Nombre de la etiqueta:', selectedOption);
-            this.selectedTag = tagId;
-          },
-          (err) => console.error(err)
-        );
+        this.tagManagerService
+          .getTagIdByName(selectedOption, selectedOption)
+          .subscribe(
+            (tagId) => {
+              console.log('ID de la etiqueta:', tagId);
+              console.log('Nombre de la etiqueta:', selectedOption);
+              this.selectedTag = tagId;
+            },
+            (err) => console.error(err)
+          );
       }
       this.optionSelected = true;
       this.checkIfChecked();
     }
   }
-  
 
   ngOnInit(): void {
     this.getFiles();
@@ -56,7 +59,7 @@ export class TagManagerAssignTagsComponent implements OnInit {
       (files) => {
         this.arrayFiles = files.map((file) => ({
           id: file.name.id, // Usa el ID proporcionado por la base de datos
-          name: file.name.nombre
+          name: file.name.nombre,
         }));
         console.log(this.arrayFiles);
         // Inicialmente, mostrar todos los archivos sin filtrar
@@ -67,7 +70,6 @@ export class TagManagerAssignTagsComponent implements OnInit {
       (err) => console.error(err)
     );
   }
-  
 
   getAllTags() {
     this.tagManagerService.getTags().subscribe(
@@ -159,25 +161,32 @@ export class TagManagerAssignTagsComponent implements OnInit {
   }
 
   assignTags() {
-    const selectedFiles = this.filteredFiles.filter(file => file.checked);
+    const selectedFiles = this.filteredFiles.filter((file) => file.checked);
     if (selectedFiles.length === 0 || !this.selectedTag) return;
 
     var tagData = {
       tagName: this.selectedTag,
-      fileIds: selectedFiles.map(file => file.id)
+      fileIds: selectedFiles.map((file) => file.id),
     };
 
-    this.tagManagerService.assignTags(tagData).subscribe(
-      () => {
-        console.log('Etiquetas asignadas exitosamente');
-        // Puedes realizar alguna acción adicional si es necesario, como actualizar la lista de archivos, etc.
-      },
-      (err) => console.error('Error al asignar etiquetas:', err)
-    );
+    this.tagManagerService
+      .assignTags(
+        this.selectedTag,
+        selectedFiles.map((file) => file.id)
+      )
+      .subscribe(
+        () => {
+          console.log('Etiquetas asignadas exitosamente');
+          // Puedes realizar alguna acción adicional si es necesario, como actualizar la lista de archivos, etc.
+        },
+        (err) => console.error('Error al asignar etiquetas:', err)
+      );
   }
 
   logCheckedFileIds() {
-    const checkedFileIds = this.filteredFiles.filter(file => file.checked).map(file => file.name.id);
+    const checkedFileIds = this.filteredFiles
+      .filter((file) => file.checked)
+      .map((file) => file.name.id);
     console.log('ID(s) de archivo(s) marcado(s):', checkedFileIds);
     console.log(this.filteredFiles);
   }

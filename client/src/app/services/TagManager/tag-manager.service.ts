@@ -53,8 +53,7 @@ export class TagManagerService {
     return this.http.put(`${this.API_URL}/tags/type-parent/${tagName}`, { type, parentId });
   }  
 
-  assignTags(tagData: any): Observable<any> {
-    console.log(tagData)
-    return this.http.post(`${this.API_URL}/tags/assign-tags`, tagData)
+  assignTags(tagId: number, fileIds: number[]): Observable<any> {
+    return this.http.post(`${this.API_URL}/tags/assign-tags`, { tagId, fileIds });
   }
 }

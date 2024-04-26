@@ -1,5 +1,3 @@
-// auth.service.ts
-
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import { Router } from '@angular/router';
@@ -8,31 +6,30 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private router: Router){}
+  constructor(private router: Router) {}
   private tokenKey = 'token';
 
-  isLogin():boolean{
+  isLogin(): boolean {
     const token = localStorage.getItem('token');
-    if (token===undefined||token==null) {
+    if (token === undefined || token == null) {
       return false;
     } else {
       return true;
     }
-    return false;
   }
+
   getToken(): string | null {
     const token = localStorage.getItem('token');
-    if(token ===undefined||token === null){
+    if (token === undefined || token === null) {
       this.router.navigate(['/login']);
       return null;
     } else {
       return token;
     }
-    
   }
 
-  getNameFromToken():string|null{
-    let token =this.getToken();
+  getNameFromToken(): string | null {
+    let token = this.getToken();
     if (token) {
       try {
         const decoded: any = jwtDecode(token);
@@ -43,12 +40,12 @@ export class AuthService {
         return null;
       }
     }
-
     return null;
   }
+
   getRoleFromToken(): string | null | number {
     //const token = localStorage.getItem('token');
-    let token =this.getToken();
+    let token = this.getToken();
     if (token) {
       try {
         const decoded: any = jwtDecode(token);
@@ -59,7 +56,6 @@ export class AuthService {
         return null;
       }
     }
-
     return null;
   }
 
@@ -76,7 +72,6 @@ export class AuthService {
         return null;
       }
     }
-
     return null;
   }
 
@@ -86,12 +81,14 @@ export class AuthService {
 
   isAdmin(): boolean {
     const role = this.getRoleFromToken();
-  return role !== null && role === 3;
+    return role !== null && role === 3;
   }
+
   isMaestro(): boolean {
     const role = this.getRoleFromToken();
     return role !== null && role === 2;
   }
+  
   isAlumno(): boolean {
     const role = this.getRoleFromToken();
     return role !== null && role === 1;

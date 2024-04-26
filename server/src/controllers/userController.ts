@@ -3,6 +3,7 @@ import db from "../database";
 import bycrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import transporter from "../nodemailer-config";
+
 class UserController {
   //SENTENCIA PARA LISTAR TODOS LOS USUARIOS
   public async list(req: Request, res: Response) {
@@ -30,7 +31,7 @@ class UserController {
   //SENTENCIA PARA CREAR UN USUARIO
   public async createUser(req: Request, res: Response) {
     const pass = req.body.password;
-    const password = await bycrypt.hash(req.body.password, 10);//ENCRIPTA LA CONTRASEÑA INGRESADA
+    const password = await bycrypt.hash(req.body.password, 10); //ENCRIPTA LA CONTRASEÑA INGRESADA
     req.body.password = password;
     const id = req.body.id;
     const email = req.body.email;
@@ -43,7 +44,7 @@ class UserController {
       res.json({ text: "User saved" });
       // Después de registrar al usuario con éxito, envía un correo electrónico
       const mailOptions = {
-        from: "kenalexmv@gmail.com",//INGRESAR SU CORREO PARA LA NOTIFICACION DE REGISTRO
+        from: "kenalexmv@gmail.com", //INGRESAR SU CORREO PARA LA NOTIFICACION DE REGISTRO
         to: email,
         subject: "Registro Exitoso",
         text:
@@ -51,9 +52,7 @@ class UserController {
           Nuestros clientes son los mas importante para nosotros. 
           Acceso a la plataforma
           email: ${email}
-          contraseña : ` +
-          pass,
-          
+          contraseña : ` + pass,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
@@ -85,7 +84,7 @@ class UserController {
       res.status(500).send("Error interno del servidor");
     }
   }
-//SENTENCIA PARA ACTUALIZAR USUARIO
+  //SENTENCIA PARA ACTUALIZAR USUARIO
   public async updateUser(req: Request, res: Response) {
     const { id } = req.params;
     const contraNueva = req.body.password;
@@ -96,7 +95,6 @@ class UserController {
       await db.query("UPDATE users SET ? WHERE id_user = ?", [datos, id]);
       let email = req.body.email;
       let pass = req.body.password;
-     
 
       const mailOptions = {
         from: "kenalexmv@gmail.com",
@@ -106,9 +104,7 @@ class UserController {
           `Se ha actualizado tu perfil tu nuevo acceso a la 
           plataforma 
           email: ${email}
-          contraseña : ` +
-          contraNueva,
-          
+          contraseña : ` + contraNueva,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
@@ -124,17 +120,15 @@ class UserController {
         // Envío de la respuesta al cliente solo después de enviar el correo electrónico
         res.status(200).send("Registro exitoso, correo electrónico enviado");
       });
-      
-    res.json({ message: "User updated" });
 
+      res.json({ message: "User updated" });
     } catch (error) {
       res.status(400).json({
-        msg:'Favor de llenar todos los datos '
-    })
+        msg: "Favor de llenar todos los datos ",
+      });
     }
-    
   }
-  //SENTENCIA PARA INICIAR SESION 
+  //SENTENCIA PARA INICIAR SESION
   public async loginUser(req: Request, res: Response) {
     //validar contraseña
     let id = req.body.id;
@@ -161,8 +155,6 @@ class UserController {
       console.log(data[0]);
       console.log(role[0]);
 
-      //console.log(password[0]);
-
       if (!data[0]) {
         return res.status(400).json({
           msg: "No existe correo en la base de datos",
@@ -176,9 +168,9 @@ class UserController {
       console.log(passwordValid);
 
       if (!passwordValid) {
-        return  res.status(400).json({
-          msg:'Password incorrecta'
-      })
+        return res.status(400).json({
+          msg: "Password incorrecta",
+        });
       }
       //Generamos Token
 
@@ -193,16 +185,15 @@ class UserController {
           rol: JSON.parse(JSON.stringify(role[0].id_rol)),
           id: JSON.parse(JSON.stringify(data[0].id_user)),
         },
-        process.env.SECRET_KEY || "pGZLwuX!rt9",
-        //{ expiresIn: 3600 } 
+        process.env.SECRET_KEY || "pGZLwuX!rt9"
       );
       console.log(token);
       res.json(token);
     } catch (error) {
       console.error("Error al ejecutar la consulta MySQL:", error);
-      return  res.status(500).json({
-        msg:'Error Interno del Servidor'
-    })
+      return res.status(500).json({
+        msg: "Error Interno del Servidor",
+      });
     }
   }
 }

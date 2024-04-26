@@ -2,9 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnInit,
   QueryList,
-  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -104,8 +102,7 @@ export class CalificacionesFormComponent implements AfterViewInit {
             .getAlumnos(params['id'])
             .subscribe((res) => {
               this.arrayAlumnos = res;
-
-              for (let i = 0; i <= this.arrayAlumnos[0].length; i++) {
+              for (let i = 0; i < this.arrayAlumnos[0].length; i++) {
                 if (
                   this.arrayAlumnos[0][i] &&
                   this.arrayAlumnos[0][i].id_user
@@ -123,16 +120,13 @@ export class CalificacionesFormComponent implements AfterViewInit {
                     if (vacios == 0) {
                       const inputValue =
                         this.myElements.toArray()[i]?.nativeElement.value;
-
                       this.calificacion.calificacion = inputValue;
                       console.log('Valor del input:', inputValue);
-
                       this.calificacionService
                         .saveCalificacion(this.calificacion)
                         .subscribe(
                           (result) => {
                             console.log(result);
-                            //this.router.navigate(['/horario']);
                             Swal.fire({
                               title: 'Done!',
                               text: 'The grade has been added.',
@@ -154,8 +148,6 @@ export class CalificacionesFormComponent implements AfterViewInit {
                         text: 'Falta calificaciones por asignar o error en el formato',
                       });
                     }
-
-                    // Haz lo que necesites con el valor obtenido
                   }
                 } else {
                   console.log('Alumno sin id_user:', this.arrayAlumnos[0][i]);

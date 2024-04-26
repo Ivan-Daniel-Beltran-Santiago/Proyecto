@@ -12,53 +12,50 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class UsersComponent implements OnInit {
   arrayusers: any = [];
-  filterPost = "";
+  filterPost = '';
   nombreUsuario = this.authService.getNameFromToken();
-  constructor(private usersService: UsersService , private router: Router , private authService: AuthService) {}
+  constructor(
+    private usersService: UsersService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.getUsers();
     //this.authService.getIdFromToken();
-
   }
 
   logout(): void {
     this.authService.removeToken(); // Elimina el token al cerrar sesión
     this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
-    
   }
 
   getUsers() {
-    
     this.usersService.getUsers().subscribe(
       (res) => {
-        
         this.arrayusers = res;
         console.log(this.arrayusers[0]);
-        
       },
 
       (err) => {
         Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: ""+err.error.msg,
-       
-      });
-    }
+          icon: 'error',
+          title: 'Oops...',
+          text: '' + err.error.msg,
+        });
+      }
     );
-
   }
 
-  deleteUser(id_user : string){
+  deleteUser(id_user: string) {
     Swal.fire({
-      title: "Are you sure?",
+      title: 'Are you sure?',
       text: "You won't be able to revert this!",
-      icon: "warning",
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
         this.usersService.deleteUser(id_user).subscribe(
@@ -68,23 +65,20 @@ export class UsersComponent implements OnInit {
           },
           (err) => {
             Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: ""+err.error.msg,
-            footer: '<a href="#">Why do I have this issue?</a>'
-          });
-        }
-    
+              icon: 'error',
+              title: 'Oops...',
+              text: '' + err.error.msg,
+              footer: '<a href="#">Why do I have this issue?</a>',
+            });
+          }
         );
         Swal.fire({
-          title: "Deleted!",
-          
-          text: "The user has been deleted.",
-          icon: "success"
+          title: 'Deleted!',
+
+          text: 'The user has been deleted.',
+          icon: 'success',
         });
       }
-      
     });
-   
   }
 }
