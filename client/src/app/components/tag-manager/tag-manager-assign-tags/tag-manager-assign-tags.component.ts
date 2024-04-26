@@ -179,7 +179,19 @@ export class TagManagerAssignTagsComponent implements OnInit {
           console.log('Etiquetas asignadas exitosamente');
           // Puedes realizar alguna acción adicional si es necesario, como actualizar la lista de archivos, etc.
         },
-        (err) => console.error('Error al asignar etiquetas:', err)
+        (error) => {
+          if (
+            error.status === 400 &&
+            error.error.error ===
+              'No se puede asignar etiquetas duplicadas a los archivos'
+          ) {
+            // Mostrar mensaje de advertencia si se detecta que alguna etiqueta ya está asignada
+            alert('No se puede asignar etiquetas duplicadas a los archivos');
+          } else {
+            // No imprimir el error en la consola
+            // console.error('Error al asignar etiquetas:', error);
+          }
+        }
       );
   }
 

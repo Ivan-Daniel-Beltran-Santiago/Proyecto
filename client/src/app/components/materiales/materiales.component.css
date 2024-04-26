@@ -55,8 +55,8 @@
   cursor: pointer;
 }
 
-#searchInput {
-  padding-right: 30px; /* Ajusta el espacio a la derecha del input para acomodar el icono */
+#searchInput::placeholder {
+  padding: .5em;
 }
 
 .new_document_viewer {

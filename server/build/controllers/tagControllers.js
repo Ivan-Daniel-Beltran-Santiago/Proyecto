@@ -231,17 +231,26 @@ class TagController {
     }
     assignTags(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body.tagData);
             try {
                 const { tagId, fileIds } = req.body;
-                // Itera sobre los IDs de archivos y realiza la asignación de etiquetas para cada uno
+                // Itera sobre los IDs de archivos y verifica si alguna etiqueta ya está asignada
                 for (const fileId of fileIds) {
+                    const existingAssignment = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas WHERE archivo_id = ? AND etiqueta_id = ?", [fileId, tagId]);
+                    if (existingAssignment[0][0].count > 0) {
+                        // Si ya existe una asignación, enviar un mensaje de advertencia
+                        res
+                            .status(400)
+                            .json({
+                            error: "No se puede asignar etiquetas duplicadas a los archivos",
+                        });
+                        return;
+                    }
+                    // Si no existe una asignación, proceder con la asignación de la etiqueta
                     yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, tagId]);
                 }
                 res.status(200).json({ message: "Etiquetas asignadas exitosamente" });
             }
             catch (error) {
-                console.log(req);
                 console.error("Error al asignar etiquetas:", error);
                 res.status(500).json({ error: "Error interno del servidor" });
             }

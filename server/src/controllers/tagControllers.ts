@@ -5,11 +5,11 @@ import { RowDataPacket } from "mysql2";
 class TagController {
   async createTag(req: Request, res: Response): Promise<void> {
     console.log("Recibida solicitud para crear etiqueta");
-    try { 
+    try {
       const { name, type, parent_id } = req.body;
       await db.query(
         "INSERT INTO Etiquetas (nombre, tipo, padre_id) VALUES (?, ?, ?)",
-        [name, type, parent_id] 
+        [name, type, parent_id]
       );
       res.status(201).json({ message: "Etiqueta creada exitosamente" });
     } catch (error) {
@@ -237,15 +237,28 @@ class TagController {
         error
       );
       res.status(500).json({ error: "Error interno del servidor" });
-    } 
+    }
   }
 
   async assignTags(req: Request, res: Response): Promise<void> {
-    console.log(req.body.tagData)
     try {
       const { tagId, fileIds } = req.body;
-      // Itera sobre los IDs de archivos y realiza la asignación de etiquetas para cada uno
+      // Itera sobre los IDs de archivos y verifica si alguna etiqueta ya está asignada
       for (const fileId of fileIds) {
+        const existingAssignment = await db.query(
+          "SELECT COUNT(*) as count FROM Asignacion_Etiquetas WHERE archivo_id = ? AND etiqueta_id = ?",
+          [fileId, tagId]
+        );
+        if (existingAssignment[0][0].count > 0) {
+          // Si ya existe una asignación, enviar un mensaje de advertencia
+          res
+            .status(400)
+            .json({
+              error: "No se puede asignar etiquetas duplicadas a los archivos",
+            });
+          return;
+        }
+        // Si no existe una asignación, proceder con la asignación de la etiqueta
         await db.query(
           "INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)",
           [fileId, tagId]
@@ -253,7 +266,6 @@ class TagController {
       }
       res.status(200).json({ message: "Etiquetas asignadas exitosamente" });
     } catch (error) {
-      console.log(req)
       console.error("Error al asignar etiquetas:", error);
       res.status(500).json({ error: "Error interno del servidor" });
     }
