@@ -235,17 +235,16 @@ class TagController {
                 const { tagId, fileIds } = req.body;
                 // Itera sobre los IDs de archivos y verifica si alguna etiqueta ya está asignada
                 for (const fileId of fileIds) {
-                    const existingAssignment = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas WHERE archivo_id = ? AND etiqueta_id = ?", [fileId, tagId]);
-                    if (existingAssignment[0][0].count > 0) {
-                        // Si ya existe una asignación, enviar un mensaje de advertencia
-                        res
-                            .status(400)
-                            .json({
-                            error: "No se puede asignar etiquetas duplicadas a los archivos",
+                    // Verifica si el archivo ya tiene asignada una etiqueta de tipo "Curso"
+                    const existingCourseTag = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = 'Curso'", [fileId]);
+                    if (existingCourseTag[0][0].count > 0) {
+                        // Si ya tiene asignada una etiqueta de tipo "Curso", enviar un mensaje de advertencia
+                        res.status(400).json({
+                            error: "No se puede asignar más etiquetas de tipo 'Curso' al archivo",
                         });
                         return;
                     }
-                    // Si no existe una asignación, proceder con la asignación de la etiqueta
+                    // Si no existe una asignación de etiqueta de tipo "Curso", proceder con la asignación
                     yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, tagId]);
                 }
                 res.status(200).json({ message: "Etiquetas asignadas exitosamente" });

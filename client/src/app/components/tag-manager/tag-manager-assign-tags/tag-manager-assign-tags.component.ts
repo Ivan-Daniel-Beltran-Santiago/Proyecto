@@ -183,13 +183,15 @@ export class TagManagerAssignTagsComponent implements OnInit {
           if (
             error.status === 400 &&
             error.error.error ===
-              'No se puede asignar etiquetas duplicadas a los archivos'
+              "No se puede asignar más etiquetas de tipo 'Curso' al archivo"
           ) {
-            // Mostrar mensaje de advertencia si se detecta que alguna etiqueta ya está asignada
-            alert('No se puede asignar etiquetas duplicadas a los archivos');
+            // Mostrar mensaje de advertencia si se detecta que no se puede asignar más etiquetas de tipo "Curso"
+            alert(
+              "No se puede asignar más etiquetas de tipo 'Curso' al archivo"
+            );
           } else {
-            // No imprimir el error en la consola
-            // console.error('Error al asignar etiquetas:', error);
+            // Manejar otros errores
+            console.error('Error al asignar etiquetas:', error);
           }
         }
       );
