@@ -59,19 +59,6 @@ class MaterialController {
 
   uploadsDirectory = path.join(__dirname, '../../uploads');
 
-  /*
-  getFiles =(req:Request, res:Response) => {
-    fs.readdir(this.uploadsDirectory, (err, files) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error al obtener la lista de archivos.');
-      } else {
-        res.json(files);
-      }
-    });
-  };
-  */
-
   getFiles = (req: Request, res: Response) => {
     fs.readdir(this.uploadsDirectory, async (err, files) => {
       if (err) {
