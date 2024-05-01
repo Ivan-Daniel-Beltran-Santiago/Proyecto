@@ -237,15 +237,20 @@ class TagController {
                 for (const fileId of fileIds) {
                     // Verifica si el archivo ya tiene asignada una etiqueta de tipo "Curso"
                     const existingCourseTag = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = 'Curso'", [fileId]);
-                    if (existingCourseTag[0][0].count > 0) {
-                        // Si ya tiene asignada una etiqueta de tipo "Curso", enviar un mensaje de advertencia
+                    // Verifica si el archivo no tiene asignada una etiqueta de tipo "Módulo"
+                    const existingModuleTag = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = 'Módulo'", [fileId]);
+                    if (existingCourseTag[0][0].count > 0 &&
+                        existingModuleTag[0][0].count === 0) {
+                        // Si ya tiene asignada una etiqueta de tipo "Curso" pero no tiene asignada una etiqueta de tipo "Módulo", permitir la asignación de etiquetas de tipo "Módulo"
+                        yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, tagId]);
+                    }
+                    else {
+                        // Si ya tiene asignada una etiqueta de tipo "Módulo" o no tiene asignada una etiqueta de tipo "Curso", enviar un mensaje de advertencia
                         res.status(400).json({
-                            error: "No se puede asignar más etiquetas de tipo 'Curso' al archivo",
+                            error: "No se puede asignar más etiquetas de tipo 'Módulo' al archivo",
                         });
                         return;
                     }
-                    // Si no existe una asignación de etiqueta de tipo "Curso", proceder con la asignación
-                    yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, tagId]);
                 }
                 res.status(200).json({ message: "Etiquetas asignadas exitosamente" });
             }

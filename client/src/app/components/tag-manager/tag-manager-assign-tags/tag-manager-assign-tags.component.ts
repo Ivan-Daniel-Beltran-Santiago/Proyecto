@@ -183,11 +183,11 @@ export class TagManagerAssignTagsComponent implements OnInit {
           if (
             error.status === 400 &&
             error.error.error ===
-              "No se puede asignar más etiquetas de tipo 'Curso' al archivo"
+              "No se puede asignar más etiquetas de tipo 'Curso' o 'Módulo' al archivo"
           ) {
-            // Mostrar mensaje de advertencia si se detecta que no se puede asignar más etiquetas de tipo "Curso"
+            // Mostrar mensaje de advertencia si se detecta que no se puede asignar más etiquetas de tipo "Módulo"
             alert(
-              "No se puede asignar más etiquetas de tipo 'Curso' al archivo"
+              "No se puede asignar más etiquetas de tipo 'Curso' o 'Módulo' al archivo"
             );
           } else {
             // Manejar otros errores
