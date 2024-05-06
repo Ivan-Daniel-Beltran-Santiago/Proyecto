@@ -234,18 +234,43 @@ class TagController {
             console.log(req.body);
             try {
                 const { tagId, fileIds } = req.body;
-                // Obtener el tipo de la etiqueta
-                const tagTypeResult = yield database_1.default.query("SELECT tipo FROM Etiquetas WHERE id = ?", [tagId]);
-                const tagType = tagTypeResult[0][0].tipo;
-                // Iterar sobre los IDs de archivos y verificar si alguna etiqueta ya está asignada
+                // Obtener el tipo y el padre_id de la etiqueta
+                const tagInfoResult = yield database_1.default.query("SELECT tipo, padre_id FROM Etiquetas WHERE id = ?", [tagId]);
+                const tagType = tagInfoResult[0][0].tipo;
+                const parentId = tagInfoResult[0][0].padre_id;
+                // Iterar sobre los IDs de archivos y asignar etiquetas
                 for (const fileId of fileIds) {
-                    console.log(fileId);
                     // Verificar si el archivo ya tiene asignada una etiqueta del mismo tipo
                     const existingTag = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = ?", [fileId, tagType]);
-                    console.log(existingTag[0][0].count);
                     if (existingTag[0][0].count === 0) {
                         // Si no tiene asignada una etiqueta del mismo tipo, permitir la asignación
                         yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, tagId]);
+                        // Verificar si la etiqueta tiene un padre y asignarla también si es necesario
+                        if (parentId) {
+                            // Verificar si el archivo ya tiene asignada una etiqueta del tipo padre
+                            const parentTagAssigned = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.id = ?", [fileId, parentId]);
+                            if (parentTagAssigned[0][0].count === 0) {
+                                // Si no tiene asignada una etiqueta del tipo padre, asignarla
+                                yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, parentId]);
+                            }
+                        }
+                        // Si la etiqueta asignada es un "Submódulo", también se deben asignar las etiquetas "Módulo" y "Curso"
+                        if (tagType === "Submódulo") {
+                            // Obtener el ID del módulo asociado al submódulo
+                            const moduleTagResult = yield database_1.default.query("SELECT padre_id FROM Etiquetas WHERE id = ?", [parentId]);
+                            const moduleId = moduleTagResult[0][0].padre_id;
+                            if (moduleId) {
+                                // Asignar la etiqueta "Módulo"
+                                yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, moduleId]);
+                                // Obtener el ID del curso asociado al módulo
+                                const courseTagResult = yield database_1.default.query("SELECT padre_id FROM Etiquetas WHERE id = ?", [moduleId]);
+                                const courseId = courseTagResult[0][0].padre_id;
+                                if (courseId) {
+                                    // Asignar la etiqueta "Curso"
+                                    yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, courseId]);
+                                }
+                            }
+                        }
                     }
                     else {
                         // Si ya tiene asignada una etiqueta del mismo tipo, enviar un mensaje de advertencia
