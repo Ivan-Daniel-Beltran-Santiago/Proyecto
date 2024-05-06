@@ -231,24 +231,26 @@ class TagController {
     }
     assignTags(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body.file);
+            console.log(req.body);
             try {
                 const { tagId, fileIds } = req.body;
-                // Itera sobre los IDs de archivos y verifica si alguna etiqueta ya está asignada
+                // Obtener el tipo de la etiqueta
+                const tagTypeResult = yield database_1.default.query("SELECT tipo FROM Etiquetas WHERE id = ?", [tagId]);
+                const tagType = tagTypeResult[0][0].tipo;
+                // Iterar sobre los IDs de archivos y verificar si alguna etiqueta ya está asignada
                 for (const fileId of fileIds) {
-                    // Verifica si el archivo ya tiene asignada una etiqueta de tipo "Curso"
-                    const existingCourseTag = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = 'Curso'", [fileId]);
-                    // Verifica si el archivo no tiene asignada una etiqueta de tipo "Módulo"
-                    const existingModuleTag = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = 'Módulo'", [fileId]);
-                    if (existingCourseTag[0][0].count > 0 &&
-                        existingModuleTag[0][0].count === 0) {
-                        // Si ya tiene asignada una etiqueta de tipo "Curso" pero no tiene asignada una etiqueta de tipo "Módulo", permitir la asignación de etiquetas de tipo "Módulo"
+                    console.log(fileId);
+                    // Verificar si el archivo ya tiene asignada una etiqueta del mismo tipo
+                    const existingTag = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = ?", [fileId, tagType]);
+                    console.log(existingTag[0][0].count);
+                    if (existingTag[0][0].count === 0) {
+                        // Si no tiene asignada una etiqueta del mismo tipo, permitir la asignación
                         yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, tagId]);
                     }
                     else {
-                        // Si ya tiene asignada una etiqueta de tipo "Módulo" o no tiene asignada una etiqueta de tipo "Curso", enviar un mensaje de advertencia
+                        // Si ya tiene asignada una etiqueta del mismo tipo, enviar un mensaje de advertencia
                         res.status(400).json({
-                            error: "No se puede asignar más etiquetas de tipo 'Módulo' al archivo",
+                            error: `No se puede asignar más etiquetas de tipo '${tagType}' al archivo`,
                         });
                         return;
                     }
