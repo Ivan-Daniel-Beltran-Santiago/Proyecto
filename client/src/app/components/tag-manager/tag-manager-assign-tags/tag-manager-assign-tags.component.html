@@ -39,7 +39,7 @@
         <legend class="text-lg font-medium text-gray-900">Selecciona el o los archivos</legend>
         <div class="member" *ngFor="let file of filteredFiles">
           <div class="checkbox-container" (click)="toggleCheckbox(file)">
-              <input type="checkbox" [checked]="file.checked" class="member-checkbox" (change)="logCheckedFileIds()">
+              <input type="checkbox" [checked]="file.checked" class="member-checkbox">
               <div class="checkmark"></div>
           </div>
           <label class="member-label">{{ file.name }}</label>

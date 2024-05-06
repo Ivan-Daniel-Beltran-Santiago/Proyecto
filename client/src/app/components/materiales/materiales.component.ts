@@ -68,7 +68,6 @@ export class MaterialesComponent {
       this.alumnoGrupoService.getClases(this.idU).subscribe(
         (res) => {
           this.arrayClases = res;
-          console.log(this.arrayClases[0]);
         },
 
         (err) => console.error(err)
@@ -77,7 +76,6 @@ export class MaterialesComponent {
       this.clasesHorarioService.getClaseHorario(this.idU).subscribe(
         (res) => {
           this.arrayClases = res;
-          console.log(this.arrayClases[0]);
         },
 
         (err) => console.error(err)
@@ -86,7 +84,6 @@ export class MaterialesComponent {
       this.clasesHorarioService.getClasesHorarios().subscribe(
         (res) => {
           this.arrayClases = res;
-          console.log(this.arrayClases[0]);
         },
         (err) => console.error(err)
       );
@@ -165,7 +162,6 @@ export class MaterialesComponent {
     this.maestroService.getMaestros().subscribe(
       (res) => {
         this.arrayMaestros = res;
-        console.log(this.arrayMaestros[0]);
       },
       (err) => console.error(err)
     );

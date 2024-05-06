@@ -61,7 +61,6 @@ export class TagManagerAssignTagsComponent implements OnInit {
           id: file.name.id, // Usa el ID proporcionado por la base de datos
           name: file.name.nombre,
         }));
-        console.log(this.arrayFiles);
         // Inicialmente, mostrar todos los archivos sin filtrar
         this.filteredFiles = [...this.arrayFiles];
         // Verificar si hay al menos un archivo seleccionado
@@ -195,13 +194,5 @@ export class TagManagerAssignTagsComponent implements OnInit {
           }
         }
       );
-  }
-
-  logCheckedFileIds() {
-    const checkedFileIds = this.filteredFiles
-      .filter((file) => file.checked)
-      .map((file) => file.name.id);
-    console.log('ID(s) de archivo(s) marcado(s):', checkedFileIds);
-    console.log(this.filteredFiles);
   }
 }

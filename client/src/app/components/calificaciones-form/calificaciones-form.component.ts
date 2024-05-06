@@ -103,9 +103,15 @@ export class CalificacionesFormComponent implements AfterViewInit {
             .subscribe((res) => {
               this.arrayAlumnos = res;
               for (let i = 0; i < this.arrayAlumnos[0].length; i++) {
+                console.log('función');
+                console.log(this.arrayAlumnos[0][i]);
+                console.log(this.arrayAlumnos[0][i].id_user);
+                console.log(
+                  this.arrayAlumnos[0][i] !== null && this.arrayAlumnos[0][i].id_user !== null
+                );
                 if (
-                  this.arrayAlumnos[0][i] &&
-                  this.arrayAlumnos[0][i].id_user
+                  this.arrayAlumnos[0][i] !== null &&
+                  this.arrayAlumnos[0][i].id_user !== null
                 ) {
                   this.calificacion.id_alumno = this.arrayAlumnos[0][i].id_user;
                   // Resto del código aquí

@@ -241,6 +241,7 @@ class TagController {
   }
 
   async assignTags(req: Request, res: Response): Promise<void> {
+    console.log(req.body.file)
     try {
       const { tagId, fileIds } = req.body;
       // Itera sobre los IDs de archivos y verifica si alguna etiqueta ya está asignada

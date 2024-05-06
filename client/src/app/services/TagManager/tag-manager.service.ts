@@ -54,6 +54,8 @@ export class TagManagerService {
   }  
 
   assignTags(tagId: number, fileIds: number[]): Observable<any> {
+    console.log(fileIds)
+    console.log(tagId)
     return this.http.post(`${this.API_URL}/tags/assign-tags`, { tagId, fileIds });
   }
 }
