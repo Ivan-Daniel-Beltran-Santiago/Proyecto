@@ -18,6 +18,8 @@ export class TagManagerAssignTagsComponent implements OnInit {
   tags: string[] = []; // Variable para almacenar las etiquetas
   location: string = '';
   selectedTag: number | null = null; // Nueva propiedad para almacenar la etiqueta seleccionada
+  showAlert: boolean = false;
+  alertMessage: string = '';
 
   constructor(
     private materialesService: MaterialesServicesService,
@@ -163,7 +165,7 @@ export class TagManagerAssignTagsComponent implements OnInit {
     const selectedFiles = this.filteredFiles.filter((file) => file.checked);
     if (selectedFiles.length === 0 || !this.selectedTag) return;
 
-    var tagData = {
+    const tagData = {
       tagName: this.selectedTag,
       fileIds: selectedFiles.map((file) => file.id),
     };
@@ -179,17 +181,10 @@ export class TagManagerAssignTagsComponent implements OnInit {
           // Puedes realizar alguna acción adicional si es necesario, como actualizar la lista de archivos, etc.
         },
         (error) => {
-          if (
-            error.status === 400 &&
-            error.error.error ===
-              "No se puede asignar más etiquetas de tipo 'Curso' o 'Módulo' al archivo"
-          ) {
-            // Mostrar mensaje de advertencia si se detecta que no se puede asignar más etiquetas de tipo "Módulo"
-            alert(
-              "No se puede asignar más etiquetas de tipo 'Curso' o 'Módulo' al archivo"
-            );
+          if (error.status === 400 && error.error.error) {
+            this.showAlert = true;
+            this.alertMessage = error.error.error;
           } else {
-            // Manejar otros errores
             console.error('Error al asignar etiquetas:', error);
           }
         }
