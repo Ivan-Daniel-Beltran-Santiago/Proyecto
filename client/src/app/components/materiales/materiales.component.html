@@ -54,7 +54,10 @@
               <h2 class="item">{{ file.name.nombre }}</h2>
               <h3 class="file_type">{{ file.type }}</h3>
               <div class="etiquetas"> <!-- Nuevo div para las etiquetas -->
-                <p *ngFor="let etiqueta of file.etiquetas">{{ etiqueta }}</p>
+                <p *ngFor="let etiqueta of file.etiquetas" class="etiqueta">
+                  {{ etiqueta }}
+                  <span class="eliminar-etiqueta">X</span>
+                </p>
               </div>
               <div class="button_container">
                 <button type="button" name="delete_document" class="delete_button" (click)="deleteFile(file.name.nombre)">Delete file</button>  
