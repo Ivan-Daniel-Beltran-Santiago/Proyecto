@@ -31,16 +31,25 @@ class MaterialController {
         this.upload = (0, multer_1.default)({
             storage: this.storage,
             fileFilter: (req, file, cb) => {
-                const allowedFileTypes = ['.pdf', '.mp3', '.jpg', '.png', '.docx', '.mp4', '.mpeg', '.pptx'];
+                const allowedFileTypes = [
+                    ".pdf",
+                    ".mp3",
+                    ".jpg",
+                    ".png",
+                    ".docx",
+                    ".mp4",
+                    ".mpeg",
+                    ".pptx",
+                ];
                 const extname = path_1.default.extname(file.originalname).toLowerCase();
                 if (allowedFileTypes.includes(extname)) {
                     cb(null, true);
                 }
                 else {
-                    cb(new Error('Tipo de archivo no válido'));
+                    cb(new Error("Tipo de archivo no válido"));
                 }
-            }
-        }).array('files', 10);
+            },
+        }).array("files", 10);
         this.handleFileUpload = (req, res) => {
             this.upload(req, res, (err) => __awaiter(this, void 0, void 0, function* () {
                 if (err) {
@@ -64,19 +73,17 @@ class MaterialController {
                 res.status(200).json({ paths: paths });
             }));
         };
-        this.uploadsDirectory = path_1.default.join(__dirname, '../../uploads');
-        this.getFiles = (req, res) => {
-            fs_1.default.readdir(this.uploadsDirectory, (err, files) => __awaiter(this, void 0, void 0, function* () {
-                if (err) {
-                    console.error(err);
-                    res.status(500).send('Error al obtener la lista de archivos.');
-                }
-                else {
-                    const listaArchivos = yield database_1.default.query('SELECT id, nombre FROM archivos WHERE nombre IN (?)', [files]);
-                    res.json(listaArchivos[0]);
-                }
-            }));
-        };
+        this.uploadsDirectory = path_1.default.join(__dirname, "../../uploads");
+        this.getFiles = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const files = yield database_1.default.query("SELECT archivos.id, archivos.nombre, archivos.tipo_archivo, GROUP_CONCAT(Etiquetas.nombre) AS etiquetas FROM archivos LEFT JOIN Asignacion_Etiquetas ON archivos.id = Asignacion_Etiquetas.archivo_id LEFT JOIN Etiquetas ON Asignacion_Etiquetas.etiqueta_id = Etiquetas.id GROUP BY archivos.id");
+                res.json(files[0]);
+            }
+            catch (error) {
+                console.error("Error al obtener la lista de archivos:", error);
+                res.status(500).send("Error al obtener la lista de archivos.");
+            }
+        });
         this.deleteFile = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const filename = req.params.filename;
             const filePath = path_1.default.join(this.uploadsDirectory, filename);

@@ -18,15 +18,24 @@ class MaterialController {
   upload = multer({
     storage: this.storage,
     fileFilter: (req, file, cb) => {
-      const allowedFileTypes = ['.pdf', '.mp3', '.jpg', '.png', '.docx', '.mp4', '.mpeg', '.pptx'];
+      const allowedFileTypes = [
+        ".pdf",
+        ".mp3",
+        ".jpg",
+        ".png",
+        ".docx",
+        ".mp4",
+        ".mpeg",
+        ".pptx",
+      ];
       const extname = path.extname(file.originalname).toLowerCase();
       if (allowedFileTypes.includes(extname)) {
         cb(null, true);
       } else {
-        cb(new Error('Tipo de archivo no válido'));
+        cb(new Error("Tipo de archivo no válido"));
       }
-    }
-  }).array('files', 10);
+    },
+  }).array("files", 10);
 
   handleFileUpload = (req: Request, res: Response) => {
     this.upload(req, res, async (err: any) => {
@@ -34,41 +43,44 @@ class MaterialController {
         console.log(err);
         return res.status(400).json({ msg: "Error en la carga de archivos" });
       }
-  
+
       if (!req.files || (req.files as Express.Multer.File[]).length === 0) {
         console.log("No se han subido archivos.");
         return res.status(400).json({ msg: "No se han subido archivos" });
       }
-  
+
       const files = req.files as Express.Multer.File[];
       const paths: string[] = [];
-  
+
       for (let i = 0; i < files.length; i++) {
         console.log("Archivo subido con éxito:", files[i].path);
         paths.push(files[i].filename);
         // Obtener el tipo de archivo
         const fileType = files[i].mimetype; // Esto te dará el tipo MIME del archivo
-  
+
         // Aquí puedes guardar el nombre y el tipo del archivo en la base de datos
-        await db.query("INSERT INTO archivos (nombre, tipo_archivo) VALUES (?, ?)", [files[i].filename, fileType]);
+        await db.query(
+          "INSERT INTO archivos (nombre, tipo_archivo) VALUES (?, ?)",
+          [files[i].filename, fileType]
+        );
       }
-  
+
       res.status(200).json({ paths: paths });
     });
   };
 
-  uploadsDirectory = path.join(__dirname, '../../uploads');
+  uploadsDirectory = path.join(__dirname, "../../uploads");
 
-  getFiles = (req: Request, res: Response) => {
-    fs.readdir(this.uploadsDirectory, async (err, files) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error al obtener la lista de archivos.');
-      } else {
-         const listaArchivos = await db.query('SELECT id, nombre FROM archivos WHERE nombre IN (?)', [files]);
-        res.json(listaArchivos[0]); 
-      }
-    });
+  getFiles = async (req: Request, res: Response) => {
+    try {
+      const files = await db.query(
+        "SELECT archivos.id, archivos.nombre, archivos.tipo_archivo, GROUP_CONCAT(Etiquetas.nombre) AS etiquetas FROM archivos LEFT JOIN Asignacion_Etiquetas ON archivos.id = Asignacion_Etiquetas.archivo_id LEFT JOIN Etiquetas ON Asignacion_Etiquetas.etiqueta_id = Etiquetas.id GROUP BY archivos.id"
+      );
+      res.json(files[0]);
+    } catch (error) {
+      console.error("Error al obtener la lista de archivos:", error);
+      res.status(500).send("Error al obtener la lista de archivos.");
+    }
   };
 
   deleteFile = async (req: Request, res: Response) => {

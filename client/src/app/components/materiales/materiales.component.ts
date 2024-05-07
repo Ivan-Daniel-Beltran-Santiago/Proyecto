@@ -386,6 +386,7 @@ export class MaterialesComponent {
     return files.map((file) => ({
       ...file,
       type: this.getFileType(file.name.nombre),
+      etiquetas: file.etiquetas,
     }));
   }
 }

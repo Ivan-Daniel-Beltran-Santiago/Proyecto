@@ -20,8 +20,12 @@ export class MaterialesServicesService {
 
   getFiles(): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/file`).pipe(
-      map(files => {
-        return files.map(file => ({ name: file, checked: false }));
+      map((files) => {
+        return files.map((file) => ({
+          name: file,
+          checked: false,
+          etiquetas: file.etiquetas ? file.etiquetas.split(',') : [], // Agregamos las etiquetas a cada archivo
+        }));
       })
     );
   }
