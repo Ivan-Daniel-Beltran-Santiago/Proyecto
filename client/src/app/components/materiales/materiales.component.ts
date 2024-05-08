@@ -139,9 +139,7 @@ export class MaterialesComponent {
         this.singleInput.nativeElement.value = '';
 
         // Después de subir los archivos, actualiza la lista de archivos
-        this.materialService.getFiles().subscribe((files) => {
-          this.arrayFiles = files;
-        });
+        this.updateFiles();
       },
       (err) => {
         console.log(err);
@@ -209,16 +207,14 @@ export class MaterialesComponent {
       if (result.isConfirmed) {
         this.materialService.deleteFile(filename).subscribe({
           next: () => {
-            // Eliminar el archivo de la lista local
-            this.arrayFiles = this.arrayFiles.filter(
-              (file: string) => file !== filename
-            );
             // Mostrar un mensaje de éxito
             Swal.fire(
               '¡Borrado!',
               'El archivo ha sido borrado correctamente.',
               'success'
             );
+            // Después de la eliminación exitosa, actualiza la lista de archivos
+            this.updateFiles();
           },
           error: (err: any) => {
             console.error(err);
@@ -228,15 +224,15 @@ export class MaterialesComponent {
               'error'
             );
           },
-          // Después de la eliminación exitosa, puedes agregar este bloque para actualizar la lista de archivos
-          complete: () => {
-            // Aquí llamamos al método getFiles del servicio para actualizar la lista de archivos
-            this.materialService.getFiles().subscribe((files) => {
-              this.arrayFiles = files;
-            });
-          },
         });
       }
+    });
+  }
+
+  updateFiles() {
+    this.materialService.getFiles().subscribe((files) => {
+      this.arrayFiles = this.processFiles(files);
+      this.allFiles = files;
     });
   }
 

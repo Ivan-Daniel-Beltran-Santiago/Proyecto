@@ -80,6 +80,7 @@
 }
 
 .images {
+  position: relative;
   scale: 0.8;
   height: 15em;
   background-size: cover;
