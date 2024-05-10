@@ -137,6 +137,20 @@ class MaterialController {
         });
     });
   };
+
+  deleteEtiqueta = async (req: Request, res: Response) => {
+    try {
+      const { filename, etiqueta } = req.params;
+      await db.query(
+        "DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?) AND etiqueta_id = (SELECT id FROM Etiquetas WHERE nombre = ?)",
+        [filename, etiqueta]
+      );
+      res.status(200).json({ message: "Etiqueta eliminada correctamente" });
+    } catch (error) {
+      console.error("Error al eliminar la etiqueta:", error);
+      res.status(500).json({ error: "Error al eliminar la etiqueta" });
+    }
+  };
 }
 export const materialController = new MaterialController();
 export default materialController;

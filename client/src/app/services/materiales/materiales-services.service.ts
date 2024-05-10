@@ -56,4 +56,10 @@ export class MaterialesServicesService {
       });
     });
   }
+
+  deleteEtiqueta(filename: string, etiqueta: string): Observable<any> {
+    return this.http.delete(
+      `${this.API_URL}/file/${filename}/etiqueta/${etiqueta}`
+    );
+  }
 }

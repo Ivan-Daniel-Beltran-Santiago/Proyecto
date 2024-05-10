@@ -6,4 +6,5 @@ const router = (0, express_1.Router)();
 router.post('/', materialControllers_1.materialController.handleFileUpload);
 router.get("/", materialControllers_1.materialController.getFiles);
 router.delete("/:filename", materialControllers_1.materialController.deleteFile);
+router.delete("/:filename/etiqueta/:etiqueta", materialControllers_1.materialController.deleteEtiqueta);
 exports.default = router;

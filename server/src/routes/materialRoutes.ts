@@ -7,4 +7,6 @@ router.post('/', materialController.handleFileUpload);
 router.get("/", materialController.getFiles);
 router.delete("/:filename", materialController.deleteFile);
 
+router.delete("/:filename/etiqueta/:etiqueta", materialController.deleteEtiqueta);
+
 export default router;

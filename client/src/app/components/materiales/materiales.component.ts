@@ -1,10 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Grupo } from 'src/app/models/grupos';
-import { AlumnoGruposService } from 'src/app/services/alumnoGrupos/alumno-grupos.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { ClasesHorariosService } from 'src/app/services/clasesHorarios/clases-horarios.service';
-import { MaestrosService } from 'src/app/services/maestros/maestros.service';
 import { MaterialesServicesService } from 'src/app/services/materiales/materiales-services.service';
 import Swal from 'sweetalert2';
 import JSZip from 'jszip';
@@ -41,17 +38,12 @@ export class MaterialesComponent {
     fecha_final: '',
   };
   constructor(
-    private clasesHorarioService: ClasesHorariosService,
     private router: Router,
     private authService: AuthService,
-    private maestroService: MaestrosService,
-    private alumnoGrupoService: AlumnoGruposService,
     private materialService: MaterialesServicesService
   ) {}
 
   ngOnInit() {
-    this.getClases();
-    this.getMaestro();
     this.materialService.getFiles().subscribe((files) => {
       this.arrayFiles = this.processFiles(files);
       this.allFiles = files;
@@ -61,33 +53,6 @@ export class MaterialesComponent {
   logout(): void {
     this.authService.removeToken(); // Elimina el token al cerrar sesión
     this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
-  }
-
-  getClases() {
-    if (this.rol == '1') {
-      this.alumnoGrupoService.getClases(this.idU).subscribe(
-        (res) => {
-          this.arrayClases = res;
-        },
-
-        (err) => console.error(err)
-      );
-    } else if (this.rol == '2') {
-      this.clasesHorarioService.getClaseHorario(this.idU).subscribe(
-        (res) => {
-          this.arrayClases = res;
-        },
-
-        (err) => console.error(err)
-      );
-    } else {
-      this.clasesHorarioService.getClasesHorarios().subscribe(
-        (res) => {
-          this.arrayClases = res;
-        },
-        (err) => console.error(err)
-      );
-    }
   }
 
   selectFiles(event: any) {
@@ -154,43 +119,6 @@ export class MaterialesComponent {
   viewFile(filename: string) {
     const fileUrl = this.getFileUrl(filename);
     window.open(fileUrl, '_blank'); // Abre el archivo en una nueva pestaña del navegador
-  }
-
-  getMaestro() {
-    this.maestroService.getMaestros().subscribe(
-      (res) => {
-        this.arrayMaestros = res;
-      },
-      (err) => console.error(err)
-    );
-  }
-
-  obtenerNombreMaestro(idMaestro: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-
-    const maestro = this.arrayMaestros[0].find(
-      (m: { id_user: number }) => m.id_user === idMaestro
-    );
-    return maestro
-      ? `${maestro.first_nameU} ${maestro.last_nameU}`
-      : 'Maestro no encontrado';
-  }
-
-  obtenerNombreMaestro2(idMaestro: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-
-    const maestro = this.arrayMaestros[0].find(
-      (m: { id_user: number }) => m.id_user === idMaestro
-    );
-    return maestro
-      ? `${maestro.first_nameU} ${maestro.last_nameU}`
-      : 'Maestro no encontrado';
   }
 
   deleteFile(filename: string) {
@@ -384,5 +312,34 @@ export class MaterialesComponent {
       type: this.getFileType(file.name.nombre),
       etiquetas: file.etiquetas,
     }));
+  }
+
+  eliminarEtiqueta(file: any, index: number) {
+    const etiquetaEliminada = file.etiquetas[index];
+    this.materialService
+      .deleteEtiqueta(file.name.nombre, etiquetaEliminada)
+      .subscribe({
+        next: () => {
+          // Elimina la etiqueta del array de etiquetas del archivo
+          file.etiquetas.splice(index, 1);
+          // Actualiza la lista de archivos después de eliminar la etiqueta
+          this.updateFiles();
+          // Muestra un mensaje de éxito
+          Swal.fire(
+            'Éxito',
+            'La etiqueta ha sido eliminada correctamente',
+            'success'
+          );
+        },
+        error: (err: any) => {
+          console.error(err);
+          // Muestra un mensaje de error si hay algún problema
+          Swal.fire(
+            'Error',
+            'Hubo un problema al intentar eliminar la etiqueta',
+            'error'
+          );
+        },
+      });
   }
 }
