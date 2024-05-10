@@ -228,3 +228,7 @@ button:focus {
   transform: scale(1.2);
   transition: transform 0.2s ease; /* Agrega una transición suave de 0.2 segundos */
 }
+
+h4{
+  text-align: center;
+}
