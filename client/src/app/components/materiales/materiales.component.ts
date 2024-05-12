@@ -327,7 +327,7 @@ export class MaterialesComponent {
           // Muestra un mensaje de éxito
           Swal.fire(
             'Éxito',
-            'La etiqueta ha sido eliminada correctamente',
+            'La(s) etiqueta(s) ha(n) sido eliminada(s) correctamente',
             'success'
           );
         },

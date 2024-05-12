@@ -141,10 +141,39 @@ class MaterialController {
   deleteEtiqueta = async (req: Request, res: Response) => {
     try {
       const { filename, etiqueta } = req.params;
-      await db.query(
-        "DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?) AND etiqueta_id = (SELECT id FROM Etiquetas WHERE nombre = ?)",
-        [filename, etiqueta]
+
+      // Buscar el tipo de la etiqueta a eliminar
+      const tipoEtiqueta = await db.query(
+        "SELECT tipo FROM Etiquetas WHERE nombre = ?",
+        [etiqueta]
       );
+
+      // Verificar si la etiqueta es de tipo "Curso"
+      if (tipoEtiqueta[0][0].tipo === "Curso") {
+        // Si es de tipo "Curso", eliminar todas las etiquetas del archivo
+        await db.query(
+          "DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?)",
+          [filename]
+        );
+      }
+
+      // Si la etiqueta no es de tipo "Curso", continuar eliminando solo esa etiqueta
+      else {
+        // Verificar si la etiqueta es de tipo "Módulo"
+        if (tipoEtiqueta[0][0].tipo === "Módulo") {
+          // Si es de tipo "Módulo", buscar y eliminar las etiquetas de tipo "Submódulo" relacionadas
+          await db.query(
+            "DELETE FROM Asignacion_Etiquetas WHERE archivo_id IN (SELECT id FROM archivos WHERE nombre = ?) AND etiqueta_id IN (SELECT id FROM Etiquetas WHERE tipo = 'Submódulo' AND padre_id = (SELECT id FROM Etiquetas WHERE nombre = ?))",
+            [filename, etiqueta]
+          );
+        }
+        // Eliminar la etiqueta deseada
+        await db.query(
+          "DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?) AND etiqueta_id = (SELECT id FROM Etiquetas WHERE nombre = ?)",
+          [filename, etiqueta]
+        );
+      }
+
       res.status(200).json({ message: "Etiqueta eliminada correctamente" });
     } catch (error) {
       console.error("Error al eliminar la etiqueta:", error);
