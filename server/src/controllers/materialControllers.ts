@@ -98,8 +98,28 @@ class MaterialController {
           .status(500)
           .json({ message: "Error al intentar borrar el archivo." });
       }
-      await db.query("DELETE FROM archivos WHERE nombre = ?", [filename]);
-      res.status(200).json({ message: "Archivo eliminado correctamente." });
+
+      try {
+        // Eliminar el archivo de la base de datos
+        await db.query("DELETE FROM archivos WHERE nombre = ?", [filename]);
+
+        // Desasignar las etiquetas asociadas al archivo
+        // Ejemplo de consulta SQL para desasignar etiquetas
+        await db.query(
+          "DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?)",
+          [filename]
+        );
+
+        // Envía una respuesta indicando que el archivo y las etiquetas asociadas se han eliminado correctamente
+        res
+          .status(200)
+          .json({ message: "Archivo y etiquetas eliminadas correctamente." });
+      } catch (error) {
+        console.error("Error al eliminar el archivo y las etiquetas:", error);
+        res
+          .status(500)
+          .json({ error: "Error al eliminar el archivo y las etiquetas." });
+      }
     });
   };
 
