@@ -62,4 +62,8 @@ export class MaterialesServicesService {
       `${this.API_URL}/file/${filename}/etiqueta/${etiqueta}`
     );
   }
+
+  getCourseTags(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_URL}/file/course-tags`);
+  }
 }

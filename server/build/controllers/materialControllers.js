@@ -171,6 +171,18 @@ class MaterialController {
                 res.status(500).json({ error: "Error al eliminar la etiqueta" });
             }
         });
+        this.getCourseTags = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const courseTags = yield database_1.default.query("SELECT * FROM Etiquetas WHERE tipo = 'Curso'");
+                res.json(courseTags[0]);
+            }
+            catch (error) {
+                console.error("Error al obtener las etiquetas de curso:", error);
+                res
+                    .status(500)
+                    .json({ error: "Error al obtener las etiquetas de curso." });
+            }
+        });
     }
 }
 exports.materialController = new MaterialController();

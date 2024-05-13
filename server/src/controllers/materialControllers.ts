@@ -200,6 +200,20 @@ class MaterialController {
       res.status(500).json({ error: "Error al eliminar la etiqueta" });
     }
   };
+
+  getCourseTags = async (req: Request, res: Response) => {
+    try {
+      const courseTags = await db.query(
+        "SELECT * FROM Etiquetas WHERE tipo = 'Curso'"
+      );
+      res.json(courseTags[0]);
+    } catch (error) {
+      console.error("Error al obtener las etiquetas de curso:", error);
+      res
+        .status(500)
+        .json({ error: "Error al obtener las etiquetas de curso." });
+    }
+  };
 }
 export const materialController = new MaterialController();
 export default materialController;

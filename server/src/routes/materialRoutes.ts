@@ -9,4 +9,6 @@ router.delete("/:filename", materialController.deleteFile);
 
 router.delete("/:filename/etiqueta/:etiqueta", materialController.deleteEtiqueta);
 
+router.get("/course-tags", materialController.getCourseTags);
+
 export default router;

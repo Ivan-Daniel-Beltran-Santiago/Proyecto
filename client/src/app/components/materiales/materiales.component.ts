@@ -27,6 +27,7 @@ export class MaterialesComponent {
   rol = this.authService.getRoleFromToken();
   click: boolean = false;
   agregarGrupo: boolean = false;
+  courseTags: any[] = [];
   idGrupo: any;
   isAdmin = this.authService.isAdmin();
   isMaestro = this.authService.isMaestro();
@@ -44,10 +45,23 @@ export class MaterialesComponent {
   ) {}
 
   ngOnInit() {
+    this.getCourseTags();
     this.materialService.getFiles().subscribe((files) => {
       this.arrayFiles = this.processFiles(files);
       this.allFiles = files;
     });
+  }
+
+  getCourseTags() {
+    this.materialService.getCourseTags().subscribe(
+      (tags) => {
+        this.courseTags = tags;
+      },
+      (error) => {
+        console.error('Error al obtener las etiquetas de curso:', error);
+        // Manejar el error adecuadamente (por ejemplo, mostrar un mensaje al usuario)
+      }
+    );
   }
 
   logout(): void {

@@ -7,4 +7,5 @@ router.post('/', materialControllers_1.materialController.handleFileUpload);
 router.get("/", materialControllers_1.materialController.getFiles);
 router.delete("/:filename", materialControllers_1.materialController.deleteFile);
 router.delete("/:filename/etiqueta/:etiqueta", materialControllers_1.materialController.deleteEtiqueta);
+router.get("/course-tags", materialControllers_1.materialController.getCourseTags);
 exports.default = router;
