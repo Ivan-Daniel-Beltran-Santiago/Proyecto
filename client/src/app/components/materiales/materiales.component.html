@@ -35,15 +35,15 @@
 
         </div>
         <div style="width: 95%;">
-          <label for="location" class="block text-sm font-medium text-gray-700" style="margin-bottom: 5px; margin-top: 24px;">Curso de idiomas: </label>
-          <select id="location" name="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          <label for="course_filter" class="block text-sm font-medium text-gray-700" style="margin-bottom: 5px; margin-top: 24px;">Curso de idiomas: </label>
+          <select id="course_filter" name="course_filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
             <option></option>
             <option *ngFor="let tag of courseTags" [value]="tag.nombre">{{ tag.nombre }}</option>
           </select>
         </div>
         <div style="width: 95%;">
-          <label for="location" class="block text-sm font-medium text-gray-700" style="margin-bottom: 5px; margin-top: 24px;">Módulo del curso de Idiomas: </label>
-          <select id="location" name="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          <label for="module_filter" class="block text-sm font-medium text-gray-700" style="margin-bottom: 5px; margin-top: 24px;">Módulo del curso de Idiomas: </label>
+          <select id="module_filter" name="module_filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
             <option></option>
             <option>Inglés básico</option>
             <option>Inglés intermedio</option>
@@ -51,8 +51,8 @@
           </select>
         </div>
         <div style="width: 95%;">
-          <label for="location" class="block text-sm font-medium text-gray-700" style="margin-bottom: 5px; margin-top: 24px;">Submódulo del curso de Idiomas: </label>
-          <select id="location" name="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          <label for="submodule_filter" class="block text-sm font-medium text-gray-700" style="margin-bottom: 5px; margin-top: 24px;">Submódulo del curso de Idiomas: </label>
+          <select id="submodule_filter" name="submodule_filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
             <option></option>
             <option>Inglés 1A</option>
             <option>Inglés 1B</option>
