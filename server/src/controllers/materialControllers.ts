@@ -214,6 +214,34 @@ class MaterialController {
         .json({ error: "Error al obtener las etiquetas de curso." });
     }
   };
+
+  getModuleTags = async (req: Request, res: Response) => {
+    try {
+      const moduleTags = await db.query(
+        "SELECT * FROM Etiquetas WHERE tipo = 'Módulo'"
+      );
+      res.json(moduleTags[0]);
+    } catch (error) {
+      console.error("Error al obtener las etiquetas de módulo:", error);
+      res
+        .status(500)
+        .json({ error: "Error al obtener las etiquetas de módulo." });
+    }
+  };
+
+  getSubmoduleTags = async (req: Request, res: Response) => {
+    try {
+      const submoduleTags = await db.query(
+        "SELECT * FROM Etiquetas WHERE tipo = 'Submódulo'"
+      );
+      res.json(submoduleTags[0]);
+    } catch (error) {
+      console.error("Error al obtener las etiquetas de submódulo:", error);
+      res
+        .status(500)
+        .json({ error: "Error al obtener las etiquetas de submódulo." });
+    }
+  };
 }
 export const materialController = new MaterialController();
 export default materialController;

@@ -8,4 +8,6 @@ router.get("/", materialControllers_1.materialController.getFiles);
 router.delete("/:filename", materialControllers_1.materialController.deleteFile);
 router.delete("/:filename/etiqueta/:etiqueta", materialControllers_1.materialController.deleteEtiqueta);
 router.get("/course-tags", materialControllers_1.materialController.getCourseTags);
+router.get("/module-tags", materialControllers_1.materialController.getModuleTags);
+router.get("/submodule-tags", materialControllers_1.materialController.getSubmoduleTags);
 exports.default = router;

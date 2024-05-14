@@ -28,6 +28,8 @@ export class MaterialesComponent {
   click: boolean = false;
   agregarGrupo: boolean = false;
   courseTags: any[] = [];
+  moduleTags: any[] = [];
+  submoduleTags: any[] = [];
   idGrupo: any;
   isAdmin = this.authService.isAdmin();
   isMaestro = this.authService.isMaestro();
@@ -46,6 +48,8 @@ export class MaterialesComponent {
 
   ngOnInit() {
     this.getCourseTags();
+    this.getModuleTags();
+    this.getSubmoduleTags();
     this.materialService.getFiles().subscribe((files) => {
       this.arrayFiles = this.processFiles(files);
       this.allFiles = files;
@@ -56,6 +60,30 @@ export class MaterialesComponent {
     this.materialService.getCourseTags().subscribe(
       (tags) => {
         this.courseTags = tags;
+      },
+      (error) => {
+        console.error('Error al obtener las etiquetas de curso:', error);
+        // Manejar el error adecuadamente (por ejemplo, mostrar un mensaje al usuario)
+      }
+    );
+  }
+
+  getModuleTags() {
+    this.materialService.getModuleTags().subscribe(
+      (tags) => {
+        this.moduleTags = tags;
+      },
+      (error) => {
+        console.error('Error al obtener las etiquetas de curso:', error);
+        // Manejar el error adecuadamente (por ejemplo, mostrar un mensaje al usuario)
+      }
+    );
+  }
+
+  getSubmoduleTags() {
+    this.materialService.getSubmoduleTags().subscribe(
+      (tags) => {
+        this.submoduleTags = tags;
       },
       (error) => {
         console.error('Error al obtener las etiquetas de curso:', error);

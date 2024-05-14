@@ -10,5 +10,7 @@ router.delete("/:filename", materialController.deleteFile);
 router.delete("/:filename/etiqueta/:etiqueta", materialController.deleteEtiqueta);
 
 router.get("/course-tags", materialController.getCourseTags);
+router.get("/module-tags", materialController.getModuleTags);
+router.get("/submodule-tags", materialController.getSubmoduleTags);
 
 export default router;

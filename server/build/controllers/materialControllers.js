@@ -183,6 +183,30 @@ class MaterialController {
                     .json({ error: "Error al obtener las etiquetas de curso." });
             }
         });
+        this.getModuleTags = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const moduleTags = yield database_1.default.query("SELECT * FROM Etiquetas WHERE tipo = 'Módulo'");
+                res.json(moduleTags[0]);
+            }
+            catch (error) {
+                console.error("Error al obtener las etiquetas de módulo:", error);
+                res
+                    .status(500)
+                    .json({ error: "Error al obtener las etiquetas de módulo." });
+            }
+        });
+        this.getSubmoduleTags = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const submoduleTags = yield database_1.default.query("SELECT * FROM Etiquetas WHERE tipo = 'Submódulo'");
+                res.json(submoduleTags[0]);
+            }
+            catch (error) {
+                console.error("Error al obtener las etiquetas de submódulo:", error);
+                res
+                    .status(500)
+                    .json({ error: "Error al obtener las etiquetas de submódulo." });
+            }
+        });
     }
 }
 exports.materialController = new MaterialController();
