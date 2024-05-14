@@ -65,9 +65,7 @@ class MaterialController {
                 for (let i = 0; i < files.length; i++) {
                     console.log("Archivo subido con éxito:", files[i].path);
                     paths.push(files[i].filename);
-                    // Obtener el tipo de archivo
-                    const fileType = files[i].mimetype; // Esto te dará el tipo MIME del archivo
-                    // Aquí puedes guardar el nombre y el tipo del archivo en la base de datos
+                    const fileType = files[i].mimetype;
                     yield database_1.default.query("INSERT INTO archivos (nombre, tipo_archivo) VALUES (?, ?)", [files[i].filename, fileType]);
                 }
                 res.status(200).json({ paths: paths });
@@ -98,12 +96,8 @@ class MaterialController {
                         .json({ message: "Error al intentar borrar el archivo." });
                 }
                 try {
-                    // Eliminar el archivo de la base de datos
                     yield database_1.default.query("DELETE FROM archivos WHERE nombre = ?", [filename]);
-                    // Desasignar las etiquetas asociadas al archivo
-                    // Ejemplo de consulta SQL para desasignar etiquetas
                     yield database_1.default.query("DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?)", [filename]);
-                    // Envía una respuesta indicando que el archivo y las etiquetas asociadas se han eliminado correctamente
                     res
                         .status(200)
                         .json({ message: "Archivo y etiquetas eliminadas correctamente." });
@@ -147,21 +141,14 @@ class MaterialController {
         this.deleteEtiqueta = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { filename, etiqueta } = req.params;
-                // Buscar el tipo de la etiqueta a eliminar
                 const tipoEtiqueta = yield database_1.default.query("SELECT tipo FROM Etiquetas WHERE nombre = ?", [etiqueta]);
-                // Verificar si la etiqueta es de tipo "Curso"
                 if (tipoEtiqueta[0][0].tipo === "Curso") {
-                    // Si es de tipo "Curso", eliminar todas las etiquetas del archivo
                     yield database_1.default.query("DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?)", [filename]);
                 }
-                // Si la etiqueta no es de tipo "Curso", continuar eliminando solo esa etiqueta
                 else {
-                    // Verificar si la etiqueta es de tipo "Módulo"
                     if (tipoEtiqueta[0][0].tipo === "Módulo") {
-                        // Si es de tipo "Módulo", buscar y eliminar las etiquetas de tipo "Submódulo" relacionadas
                         yield database_1.default.query("DELETE FROM Asignacion_Etiquetas WHERE archivo_id IN (SELECT id FROM archivos WHERE nombre = ?) AND etiqueta_id IN (SELECT id FROM Etiquetas WHERE tipo = 'Submódulo' AND padre_id = (SELECT id FROM Etiquetas WHERE nombre = ?))", [filename, etiqueta]);
                     }
-                    // Eliminar la etiqueta deseada
                     yield database_1.default.query("DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?) AND etiqueta_id = (SELECT id FROM Etiquetas WHERE nombre = ?)", [filename, etiqueta]);
                 }
                 res.status(200).json({ message: "Etiqueta eliminada correctamente" });

@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Grupo } from 'src/app/models/grupos';
 import { AuthService } from 'src/app/services/auth.service';
 import { MaterialesServicesService } from 'src/app/services/materiales/materiales-services.service';
 import Swal from 'sweetalert2';
@@ -14,9 +13,6 @@ import JSZip from 'jszip';
 export class MaterialesComponent {
   @ViewChild('singleInput', { static: false })
   singleInput!: ElementRef;
-  arrayClases: any = [];
-  arrayMaestros: any = [];
-  arrayAlumnos: any = [];
   arrayFiles: any = [];
   allFiles: any = [];
   files: any;
@@ -26,20 +22,13 @@ export class MaterialesComponent {
   idU: any = this.authService.getIdFromToken();
   rol = this.authService.getRoleFromToken();
   click: boolean = false;
-  agregarGrupo: boolean = false;
   courseTags: any[] = [];
   moduleTags: any[] = [];
   submoduleTags: any[] = [];
-  idGrupo: any;
   isAdmin = this.authService.isAdmin();
   isMaestro = this.authService.isMaestro();
   isAlumno = this.authService.isAlumno();
   nombreUsuario = this.authService.getNameFromToken();
-  grupo: Grupo = {
-    nombre_grupo: '',
-    fecha_inicio: '',
-    fecha_final: '',
-  };
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -63,7 +52,6 @@ export class MaterialesComponent {
       },
       (error) => {
         console.error('Error al obtener las etiquetas de curso:', error);
-        // Manejar el error adecuadamente (por ejemplo, mostrar un mensaje al usuario)
       }
     );
   }
@@ -74,8 +62,7 @@ export class MaterialesComponent {
         this.moduleTags = tags;
       },
       (error) => {
-        console.error('Error al obtener las etiquetas de curso:', error);
-        // Manejar el error adecuadamente (por ejemplo, mostrar un mensaje al usuario)
+        console.error('Error al obtener las etiquetas de módulo:', error);
       }
     );
   }
@@ -86,8 +73,7 @@ export class MaterialesComponent {
         this.submoduleTags = tags;
       },
       (error) => {
-        console.error('Error al obtener las etiquetas de curso:', error);
-        // Manejar el error adecuadamente (por ejemplo, mostrar un mensaje al usuario)
+        console.error('Error al obtener las etiquetas de submódulo:', error);
       }
     );
   }
@@ -103,7 +89,6 @@ export class MaterialesComponent {
     if (this.filesSelected) {
       this.files = event.target.files;
       console.log(this.files);
-      // Agrega validación para tipos de archivo aceptables
       for (let i = 0; i < this.files.length; i++) {
         const fileType = this.files[i].type;
         const allowedFileTypes = [
@@ -117,7 +102,6 @@ export class MaterialesComponent {
           'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         ];
         if (!allowedFileTypes.includes(fileType)) {
-          // Mostrar mensaje de error o realizar alguna acción
           console.log('Tipo de archivo no válido');
           return;
         }
@@ -145,7 +129,6 @@ export class MaterialesComponent {
         console.log(res.paths);
         this.singleInput.nativeElement.value = '';
 
-        // Después de subir los archivos, actualiza la lista de archivos
         this.updateFiles();
       },
       (err) => {
@@ -177,13 +160,11 @@ export class MaterialesComponent {
       if (result.isConfirmed) {
         this.materialService.deleteFile(filename).subscribe({
           next: () => {
-            // Mostrar un mensaje de éxito
             Swal.fire(
               '¡Borrado!',
               'El archivo ha sido borrado correctamente.',
               'success'
             );
-            // Después de la eliminación exitosa, actualiza la lista de archivos
             this.updateFiles();
           },
           error: (err: any) => {
@@ -226,9 +207,8 @@ export class MaterialesComponent {
   }
 
   searchFiles(searchText: string) {
-    let filteredFiles = this.allFiles; // Inicialmente, todos los archivos están visibles
-
-    // Aplicar el filtro por tipo de archivo seleccionado
+    let filteredFiles = this.allFiles;
+    
     const fileTypeFilter = (
       document.getElementById('location') as HTMLSelectElement
     ).value;
@@ -261,7 +241,6 @@ export class MaterialesComponent {
       }
     }
 
-    // Aplicar la búsqueda de texto sobre los archivos filtrados por tipo de archivo
     if (searchText.trim()) {
       filteredFiles = filteredFiles.filter((file: any) => {
         return file.name.nombre
@@ -270,7 +249,6 @@ export class MaterialesComponent {
       });
     }
 
-    // Actualizar la lista de archivos para mostrar solo los archivos que pasaron los filtros
     this.arrayFiles = filteredFiles;
   }
 
@@ -279,37 +257,29 @@ export class MaterialesComponent {
     const fileType = target.value;
 
     if (!fileType) {
-      // Si no se ha seleccionado ningún tipo, mostrar todos los archivos de la lista completa
       this.arrayFiles = this.allFiles;
     } else {
-      // Filtrar los archivos en función del tipo seleccionado sobre la lista completa
       if (fileType === 'Documento Word') {
-        // Filtrar por tipo de archivo y extensión .docx
         this.arrayFiles = this.allFiles.filter((file: any) =>
           file.name.nombre.toLowerCase().endsWith('.docx')
         );
       } else if (fileType === 'PDF') {
-        // Filtrar por tipo de archivo y extensión .pdf
         this.arrayFiles = this.allFiles.filter((file: any) =>
           file.name.nombre.toLowerCase().endsWith('.pdf')
         );
       } else if (fileType === 'Audio') {
-        // Filtrar por tipo de archivo de audio
         this.arrayFiles = this.allFiles.filter((file: any) =>
           file.name.nombre.toLowerCase().endsWith('.mp3')
         );
       } else if (fileType === 'Video') {
-        // Filtrar por tipo de archivo de video
         this.arrayFiles = this.allFiles.filter((file: any) =>
           file.name.nombre.toLowerCase().endsWith('.mp4')
         );
       } else if (fileType === 'PowerPoint') {
-        // Filtrar por tipo de archivo de presentación de PowerPoint
         this.arrayFiles = this.allFiles.filter((file: any) =>
           file.name.nombre.toLowerCase().endsWith('.pptx')
         );
       } else if (fileType === 'Imagen') {
-        // Filtrar por tipo de archivo de imagen (JPEG o PNG)
         this.arrayFiles = this.allFiles.filter(
           (file: any) =>
             file.name.nombre.toLowerCase().endsWith('.jpg') ||
@@ -347,7 +317,6 @@ export class MaterialesComponent {
     }
   }
 
-  // Método para procesar los archivos y establecer su tipo
   processFiles(files: any[]) {
     return files.map((file) => ({
       ...file,
@@ -362,11 +331,8 @@ export class MaterialesComponent {
       .deleteEtiqueta(file.name.nombre, etiquetaEliminada)
       .subscribe({
         next: () => {
-          // Elimina la etiqueta del array de etiquetas del archivo
           file.etiquetas.splice(index, 1);
-          // Actualiza la lista de archivos después de eliminar la etiqueta
           this.updateFiles();
-          // Muestra un mensaje de éxito
           Swal.fire(
             'Éxito',
             'La(s) etiqueta(s) ha(n) sido eliminada(s) correctamente',
@@ -375,7 +341,6 @@ export class MaterialesComponent {
         },
         error: (err: any) => {
           console.error(err);
-          // Muestra un mensaje de error si hay algún problema
           Swal.fire(
             'Error',
             'Hubo un problema al intentar eliminar la etiqueta',
