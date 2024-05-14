@@ -208,7 +208,7 @@ export class MaterialesComponent {
 
   searchFiles(searchText: string) {
     let filteredFiles = this.allFiles;
-    
+
     const fileTypeFilter = (
       document.getElementById('location') as HTMLSelectElement
     ).value;
@@ -348,5 +348,35 @@ export class MaterialesComponent {
           );
         },
       });
+  }
+
+  filterFilesByTag() {
+    const courseFilter = (
+      document.getElementById('course_filter') as HTMLSelectElement
+    ).value;
+    const moduleFilter = (
+      document.getElementById('module_filter') as HTMLSelectElement
+    ).value;
+    const submoduleFilter = (
+      document.getElementById('submodule_filter') as HTMLSelectElement
+    ).value;
+
+    let selectedTag = '';
+    if (courseFilter) {
+      selectedTag = courseFilter;
+    } else if (moduleFilter) {
+      selectedTag = moduleFilter;
+    } else if (submoduleFilter) {
+      selectedTag = submoduleFilter;
+    }
+
+    if (selectedTag) {
+      this.materialService.getFilesByTag(selectedTag).subscribe((files) => {
+        this.arrayFiles = this.processFiles(files);
+      });
+    } else {
+      // Si no se selecciona ninguna etiqueta, mostrar todos los archivos
+      this.updateFiles();
+    }
   }
 }

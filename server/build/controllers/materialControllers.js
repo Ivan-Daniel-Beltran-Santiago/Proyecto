@@ -194,6 +194,19 @@ class MaterialController {
                     .json({ error: "Error al obtener las etiquetas de submódulo." });
             }
         });
+        this.getFilesByTag = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const tag = req.params.tag;
+                const files = yield database_1.default.query("SELECT archivos.id, archivos.nombre, archivos.tipo_archivo, GROUP_CONCAT(Etiquetas.nombre) AS etiquetas FROM archivos LEFT JOIN Asignacion_Etiquetas ON archivos.id = Asignacion_Etiquetas.archivo_id LEFT JOIN Etiquetas ON Asignacion_Etiquetas.etiqueta_id = Etiquetas.id WHERE Etiquetas.nombre = ? GROUP BY archivos.id", [tag]);
+                res.json(files[0]);
+            }
+            catch (error) {
+                console.error("Error al obtener los archivos por etiqueta:", error);
+                res
+                    .status(500)
+                    .json({ error: "Error al obtener los archivos por etiqueta." });
+            }
+        });
     }
 }
 exports.materialController = new MaterialController();

@@ -74,4 +74,16 @@ export class MaterialesServicesService {
   getSubmoduleTags(): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/file/submodule-tags`);
   }
+
+  getFilesByTag(tag: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_URL}/file/tag/${tag}`).pipe(
+      map((files) => {
+        return files.map((file) => ({
+          name: file,
+          checked: false,
+          etiquetas: file.etiquetas ? file.etiquetas.split(',') : [],
+        }));
+      })
+    );
+  }
 }

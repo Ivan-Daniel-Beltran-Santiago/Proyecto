@@ -55,9 +55,9 @@ class MaterialController {
       for (let i = 0; i < files.length; i++) {
         console.log("Archivo subido con éxito:", files[i].path);
         paths.push(files[i].filename);
-        
+
         const fileType = files[i].mimetype;
-        
+
         await db.query(
           "INSERT INTO archivos (nombre, tipo_archivo) VALUES (?, ?)",
           [files[i].filename, fileType]
@@ -100,7 +100,7 @@ class MaterialController {
 
       try {
         await db.query("DELETE FROM archivos WHERE nombre = ?", [filename]);
-        
+
         await db.query(
           "DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?)",
           [filename]
@@ -155,7 +155,7 @@ class MaterialController {
   deleteEtiqueta = async (req: Request, res: Response) => {
     try {
       const { filename, etiqueta } = req.params;
-      
+
       const tipoEtiqueta = await db.query(
         "SELECT tipo FROM Etiquetas WHERE nombre = ?",
         [etiqueta]
@@ -166,8 +166,7 @@ class MaterialController {
           "DELETE FROM Asignacion_Etiquetas WHERE archivo_id = (SELECT id FROM archivos WHERE nombre = ?)",
           [filename]
         );
-      }
-      else {
+      } else {
         if (tipoEtiqueta[0][0].tipo === "Módulo") {
           await db.query(
             "DELETE FROM Asignacion_Etiquetas WHERE archivo_id IN (SELECT id FROM archivos WHERE nombre = ?) AND etiqueta_id IN (SELECT id FROM Etiquetas WHERE tipo = 'Submódulo' AND padre_id = (SELECT id FROM Etiquetas WHERE nombre = ?))",
@@ -226,6 +225,22 @@ class MaterialController {
       res
         .status(500)
         .json({ error: "Error al obtener las etiquetas de submódulo." });
+    }
+  };
+
+  getFilesByTag = async (req: Request, res: Response) => {
+    try {
+      const tag = req.params.tag;
+      const files = await db.query(
+        "SELECT archivos.id, archivos.nombre, archivos.tipo_archivo, GROUP_CONCAT(Etiquetas.nombre) AS etiquetas FROM archivos LEFT JOIN Asignacion_Etiquetas ON archivos.id = Asignacion_Etiquetas.archivo_id LEFT JOIN Etiquetas ON Asignacion_Etiquetas.etiqueta_id = Etiquetas.id WHERE Etiquetas.nombre = ? GROUP BY archivos.id",
+        [tag]
+      );
+      res.json(files[0]);
+    } catch (error) {
+      console.error("Error al obtener los archivos por etiqueta:", error);
+      res
+        .status(500)
+        .json({ error: "Error al obtener los archivos por etiqueta." });
     }
   };
 }
