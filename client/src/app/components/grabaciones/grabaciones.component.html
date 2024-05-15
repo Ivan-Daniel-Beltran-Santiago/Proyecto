@@ -6,11 +6,8 @@
     <title>Document</title>
   </head>
   <body>
-    <header>
-      <app-menu></app-menu>
-    </header>
+    <app-menu></app-menu>
     <h4 style="text-align: center">GRABACIONES</h4>
-
     <ul
       role="list"
       class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
@@ -58,16 +55,12 @@
                 (click)="getGrabaciones(clase.id_clase)"
                 class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
               >
-                <!-- Heroicon name: solid/mail -->
-
                 <span class="ml-3">View Recordings</span>
               </a>
             </div>
           </div>
         </div>
       </li>
-
-      <!-- More people... -->
     </ul>
 
     <div *ngIf="obtenerGrab">
@@ -273,8 +266,6 @@
         GUARDAR GRABACION</button
       ><br />
     </div>
-
-    <!-- component -->
     <div *ngIf="mostrarGrab">
       <button
         *ngIf="!isAlumno"

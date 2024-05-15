@@ -79,7 +79,8 @@ class CalificacionController {
                 console.log(fechas[0]);
                 const fecha_inicio = fechas[0].fecha_inicio;
                 const fecha_final = fechas[0].fecha_final;
-                if (fecha > fecha_final.substring(10, 0) || fecha < fecha_inicio.substring(10, 0)) {
+                if (fecha > fecha_final.substring(10, 0) ||
+                    fecha < fecha_inicio.substring(10, 0)) {
                     res.status(400).json({
                         msg: "Fecha fuera del rango de clases",
                     });
@@ -99,7 +100,9 @@ class CalificacionController {
                     }
                     else {
                         if (calif < 0 || calif > 100 || calif === "" || fecha == "") {
-                            res.status(400).json({ msg: "Error en las calificaciones o fecha" });
+                            res
+                                .status(400)
+                                .json({ msg: "Error en las calificaciones o fecha" });
                             //console.log(req.body);
                         }
                         else {
@@ -120,34 +123,6 @@ class CalificacionController {
                 console.error("Error al ejecutar la consulta MySQL:", error);
                 res.status(500).send("Error interno del servidor");
             }
-            /*
-            let calificacion = await db.query("Select * from calificaciones where id_alumno = ?AND fecha_calif = ?", [req.body.id_alumno,req.body.fecha_calif]);
-            let numero : string="" ;
-            let num : number = 0; //numero para saber si hay calificacion repetido al mismo alumno en la misma fecha
-            
-            for( numero in calificacion[0]) {
-             
-               num = parseInt(numero)+1;
-               
-            }
-            if(num>0)
-            {
-              res.json({text:"Calificacion ya agregada "});
-              console.log(num);
-              console.log(req.body);
-            } else {
-            if (calif < 0 || calif > 100 || calif === "") {
-              res.json({text:"error en la califacion"});
-              console.log(req.body);
-            } else {
-              await db.query("INSERT INTO calificaciones SET ?", [
-                req.body
-              ]);
-              res.json({ text: "Grade added" });
-              console.log(req.body);
-            }
-          }
-          */
         });
     }
     deleteCalificacion(req, res) {
@@ -189,10 +164,7 @@ class CalificacionController {
                     }
                     else {
                         try {
-                            yield database_1.default.query("UPDATE calificaciones SET ? WHERE id_calificacion = ?", [
-                                datos,
-                                id,
-                            ]);
+                            yield database_1.default.query("UPDATE calificaciones SET ? WHERE id_calificacion = ?", [datos, id]);
                             res.json({ message: "Grade updated" });
                         }
                         catch (error) {

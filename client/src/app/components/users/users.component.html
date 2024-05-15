@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
     <app-menu></app-menu>
-  </header>
-  <h4 style="text-align: center">Usuarios</h4>
-  <input
-  type="text" style="height: 35px; width: 800px; margin-left: 20%;"placeholder="Search" name="filterPost" [(ngModel)]="filterPost"
-  class="block w-full px-4 py1 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-/>
+    <h4 style="text-align: center">Usuarios</h4>
+    <input
+      type="text"
+      style="height: 35px; width: 800px; margin-left: 20%"
+      placeholder="Search"
+      name="filterPost"
+      [(ngModel)]="filterPost"
+      class="block w-full px-4 py1 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+    />
     <div class="flex flex-col">
       <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
         <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -21,83 +23,121 @@
             <table class="min-w-full">
               <thead class="bg-white border-b">
                 <tr>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th
+                    scope="col"
+                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
                     Username
                   </th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th
+                    scope="col"
+                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
                     Telephone Number
                   </th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th
+                    scope="col"
+                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
                     Email
                   </th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th
+                    scope="col"
+                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
                     Password
                   </th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th
+                    scope="col"
+                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
                     Role
                   </th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th
+                    scope="col"
+                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
                     Status
                   </th>
-                  <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th
+                    scope="col"
+                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
                     Action
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-gray-100 border-b" *ngFor="let user of arrayusers[0]|filter:filterPost">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ user.last_nameU }} {{ user.last_nameU2 }} {{ user.first_nameU }}</td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    {{ user.telephoneU}}
+                <tr
+                  class="bg-gray-100 border-b"
+                  *ngFor="let user of arrayusers[0] | filter : filterPost"
+                >
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                  >
+                    {{ user.last_nameU }} {{ user.last_nameU2 }}
+                    {{ user.first_nameU }}
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    {{ user.email}}
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    {{ user.telephoneU }}
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    {{ user.password}}
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    {{ user.email }}
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-               
-                    <p *ngIf="user.id_rol===1">Alumno</p>
-                    <p *ngIf="user.id_rol===2">Maestro</p>
-                    <p *ngIf="user.id_rol===3">Administrador</p>
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    {{ user.password }}
+                  </td>
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    <p *ngIf="user.id_rol === 1">Alumno</p>
+                    <p *ngIf="user.id_rol === 2">Maestro</p>
+                    <p *ngIf="user.id_rol === 3">Administrador</p>
+                  </td>
 
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
+                    {{ user.status }}
                   </td>
 
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    {{ user.status}}
-                  </td>
-
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    <!-- component -->
+                  <td
+                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+                  >
                     <button
-                    [routerLink]="['/usuario/update',user.id_user]"
-                    data-ripple-light="true"
-                    data-popover-target="popover"
-                    class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                      [routerLink]="['/usuario/update', user.id_user]"
+                      data-ripple-light="true"
+                      data-popover-target="popover"
+                      class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     >
-                    Update
+                      Update
                     </button>
                   </td>
 
-                  <td class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
+                  <td
+                    class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap"
+                  >
                     <button
-                    data-ripple-light="true"
-                    (click)="deleteUser(user.id_user)"
-                    data-popover-target="popover"
-                    class="middle none center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    
+                      data-ripple-light="true"
+                      (click)="deleteUser(user.id_user)"
+                      data-popover-target="popover"
+                      class="middle none center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     >
-                    Delete
+                      Delete
                     </button>
                   </td>
                 </tr>
-                
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-</body>
+  </body>
 </html>

@@ -6,12 +6,9 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { AlumnosService } from 'src/app/services/alumnos/alumnos.service';
 import { CalificacionesService } from 'src/app/services/calificaciones/calificaciones.service';
 import { AlumnoGruposService } from 'src/app/services/alumnoGrupos/alumno-grupos.service';
 import { Calificacion } from 'src/app/models/calificaciones';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -37,10 +34,7 @@ export class CalificacionesFormComponent implements AfterViewInit {
   };
 
   constructor(
-    private datepipe: DatePipe,
-    private alumnosService: AlumnosService,
     private calificacionService: CalificacionesService,
-    private formBuilder: FormBuilder,
     private alumnosGruposService: AlumnoGruposService,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,

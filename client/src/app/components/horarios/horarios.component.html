@@ -7,9 +7,7 @@
   </head>
 
   <body>
-    <header>
-      <app-menu></app-menu>
-    </header>
+    <app-menu></app-menu>
     <h4 style="text-align: center">Horarios</h4>
     <input
       *ngIf="isAdmin"
@@ -56,7 +54,6 @@
                       }}
                       <br />
                       <br />
-                      <!-- component -->
                       <button
                         *ngIf="isAdmin && horario.semana == 1"
                         data-ripple-light="true"

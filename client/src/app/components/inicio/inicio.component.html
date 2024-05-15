@@ -1,282 +1,400 @@
-<!-- component -->
 <!DOCTYPE html>
 <html>
-
-<head>
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/motion-tailwind/motion-tailwind.css"
-    rel="stylesheet">
-</head>
-
-<body class="bg-white">
-  <header >
-    <nav>
-      <div class="nav-wrapper" style="background-color: #0066ff">
-        <a routerLink="/" class="brand-logo"><img src="https://i.imgur.com/1NA0X3h.jpg" alt="logo" style="width: px; height:62px; margin-left: 5px;"/></a>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
-          ><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-          <li class="has-dropdown"><a routerLink="/clases" style="margin-right: 40px;">{{nombreUsuario}}</a> <ul class="dropdown">
-            <li style="z-index: 1;"><a (click)="logout()">Cerrar Sesion</a></li>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/motion-tailwind/motion-tailwind.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-white">
+    <header>
+      <nav>
+        <div class="nav-wrapper" style="background-color: #0066ff">
+          <a routerLink="/" class="brand-logo"
+            ><img
+              src="https://i.imgur.com/1NA0X3h.jpg"
+              alt="logo"
+              style="width: px; height: 62px; margin-left: 5px"
+          /></a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+            ><i class="material-icons">menu</i></a
+          >
+          <ul class="right hide-on-med-and-down">
+            <li class="has-dropdown">
+              <a routerLink="/clases" style="margin-right: 40px">{{
+                nombreUsuario
+              }}</a>
+              <ul class="dropdown">
+                <li style="z-index: 1">
+                  <a (click)="logout()">Cerrar Sesion</a>
+                </li>
+              </ul>
+            </li>
+            <li *ngIf="!isLogin">
+              <a routerLink="/login"
+                ><i class="fa-solid fa-user" style="margin-right: 10px"></i>Log
+                In</a
+              >
+            </li>
+            <li *ngIf="isAdmin">
+              <a routerLink="/registro"
+                ><i class="fa-solid fa-user-plus" style="margin-right: 10px"></i
+                >Sign Up</a
+              >
+            </li>
           </ul>
-        </li>
-          <li *ngIf="!isLogin"><a routerLink="/login"><i class="fa-solid fa-user" style="margin-right: 10px;"></i>Log In</a></li>
-          <li *ngIf="isAdmin"><a routerLink="/registro"><i class="fa-solid fa-user-plus" style="margin-right: 10px;"></i>Sign Up</a></li>
-
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!--
-  <div id="component" class="relative flex flex-wrap items-center justify-between group py-3"
-    style="background-color: #0066ff;">
-    <div>
-      <a routerLink="/" style="text-decoration: none;"><i class="fa-solid fa-house"></i>Volver</a>
-    </div>
-
-    <div class="items-center hidden gap-8 md:flex">
-      <button routerLink="/login"
-        class="flex items-center text-sm font-normal text-gray-800 hover:text-gray-900 transition duration-300">Log
-        In</button>
-      <button routerLink="/registro"
-        class="flex items-center px-4 py-2 text-sm font-bold rounded-xl bg-purple-blue-100 text-purple-blue-600 hover:bg-purple-blue-600 hover:text-white transition duration-300">
-        Sign Up
-      </button>
-    </div>
+        </div>
+      </nav>
+    </header>
     <div
-      class="absolute flex md:hidden transition-all duration-300 ease-in-out flex-col items-start shadow-main justify-center w-full gap-3 overflow-hidden bg-white max-h-0 group-[.open]:py-4 px-4 rounded-2xl group-[.open]:max-h-64 top-full">
-
-      <button class="flex items-center text-sm font-normal text-black">Log In</button>
-      <button
-        class="flex items-center px-3 py-2 text-sm font-bold rounded-xl bg-purple-blue-100 text-purple-blue-600 hover:bg-purple-blue-600 hover:text-white transition duration-300"
-        style="align-items: center;">Sign Up</button>
-    </div>
-  </div>
--->
-  <div class="container flex flex-col mx-auto bg-white" style="margin-top:10px">
-
-    <div class="grid w-full grid-cols-1 my-auto mt-12 mb-8 md:grid-cols-2 xl:gap-14 md:gap-5">
-      <div class="flex flex-col justify-center col-span-1 text-center lg:text-start">
-        <h1 class="mb-8 text-4xl font-extrabold leading-tight lg:text-6xl text-dark-grey-900">INNOVA LANGUAGE SOLUTIONS</h1>
-        <p class="mb-6 text-base font-normal leading-7 lg:w-3/4 text-grey-900" style="margin-left:55px">
-          Say goodbye to endless hours spent on building templates from scratch. Experience the quickest, most
-          responsive, and trendiest dashboard solution available. Seriously.
-        </p>
-
+      class="container flex flex-col mx-auto bg-white"
+      style="margin-top: 10px"
+    >
+      <div
+        class="grid w-full grid-cols-1 my-auto mt-12 mb-8 md:grid-cols-2 xl:gap-14 md:gap-5"
+      >
+        <div
+          class="flex flex-col justify-center col-span-1 text-center lg:text-start"
+        >
+          <h1
+            class="mb-8 text-4xl font-extrabold leading-tight lg:text-6xl text-dark-grey-900"
+          >
+            INNOVA LANGUAGE SOLUTIONS
+          </h1>
+          <p
+            class="mb-6 text-base font-normal leading-7 lg:w-3/4 text-grey-900"
+            style="margin-left: 55px"
+          >
+            Say goodbye to endless hours spent on building templates from
+            scratch. Experience the quickest, most responsive, and trendiest
+            dashboard solution available. Seriously.
+          </p>
+        </div>
+        <div class="items-center justify-end hidden col-span-1 md:flex">
+          <img
+            class="w-4/5 rounded-md"
+            src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/header-1.png"
+            alt="header image"
+          />
+        </div>
       </div>
-      <div class="items-center justify-end hidden col-span-1 md:flex">
-        <img class="w-4/5 rounded-md"
-          src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/header-1.png"
-          alt="header image">
-      </div>
     </div>
-  </div>
-  <!-- component -->
-  <div>
-    <div class="bg-gray-100 lg:py-12">
-      <div class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
-        <div class="lg:w-1/2">
-          <div class="h-64 bg-cover lg:rounded-lg lg:h-full"
-            style="background-image:url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80')">
+    <div>
+      <div class="bg-gray-100 lg:py-12">
+        <div
+          class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg"
+        >
+          <div class="lg:w-1/2">
+            <div
+              class="h-64 bg-cover lg:rounded-lg lg:h-full"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
+              "
+            ></div>
           </div>
-          
-        </div>        
-        <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
-          <h2 class="text-3xl text-gray-800 font-bold"><span class="text-indigo-600">Engineering</span></h2>
-          <p class="mt-4 text-gray-600">Este programa integral busca capacitar ingenieros de diversas disciplinas, proporcionándoles habilidades lingüísticas para comunicarse efectivamente en el exigente entorno de la industria y la manufactura. 
-            Se enfoca en el desarrollo equilibrado de expresión oral, comprensión auditiva, lectura y escritura, con énfasis en la terminología específica de la ingeniería. 
-            El objetivo principal es que los participantes no solo dominen el inglés, sino que también puedan aplicar estas habilidades de manera práctica y especializada en sus áreas de expertise.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- component -->
-  <div>
-    <div class="bg-gray-100 lg:py-12">
-      <div class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
-        <div class="lg:w-1/2">
-          <div class="h-64 bg-cover lg:rounded-lg lg:h-full"
-            style="background-image:url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80')">
-          </div>
-        </div>
-        <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
-          <h2 class="text-3xl text-gray-800 font-bold"><span class="text-indigo-600">Science</span></h2>
-          <p class="mt-4 text-gray-600">Este programa de instrucción está diseñado para dotar a científicos de diversas disciplinas con habilidades lingüísticas esenciales para una comunicación efectiva en un entorno científico global. 
-            Se centra en hablar, escuchar, leer y escribir, con énfasis en la terminología científica especializada. El objetivo es proporcionar herramientas lingüísticas para comunicar investigaciones, colaborar en equipos internacionales y participar en discusiones científicas globales. 
-            Con un enfoque práctico, garantiza que los científicos puedan aplicar estas habilidades con precisión en sus campos de estudio.</p>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- component -->
-  <div>
-    <div class="bg-gray-100 lg:py-12">
-      <div class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
-        <div class="lg:w-1/2">
-          <div class="h-64 bg-cover lg:rounded-lg lg:h-full"
-            style="background-image:url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80')">
-          </div>
-        </div>
-        <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
-          <h2 class="text-3xl text-gray-800 font-bold"><span class="text-indigo-600">Mining</span></h2>
-          <p class="mt-4 text-gray-600">Este programa de formación está diseñado para equipar a profesionales de la industria minera con habilidades lingüísticas para una comunicación efectiva en un entorno globalizado y diverso. 
-            Se enfoca en hablar, escuchar, leer y escribir, con atención en la terminología minera. El objetivo es capacitar a los participantes para comunicarse fluidamente en un entorno industrial exigente, aplicando estas habilidades en contextos específicos de la minería. 
-            Promueve la comunicación efectiva en equipos multidisciplinarios y proyectos mineros internacionales.</p>
-          <div class="mt-8">
-            <a href="#" class="bg-gray-900 text-gray-100 px-5 py-3 font-semibold rounded">Start Now</a>
+          <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
+            <h2 class="text-3xl text-gray-800 font-bold">
+              <span class="text-indigo-600">Engineering</span>
+            </h2>
+            <p class="mt-4 text-gray-600">
+              Este programa integral busca capacitar ingenieros de diversas
+              disciplinas, proporcionándoles habilidades lingüísticas para
+              comunicarse efectivamente en el exigente entorno de la industria y
+              la manufactura. Se enfoca en el desarrollo equilibrado de
+              expresión oral, comprensión auditiva, lectura y escritura, con
+              énfasis en la terminología específica de la ingeniería. El
+              objetivo principal es que los participantes no solo dominen el
+              inglés, sino que también puedan aplicar estas habilidades de
+              manera práctica y especializada en sus áreas de expertise.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- component -->
-  <div>
-    <div class="bg-gray-100 lg:py-12">
-      <div class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
-        <div class="lg:w-1/2">
-          <div class="h-64 bg-cover lg:rounded-lg lg:h-full"
-            style="background-image:url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80')">
+    <div>
+      <div class="bg-gray-100 lg:py-12">
+        <div
+          class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg"
+        >
+          <div class="lg:w-1/2">
+            <div
+              class="h-64 bg-cover lg:rounded-lg lg:h-full"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
+              "
+            ></div>
           </div>
-        </div>
-        <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
-          <h2 class="text-3xl text-gray-800 font-bold"><span class="text-indigo-600">Traveling</span></h2>
-          <p class="mt-4 text-gray-600">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem modi
-            reprehenderit vitae exercitationem aliquid dolores ullam temporibus enim expedita aperiam mollitia iure
-            consectetur dicta tenetur, porro consequuntur saepe accusantium consequatur.</p>
-          <div class="mt-8">
-            <a href="#" class="bg-gray-900 text-gray-100 px-5 py-3 font-semibold rounded">Start Now</a>
+          <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
+            <h2 class="text-3xl text-gray-800 font-bold">
+              <span class="text-indigo-600">Science</span>
+            </h2>
+            <p class="mt-4 text-gray-600">
+              Este programa de instrucción está diseñado para dotar a
+              científicos de diversas disciplinas con habilidades lingüísticas
+              esenciales para una comunicación efectiva en un entorno científico
+              global. Se centra en hablar, escuchar, leer y escribir, con
+              énfasis en la terminología científica especializada. El objetivo
+              es proporcionar herramientas lingüísticas para comunicar
+              investigaciones, colaborar en equipos internacionales y participar
+              en discusiones científicas globales. Con un enfoque práctico,
+              garantiza que los científicos puedan aplicar estas habilidades con
+              precisión en sus campos de estudio.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- component -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
-    <div class="text-center pb-12">
-
-      <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-gray-900">
-        Check our awesome team members
-      </h1>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="w-full bg-white rounded-lg sahdow-lg overflow-hidden flex flex-col justify-center items-center">
-        <div>
-          <img class="object-center object-cover h-auto w-full" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAACUlJTq6urm5ua5ubn29vaQkJDNzc3f39/c3NwsLCz8/Px8fHwUFBScnJxSUlKxsbEjIyOzs7NwcHCrq6spKSk3NzfR0dGKiorw8PBBQUHGxsakpKReXl5ZWVlMTExmZmY7OzsbGxsLCwu9vb0XFxd+fn7zKP1yAAAEEklEQVR4nO3di3aqMBAFUAKIolBUoFURlWrr///hLberq60FeWRgknj2DzRnCXkxSS0LAAAAAAAAAAAAAAAAAAAAwEA7dxbnkR3l8czdcTeGnL9Ksov4dsmS1Zy7UXT86UJUWUx97qZRCCZZZbxPL5OAu4GSgnR9J19pnWud8a368bx5WN+4m9mbc2yRr7R0uJvaz6RlvtKEu7E9BNcOAYUIudvbmXfqFFCIk8fd5G52Tx0DCvGk1TzHbRojqry73M1uz3nuEVCIZ3261JdeAT9mOLoM/m2Hwb+O3E1vx+4dUAibu/FtbCQCCrHhbn6zoM1UtN5C/VdxKxVQiCl3gCaOZEAhVB8yCumEBXeE++bSAYVQe/8mIUiYcIe4R/4tLKn8JkYkCSPuGHfIjYVfXrhj1KPoZ0rq9jU0D6nKj2nfVdOtV+4gdQKigEKoOjmdkSWccUepsSJLuOKOUiMkS6jq7umSLOGSO0qNV7KEqnamNDOa0oI7SjWvzzZwtbWaW/y7M1nCs5o7/OYnNP8pNb+neYDRwvwRn27WduWOUsP8mbf5qye6FTB3klpUnWnGHaSW+TtR5u8mEm22Kbwj/AC7+uZ/mTH/6xpJX6N48XchHVDxr9wPUKlgTSUDKl9tIlsxpEPxnvFVXw9QuWdZh94BD9xNbykwvoLWcvrtnJ6VHyi+Od1L9YW4aBTQsnbdf8W1mjv5tbyum6cnzQJ+dDfddk9DbTqZH0w/2fXBKVrmK7TqY355a3N45lnfE5altCnfJeVuorS7J50zTV/AG/Npdchsq/DGaEeBm4a/142La6rRYby23H2c5nmexnsDwwEAAAAAAACACbyds5nk9jZMDsfl8ZCEWzuK9/7O03Er/7fAn+XX4lT3Ieo9K675zFf0cEWTYLMKT+3ui1pnSTrTK6a7CnvcZhamcx2e2mAeyVTvFdFc6R/TiRP5GtpFMlF0O9WP7n2g6CaLlCtQ9G26g2ufnmyFQjp512sg28lyNb6c7otB4n067LnjeTn103nrHHF2rq7s1WXtXLn6Vp+ibL2dhONTqjNevv8Zx+50vHGez5+uo76P8ej5SvFo+Vy6A7/dLEeaBORM+Ur5CPm8/jfMUjgOXsK4GXqEb3IeuJr/jTlfadAyKs5X8NuAL6MaAQeM2FhnOJqB6hn33Ll+GGRRRXMClsoQ09Rh1vF9negDqtLLfCF/FT3uRH9QLzXGXy012dIG9C7Nf3JkF9ofke5yHTq0y0XeBUU10uOYPf4xzvBI//WOz52mEuWKv8shrfFQLqOoLg+iRXnLi8wB9OFQHm1HQh5IiIRIyA8JkRAJ+SEhEiIhPyREwsdKKHsZ4jAor1jcT231TNkrMwEAAAAAAAAAAAAAAAAAAABu/AMfVksANwN8IgAAAABJRU5ErkJggg==" alt="photo">
-        </div>
-        <div class="text-center py-8 sm:py-6">
-          <p class="text-xl text-gray-700 font-bold mb-2">JUAN RAMIREZ</p>
-          <p class="text-base text-gray-400 font-normal">DIRECTOR ACADEMICO</p>
-        </div>
-      </div>
-      <div class="w-full bg-white rounded-lg sahdow-lg overflow-hidden flex flex-col justify-center items-center">
-        <div>
-          <img class="object-center object-cover h-auto w-full" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAACUlJTq6urm5ua5ubn29vaQkJDNzc3f39/c3NwsLCz8/Px8fHwUFBScnJxSUlKxsbEjIyOzs7NwcHCrq6spKSk3NzfR0dGKiorw8PBBQUHGxsakpKReXl5ZWVlMTExmZmY7OzsbGxsLCwu9vb0XFxd+fn7zKP1yAAAEEklEQVR4nO3di3aqMBAFUAKIolBUoFURlWrr///hLberq60FeWRgknj2DzRnCXkxSS0LAAAAAAAAAAAAAAAAAAAAwEA7dxbnkR3l8czdcTeGnL9Ksov4dsmS1Zy7UXT86UJUWUx97qZRCCZZZbxPL5OAu4GSgnR9J19pnWud8a368bx5WN+4m9mbc2yRr7R0uJvaz6RlvtKEu7E9BNcOAYUIudvbmXfqFFCIk8fd5G52Tx0DCvGk1TzHbRojqry73M1uz3nuEVCIZ3261JdeAT9mOLoM/m2Hwb+O3E1vx+4dUAibu/FtbCQCCrHhbn6zoM1UtN5C/VdxKxVQiCl3gCaOZEAhVB8yCumEBXeE++bSAYVQe/8mIUiYcIe4R/4tLKn8JkYkCSPuGHfIjYVfXrhj1KPoZ0rq9jU0D6nKj2nfVdOtV+4gdQKigEKoOjmdkSWccUepsSJLuOKOUiMkS6jq7umSLOGSO0qNV7KEqnamNDOa0oI7SjWvzzZwtbWaW/y7M1nCs5o7/OYnNP8pNb+neYDRwvwRn27WduWOUsP8mbf5qye6FTB3klpUnWnGHaSW+TtR5u8mEm22Kbwj/AC7+uZ/mTH/6xpJX6N48XchHVDxr9wPUKlgTSUDKl9tIlsxpEPxnvFVXw9QuWdZh94BD9xNbykwvoLWcvrtnJ6VHyi+Od1L9YW4aBTQsnbdf8W1mjv5tbyum6cnzQJ+dDfddk9DbTqZH0w/2fXBKVrmK7TqY355a3N45lnfE5altCnfJeVuorS7J50zTV/AG/Npdchsq/DGaEeBm4a/142La6rRYby23H2c5nmexnsDwwEAAAAAAACACbyds5nk9jZMDsfl8ZCEWzuK9/7O03Er/7fAn+XX4lT3Ieo9K675zFf0cEWTYLMKT+3ui1pnSTrTK6a7CnvcZhamcx2e2mAeyVTvFdFc6R/TiRP5GtpFMlF0O9WP7n2g6CaLlCtQ9G26g2ufnmyFQjp512sg28lyNb6c7otB4n067LnjeTn103nrHHF2rq7s1WXtXLn6Vp+ibL2dhONTqjNevv8Zx+50vHGez5+uo76P8ej5SvFo+Vy6A7/dLEeaBORM+Ur5CPm8/jfMUjgOXsK4GXqEb3IeuJr/jTlfadAyKs5X8NuAL6MaAQeM2FhnOJqB6hn33Ll+GGRRRXMClsoQ09Rh1vF9negDqtLLfCF/FT3uRH9QLzXGXy012dIG9C7Nf3JkF9ofke5yHTq0y0XeBUU10uOYPf4xzvBI//WOz52mEuWKv8shrfFQLqOoLg+iRXnLi8wB9OFQHm1HQh5IiIRIyA8JkRAJ+SEhEiIhPyREwsdKKHsZ4jAor1jcT231TNkrMwEAAAAAAAAAAAAAAAAAAABu/AMfVksANwN8IgAAAABJRU5ErkJggg==" alt="photo">
-        </div>
-        <div class="text-center py-8 sm:py-6">
-          <p class="text-xl text-gray-700 font-bold mb-2">RODOLFO RAMIREZ</p>
-          <p class="text-base text-gray-400 font-normal">DIRECTOR EJECUTIVO</p>
-        </div>
-      </div>
-      
-
-    </div>
-  </section>
-  <!-- component -->
-  <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
-  <link rel="stylesheet"
-    href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
-
-  <footer class="relative bg-blueGray-200 pt-8 pb-6">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-wrap text-left lg:text-left" style="height: 150px;">
-        <div class="w-full lg:w-6/12 px-4">
-          <h4 class="text-3xl fonat-semibold text-blueGray-700">Let's keep in touch!</h4>
-          <h5 class="text-lg mt-0 mb-2 text-blueGray-600">
-            Find us on any of these platforms, we respond 1-2 business days.
-          </h5>
-          <div class="mt-6 lg:mb-0 mb-6">
-            <button
-              class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-              type="button">
-              <i class="fab fa-twitter"></i></button><button
-              class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-              type="button">
-              <i class="fab fa-facebook-square"></i></button><button
-              class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-              type="button">
-              <i class="fab fa-dribbble"></i></button><button
-              class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-              type="button">
-              <i class="fab fa-github"></i>
-            </button>
+    <div>
+      <div class="bg-gray-100 lg:py-12">
+        <div
+          class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg"
+        >
+          <div class="lg:w-1/2">
+            <div
+              class="h-64 bg-cover lg:rounded-lg lg:h-full"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
+              "
+            ></div>
           </div>
-        </div>
-        <div class="w-full lg:w-6/12 px-4">
-          <div class="flex flex-wrap items-top mb-6">
-            <div class="w-full lg:w-4/12 px-4 ml-auto">
-              <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Useful Links</span>
-              <ul class="list-unstyled">
-                <li>
-                  <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile">About Us</a>
-                </li>
-                <li>
-                  <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="https://blog.creative-tim.com?ref=njs-profile">Blog</a>
-                </li>
-                <li>
-                  <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="https://www.github.com/creativetimofficial?ref=njs-profile">Github</a>
-                </li>
-                <li>
-                  <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="https://www.creative-tim.com/bootstrap-themes/free?ref=njs-profile">Free Products</a>
-                </li>
-              </ul>
-            </div>
-            <div class="w-full lg:w-4/12 px-4">
-              <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Other Resources</span>
-              <ul class="list-unstyled">
-                <li>
-                  <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-profile">MIT
-                    License</a>
-                </li>
-                <li>
-                  <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="https://creative-tim.com/terms?ref=njs-profile">Terms &amp; Conditions</a>
-                </li>
-                <li>
-                  <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="https://creative-tim.com/privacy?ref=njs-profile">Privacy Policy</a>
-                </li>
-                <li>
-                  <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="https://creative-tim.com/contact-us?ref=njs-profile">Contact Us</a>
-                </li>
-              </ul>
+          <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
+            <h2 class="text-3xl text-gray-800 font-bold">
+              <span class="text-indigo-600">Mining</span>
+            </h2>
+            <p class="mt-4 text-gray-600">
+              Este programa de formación está diseñado para equipar a
+              profesionales de la industria minera con habilidades lingüísticas
+              para una comunicación efectiva en un entorno globalizado y
+              diverso. Se enfoca en hablar, escuchar, leer y escribir, con
+              atención en la terminología minera. El objetivo es capacitar a los
+              participantes para comunicarse fluidamente en un entorno
+              industrial exigente, aplicando estas habilidades en contextos
+              específicos de la minería. Promueve la comunicación efectiva en
+              equipos multidisciplinarios y proyectos mineros internacionales.
+            </p>
+            <div class="mt-8">
+              <a
+                href="#"
+                class="bg-gray-900 text-gray-100 px-5 py-3 font-semibold rounded"
+                >Start Now</a
+              >
             </div>
           </div>
         </div>
       </div>
-      <hr class="my-6 border-blueGray-300">
-      <div class="flex flex-wrap items-center md:justify-between justify-center">
-        <div class="w-full md:w-4/12 px-4 mx-auto text-center">
-
+    </div>
+    <div>
+      <div class="bg-gray-100 lg:py-12">
+        <div
+          class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg"
+        >
+          <div class="lg:w-1/2">
+            <div
+              class="h-64 bg-cover lg:rounded-lg lg:h-full"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
+              "
+            ></div>
+          </div>
+          <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
+            <h2 class="text-3xl text-gray-800 font-bold">
+              <span class="text-indigo-600">Traveling</span>
+            </h2>
+            <p class="mt-4 text-gray-600">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem
+              modi reprehenderit vitae exercitationem aliquid dolores ullam
+              temporibus enim expedita aperiam mollitia iure consectetur dicta
+              tenetur, porro consequuntur saepe accusantium consequatur.
+            </p>
+            <div class="mt-8">
+              <a
+                href="#"
+                class="bg-gray-900 text-gray-100 px-5 py-3 font-semibold rounded"
+                >Start Now</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </footer>
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
+      <div class="text-center pb-12">
+        <h1
+          class="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-gray-900"
+        >
+          Check our awesome team members
+        </h1>
+      </div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <div
+          class="w-full bg-white rounded-lg sahdow-lg overflow-hidden flex flex-col justify-center items-center"
+        >
+          <div>
+            <img
+              class="object-center object-cover h-auto w-full"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAACUlJTq6urm5ua5ubn29vaQkJDNzc3f39/c3NwsLCz8/Px8fHwUFBScnJxSUlKxsbEjIyOzs7NwcHCrq6spKSk3NzfR0dGKiorw8PBBQUHGxsakpKReXl5ZWVlMTExmZmY7OzsbGxsLCwu9vb0XFxd+fn7zKP1yAAAEEklEQVR4nO3di3aqMBAFUAKIolBUoFURlWrr///hLberq60FeWRgknj2DzRnCXkxSS0LAAAAAAAAAAAAAAAAAAAAwEA7dxbnkR3l8czdcTeGnL9Ksov4dsmS1Zy7UXT86UJUWUx97qZRCCZZZbxPL5OAu4GSgnR9J19pnWud8a368bx5WN+4m9mbc2yRr7R0uJvaz6RlvtKEu7E9BNcOAYUIudvbmXfqFFCIk8fd5G52Tx0DCvGk1TzHbRojqry73M1uz3nuEVCIZ3261JdeAT9mOLoM/m2Hwb+O3E1vx+4dUAibu/FtbCQCCrHhbn6zoM1UtN5C/VdxKxVQiCl3gCaOZEAhVB8yCumEBXeE++bSAYVQe/8mIUiYcIe4R/4tLKn8JkYkCSPuGHfIjYVfXrhj1KPoZ0rq9jU0D6nKj2nfVdOtV+4gdQKigEKoOjmdkSWccUepsSJLuOKOUiMkS6jq7umSLOGSO0qNV7KEqnamNDOa0oI7SjWvzzZwtbWaW/y7M1nCs5o7/OYnNP8pNb+neYDRwvwRn27WduWOUsP8mbf5qye6FTB3klpUnWnGHaSW+TtR5u8mEm22Kbwj/AC7+uZ/mTH/6xpJX6N48XchHVDxr9wPUKlgTSUDKl9tIlsxpEPxnvFVXw9QuWdZh94BD9xNbykwvoLWcvrtnJ6VHyi+Od1L9YW4aBTQsnbdf8W1mjv5tbyum6cnzQJ+dDfddk9DbTqZH0w/2fXBKVrmK7TqY355a3N45lnfE5altCnfJeVuorS7J50zTV/AG/Npdchsq/DGaEeBm4a/142La6rRYby23H2c5nmexnsDwwEAAAAAAACACbyds5nk9jZMDsfl8ZCEWzuK9/7O03Er/7fAn+XX4lT3Ieo9K675zFf0cEWTYLMKT+3ui1pnSTrTK6a7CnvcZhamcx2e2mAeyVTvFdFc6R/TiRP5GtpFMlF0O9WP7n2g6CaLlCtQ9G26g2ufnmyFQjp512sg28lyNb6c7otB4n067LnjeTn103nrHHF2rq7s1WXtXLn6Vp+ibL2dhONTqjNevv8Zx+50vHGez5+uo76P8ej5SvFo+Vy6A7/dLEeaBORM+Ur5CPm8/jfMUjgOXsK4GXqEb3IeuJr/jTlfadAyKs5X8NuAL6MaAQeM2FhnOJqB6hn33Ll+GGRRRXMClsoQ09Rh1vF9negDqtLLfCF/FT3uRH9QLzXGXy012dIG9C7Nf3JkF9ofke5yHTq0y0XeBUU10uOYPf4xzvBI//WOz52mEuWKv8shrfFQLqOoLg+iRXnLi8wB9OFQHm1HQh5IiIRIyA8JkRAJ+SEhEiIhPyREwsdKKHsZ4jAor1jcT231TNkrMwEAAAAAAAAAAAAAAAAAAABu/AMfVksANwN8IgAAAABJRU5ErkJggg=="
+              alt="photo"
+            />
+          </div>
+          <div class="text-center py-8 sm:py-6">
+            <p class="text-xl text-gray-700 font-bold mb-2">JUAN RAMIREZ</p>
+            <p class="text-base text-gray-400 font-normal">
+              DIRECTOR ACADEMICO
+            </p>
+          </div>
+        </div>
+        <div
+          class="w-full bg-white rounded-lg sahdow-lg overflow-hidden flex flex-col justify-center items-center"
+        >
+          <div>
+            <img
+              class="object-center object-cover h-auto w-full"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAACUlJTq6urm5ua5ubn29vaQkJDNzc3f39/c3NwsLCz8/Px8fHwUFBScnJxSUlKxsbEjIyOzs7NwcHCrq6spKSk3NzfR0dGKiorw8PBBQUHGxsakpKReXl5ZWVlMTExmZmY7OzsbGxsLCwu9vb0XFxd+fn7zKP1yAAAEEklEQVR4nO3di3aqMBAFUAKIolBUoFURlWrr///hLberq60FeWRgknj2DzRnCXkxSS0LAAAAAAAAAAAAAAAAAAAAwEA7dxbnkR3l8czdcTeGnL9Ksov4dsmS1Zy7UXT86UJUWUx97qZRCCZZZbxPL5OAu4GSgnR9J19pnWud8a368bx5WN+4m9mbc2yRr7R0uJvaz6RlvtKEu7E9BNcOAYUIudvbmXfqFFCIk8fd5G52Tx0DCvGk1TzHbRojqry73M1uz3nuEVCIZ3261JdeAT9mOLoM/m2Hwb+O3E1vx+4dUAibu/FtbCQCCrHhbn6zoM1UtN5C/VdxKxVQiCl3gCaOZEAhVB8yCumEBXeE++bSAYVQe/8mIUiYcIe4R/4tLKn8JkYkCSPuGHfIjYVfXrhj1KPoZ0rq9jU0D6nKj2nfVdOtV+4gdQKigEKoOjmdkSWccUepsSJLuOKOUiMkS6jq7umSLOGSO0qNV7KEqnamNDOa0oI7SjWvzzZwtbWaW/y7M1nCs5o7/OYnNP8pNb+neYDRwvwRn27WduWOUsP8mbf5qye6FTB3klpUnWnGHaSW+TtR5u8mEm22Kbwj/AC7+uZ/mTH/6xpJX6N48XchHVDxr9wPUKlgTSUDKl9tIlsxpEPxnvFVXw9QuWdZh94BD9xNbykwvoLWcvrtnJ6VHyi+Od1L9YW4aBTQsnbdf8W1mjv5tbyum6cnzQJ+dDfddk9DbTqZH0w/2fXBKVrmK7TqY355a3N45lnfE5altCnfJeVuorS7J50zTV/AG/Npdchsq/DGaEeBm4a/142La6rRYby23H2c5nmexnsDwwEAAAAAAACACbyds5nk9jZMDsfl8ZCEWzuK9/7O03Er/7fAn+XX4lT3Ieo9K675zFf0cEWTYLMKT+3ui1pnSTrTK6a7CnvcZhamcx2e2mAeyVTvFdFc6R/TiRP5GtpFMlF0O9WP7n2g6CaLlCtQ9G26g2ufnmyFQjp512sg28lyNb6c7otB4n067LnjeTn103nrHHF2rq7s1WXtXLn6Vp+ibL2dhONTqjNevv8Zx+50vHGez5+uo76P8ej5SvFo+Vy6A7/dLEeaBORM+Ur5CPm8/jfMUjgOXsK4GXqEb3IeuJr/jTlfadAyKs5X8NuAL6MaAQeM2FhnOJqB6hn33Ll+GGRRRXMClsoQ09Rh1vF9negDqtLLfCF/FT3uRH9QLzXGXy012dIG9C7Nf3JkF9ofke5yHTq0y0XeBUU10uOYPf4xzvBI//WOz52mEuWKv8shrfFQLqOoLg+iRXnLi8wB9OFQHm1HQh5IiIRIyA8JkRAJ+SEhEiIhPyREwsdKKHsZ4jAor1jcT231TNkrMwEAAAAAAAAAAAAAAAAAAABu/AMfVksANwN8IgAAAABJRU5ErkJggg=="
+              alt="photo"
+            />
+          </div>
+          <div class="text-center py-8 sm:py-6">
+            <p class="text-xl text-gray-700 font-bold mb-2">RODOLFO RAMIREZ</p>
+            <p class="text-base text-gray-400 font-normal">
+              DIRECTOR EJECUTIVO
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <link
+      rel="stylesheet"
+      href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
+    />
 
-</body>
-
-
-
-
-
-<html>
+    <footer class="relative bg-blueGray-200 pt-8 pb-6">
+      <div class="container mx-auto px-4">
+        <div
+          class="flex flex-wrap text-left lg:text-left"
+          style="height: 150px"
+        >
+          <div class="w-full lg:w-6/12 px-4">
+            <h4 class="text-3xl fonat-semibold text-blueGray-700">
+              Let's keep in touch!
+            </h4>
+            <h5 class="text-lg mt-0 mb-2 text-blueGray-600">
+              Find us on any of these platforms, we respond 1-2 business days.
+            </h5>
+            <div class="mt-6 lg:mb-0 mb-6">
+              <button
+                class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <i class="fab fa-twitter"></i></button
+              ><button
+                class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <i class="fab fa-facebook-square"></i></button
+              ><button
+                class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <i class="fab fa-dribbble"></i></button
+              ><button
+                class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <i class="fab fa-github"></i>
+              </button>
+            </div>
+          </div>
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="flex flex-wrap items-top mb-6">
+              <div class="w-full lg:w-4/12 px-4 ml-auto">
+                <span
+                  class="block uppercase text-blueGray-500 text-sm font-semibold mb-2"
+                  >Useful Links</span
+                >
+                <ul class="list-unstyled">
+                  <li>
+                    <a
+                      class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                      href="https://blog.creative-tim.com?ref=njs-profile"
+                      >Blog</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                      href="https://www.github.com/creativetimofficial?ref=njs-profile"
+                      >Github</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                      href="https://www.creative-tim.com/bootstrap-themes/free?ref=njs-profile"
+                      >Free Products</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="w-full lg:w-4/12 px-4">
+                <span
+                  class="block uppercase text-blueGray-500 text-sm font-semibold mb-2"
+                  >Other Resources</span
+                >
+                <ul class="list-unstyled">
+                  <li>
+                    <a
+                      class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                      href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-profile"
+                      >MIT License</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                      href="https://creative-tim.com/terms?ref=njs-profile"
+                      >Terms &amp; Conditions</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                      href="https://creative-tim.com/privacy?ref=njs-profile"
+                      >Privacy Policy</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                      href="https://creative-tim.com/contact-us?ref=njs-profile"
+                      >Contact Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="my-6 border-blueGray-300" />
+        <div
+          class="flex flex-wrap items-center md:justify-between justify-center"
+        >
+          <div class="w-full md:w-4/12 px-4 mx-auto text-center"></div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

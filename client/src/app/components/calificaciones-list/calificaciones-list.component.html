@@ -6,12 +6,8 @@
     <title>Document</title>
   </head>
   <body>
-    <header>
-      <app-menu></app-menu>
-    </header>
+    <app-menu></app-menu>
     <h4 style="text-align: center">Calificaciones</h4>
-
-    <!-- This example requires Tailwind CSS v2.0+ -->
     <ul
       role="list"
       class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
@@ -41,8 +37,6 @@
                 [routerLink]="['/calificaciones-form', clase.id_grupo]"
                 class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
               >
-                <!-- Heroicon name: solid/mail -->
-
                 <span class="ml-3">Assign grade</span>
               </a>
             </div>
@@ -51,8 +45,6 @@
                 (click)="getAlumnos(clase.id_grupo)"
                 class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
               >
-                <!-- Heroicon name: solid/phone -->
-
                 <span class="ml-3">View Grades</span>
               </a>
             </div>
@@ -63,16 +55,12 @@
                 [routerLink]="['/calificaciones', clase.id_grupo, id]"
                 class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
               >
-                <!-- Heroicon name: solid/phone -->
-
                 <span class="ml-3">View Grades</span>
               </a>
             </div>
           </div>
         </div>
       </li>
-
-      <!-- More people... -->
     </ul>
     <br />
     <div *ngIf="click" style="margin-left: 30px; margin-top: 20px">

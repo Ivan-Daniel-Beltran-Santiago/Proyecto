@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Calificacion } from 'src/app/models/calificaciones';
@@ -87,7 +86,6 @@ export class CalificacionesListComponent implements AfterViewInit {
           .subscribe(
             (result) => {
               console.log(result);
-              //this.router.navigate(['/horario']);
               Swal.fire({
                 title: 'Done!',
                 text: 'The grade has been added.',
@@ -114,7 +112,6 @@ export class CalificacionesListComponent implements AfterViewInit {
   }
   getAlumnos(id: number) {
     this.click = true;
-    //[routerLink]="['/calificaciones',alumno.id_user]"
     this.alumnosGrupoService.getAlumnos(id.toString()).subscribe(
       (res) => {
         this.arrayAlumnos = res;
@@ -131,8 +128,6 @@ export class CalificacionesListComponent implements AfterViewInit {
     );
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Horario');
-    // const cell = ws["getCell"](2, 1);
-    //cell.setStyle({ alignment: { horizontal: "center" } });
     XLSX.writeFile(wb, 'Calificaciones Globales.xlsx');
   }
 
@@ -206,8 +201,6 @@ export class CalificacionesListComponent implements AfterViewInit {
             if (!(fecha == objeto[i].fecha_calif))
               this.arrayFechas.push(objeto[i].fecha_calif);
           }
-
-          //if (this.arrayFechas.length > 5) this.arrayFechas.splice(0, 1);
         }
 
         console.log(this.arrayCalificaciones[0]);

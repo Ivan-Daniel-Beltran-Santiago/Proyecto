@@ -4,7 +4,6 @@ import { CalificacionesService } from 'src/app/services/calificaciones/calificac
 import { AlumnosService } from 'src/app/services/alumnos/alumnos.service';
 import { Calificacion } from 'src/app/models/calificaciones';
 import { Chart } from 'chart.js';
-import { GrabacionesComponent } from '../grabaciones/grabaciones.component';
 import 'chartjs-plugin-annotation';
 import 'chartjs-plugin-datalabels';
 import { AuthService } from 'src/app/services/auth.service';
@@ -51,7 +50,6 @@ export class CalificacionesComponent implements OnInit {
     private calificacionesService: CalificacionesService,
     private authService: AuthService,
     private router: Router,
-    private grabacion: GrabacionesComponent
   ) {}
   ngOnInit() {
     this.generarGrafica();
@@ -64,13 +62,6 @@ export class CalificacionesComponent implements OnInit {
   logout(): void {
     this.authService.removeToken(); // Elimina el token al cerrar sesión
     this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
-  }
-
-  getGrabacion(id: number, id2: string) {
-    console.log(id);
-    console.log(id2);
-
-    this.router.navigate(['/grabaciones', id, id2]);
   }
 
   getAlumnos() {
