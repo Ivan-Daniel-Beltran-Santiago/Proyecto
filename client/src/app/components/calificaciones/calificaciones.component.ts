@@ -35,7 +35,6 @@ export class CalificacionesComponent implements OnInit {
   public a2: string = 'gvg';
 
   isEdit: boolean = false;
-  // Array de calificaciones (debes proporcionar tus propias calificaciones)
 
   calificacion: Calificacion = {
     fecha_calif: '',
@@ -49,7 +48,7 @@ export class CalificacionesComponent implements OnInit {
     private alumnosService: AlumnosService,
     private calificacionesService: CalificacionesService,
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) {}
   ngOnInit() {
     this.generarGrafica();
@@ -211,14 +210,10 @@ export class CalificacionesComponent implements OnInit {
           }
           this.promedio = this.acumulador / this.contador;
           console.log(this.promedio);
-          //if (this.calificacionesAlumno.length > 5)
-          //this.calificacionesAlumno.splice(0, 1);
 
           console.log(this.calificaciones[0]);
           console.log(this.fechas);
           console.log(this.calificacionesAlumno);
-          //this.calificacion=objeto[0];
-          //console.log(this.calificacion.id_alumno);
           const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
           if (this.calificacionesAlumno.length > 0) {
@@ -249,17 +244,17 @@ export class CalificacionesComponent implements OnInit {
               plugins: {
                 title: {
                   display: true,
-                  text: 'Gráfico de Calificaciones ', // Aquí puedes especificar el título deseado
+                  text: 'Gráfico de Calificaciones ',
                   font: {
-                    size: 16, // Tamaño de fuente del título
+                    size: 16,
                   },
                 },
               },
               scales: {
                 y: {
                   beginAtZero: true,
-                  min: 0, // Comienza en 0
-                  max: 100, // Valor máximo en el eje Y
+                  min: 0,
+                  max: 100,
                 },
               },
             },
@@ -281,12 +276,10 @@ export class CalificacionesComponent implements OnInit {
   }
 
   exportarAPDF(): void {
-    // Obtén el elemento canvas
     const canvas: HTMLCanvasElement | null = document.getElementById(
       'myChart'
     ) as HTMLCanvasElement;
 
-    // Captura la representación visual del canvas usando html2canvas
     if (!canvas) {
       console.error('Elemento canvas no encontrado.');
       return;
@@ -298,9 +291,8 @@ export class CalificacionesComponent implements OnInit {
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
 
-        // Ajusta el tamaño y posición de la imagen en el PDF
-        const imageWidth = canvasCapturado.width * 0.1; // ajusta según sea necesario
-        const imageHeight = canvasCapturado.height * 0.1; // ajusta según sea necesario
+        const imageWidth = canvasCapturado.width * 0.1;
+        const imageHeight = canvasCapturado.height * 0.1;
         const xPos = (pdfWidth - imageWidth) / 2;
         const yPos = (pdfHeight - imageHeight) / 2;
 
@@ -313,7 +305,6 @@ export class CalificacionesComponent implements OnInit {
           imageHeight
         );
 
-        // Descarga el archivo PDF
         pdf.save('tu_archivo.pdf');
       })
       .catch((error) => {
