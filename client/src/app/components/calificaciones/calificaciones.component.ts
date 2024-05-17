@@ -89,6 +89,46 @@ export class CalificacionesComponent implements OnInit {
     console.log(idG);
   }
 
+  generateCourseDates(
+    startDate: string,
+    checkDate: string,
+    examDate: string,
+    schedule: string
+  ) {
+    let courseDates = [];
+    let currentDate = new Date(startDate);
+    let endDate = new Date(examDate);
+    let almostEndDate = new Date(checkDate);
+
+    let courseDays;
+    if (schedule === 'Monday-Thursday') {
+      courseDays = [1, 2, 3, 4]; // Monday to Thursday
+    } else if (schedule === 'Saturday Only') {
+      courseDays = [6]; // Saturday
+    } else {
+      throw new Error('Invalid schedule');
+    }
+
+    // Iterate through each date from startDate to examDate
+    while (currentDate <= endDate) {
+      let dayOfWeek = currentDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
+
+      if (currentDate < almostEndDate && courseDays.includes(dayOfWeek)) {
+        courseDates.push({ date: new Date(currentDate), score: null });
+      } else {
+        courseDates.push({ date: null, score: null });
+      }
+
+      // Move to the next day
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    courseDates.push({ date: almostEndDate, score: null });
+    courseDates.push({ date: endDate, score: null });
+
+    return courseDates;
+  }
+
   updateCalificacion() {
     Swal.fire({
       title: 'Updating Grade?',
@@ -172,14 +212,13 @@ export class CalificacionesComponent implements OnInit {
     const objeto: any = {};
     const params = this.activatedRoute.snapshot.params;
     this.nombreAlumno = params['id'];
-    console.log(this.nombreAlumno);
     this.calificacion.id_grupo = params['idG'];
     if (params['idG'] && params['id']) {
       this.calificacionesService
         .getCalificacion(params['idG'], params['id'])
         .subscribe((res) => {
           this.calificaciones = res;
-
+          console.log(this.calificaciones);
           for (let i = 0; i < this.calificaciones[0].length; i++) {
             objeto[i] = this.calificaciones[0][i];
             this.calificacionesAlumno.push(
