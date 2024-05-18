@@ -15,8 +15,8 @@ class GrupoRoutes {
         this.router.post("/", validateToken_1.default, grupoControllers_1.default.addGrupo);
         this.router.get("/", validateToken_1.default, grupoControllers_1.default.list);
         this.router.get("/:id", validateToken_1.default, grupoControllers_1.default.listOne);
-        this.router.delete("/:id", validateToken_1.default, grupoControllers_1.default.deleteGrupo);
         this.router.put("/:id", validateToken_1.default, grupoControllers_1.default.updateGrupo);
+        this.router.delete("/:id", validateToken_1.default, grupoControllers_1.default.deleteGrupo); // Añadir esta línea
     }
 }
 const grupoRoutes = new GrupoRoutes();

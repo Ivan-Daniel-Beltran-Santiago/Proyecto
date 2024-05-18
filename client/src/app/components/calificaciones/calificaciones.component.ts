@@ -97,8 +97,11 @@ export class CalificacionesComponent implements OnInit {
   ) {
     let courseDates = [];
     let currentDate = new Date(startDate);
-    let endDate = new Date(examDate);
     let almostEndDate = new Date(checkDate);
+    let endDate = new Date(examDate);
+    
+    console.log(examDate, checkDate)
+    console.log(almostEndDate, endDate)
 
     let courseDays;
     if (schedule === 'Monday-Thursday') {
@@ -110,7 +113,7 @@ export class CalificacionesComponent implements OnInit {
     }
 
     // Iterate through each date from startDate to examDate
-    while (currentDate <= endDate) {
+    while (currentDate < almostEndDate) {
       let dayOfWeek = currentDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
 
       if (currentDate < almostEndDate && courseDays.includes(dayOfWeek)) {
@@ -125,6 +128,8 @@ export class CalificacionesComponent implements OnInit {
 
     courseDates.push({ date: almostEndDate, score: null });
     courseDates.push({ date: endDate, score: null });
+
+    console.log(almostEndDate, endDate)
 
     return courseDates;
   }
@@ -210,6 +215,10 @@ export class CalificacionesComponent implements OnInit {
 
   generarGrafica() {
     const objeto: any = {};
+    const startDateValue = '2024-05-06'; // ejemplo de fecha de inicio
+    const checkDateValue = '2024-05-29'; // ejemplo de fecha de revisión
+    const examDateValue = '2024-05-30'; // ejemplo de fecha de examen
+    const scheduleValue = 'Monday-Thursday'; // ejemplo de horario
     const params = this.activatedRoute.snapshot.params;
     this.nombreAlumno = params['id'];
     this.calificacion.id_grupo = params['idG'];
@@ -219,6 +228,13 @@ export class CalificacionesComponent implements OnInit {
         .subscribe((res) => {
           this.calificaciones = res;
           console.log(this.calificaciones);
+          const tmpDates: any[] = this.generateCourseDates(
+            startDateValue,
+            checkDateValue,
+            examDateValue,
+            scheduleValue
+          );
+          console.log(tmpDates)
           for (let i = 0; i < this.calificaciones[0].length; i++) {
             objeto[i] = this.calificaciones[0][i];
             this.calificacionesAlumno.push(

@@ -121,35 +121,34 @@ export class GruposComponent implements OnInit {
 
   eliminarGrupo(id: number) {
     Swal.fire({
-      title: 'Delete this group?',
-      text: "You won't be able to revert this!",
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Sí, eliminarlo!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.gruposService.deleteGrupo(id.toString()).subscribe(
+        this.gruposService.deleteGrupo(id).subscribe(
           (res) => {
-            console.log(res);
-            setTimeout(() => {
-              location.reload();
-            }, 2500);
-            Swal.fire({
-              title: 'Done!',
-              text: 'The group has been deleted successfully',
-              icon: 'success',
-            });
+            Swal.fire('Eliminado!', 'El grupo ha sido eliminado.', 'success');
+            this.recargar();
           },
-
           (err) => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `${err.error.msg}`,
-              footer: '<a href="#">Why do I have this issue?</a>',
-            });
+            if (err.status === 400) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '¡No se puede eliminar el grupo porque tiene clases asociadas!',
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '¡Algo salió mal!',
+              });
+            }
           }
         );
       }
@@ -180,5 +179,5 @@ export class GruposComponent implements OnInit {
     } else {
       return 'Maestro no encontrado';
     }
-  }  
+  }
 }
