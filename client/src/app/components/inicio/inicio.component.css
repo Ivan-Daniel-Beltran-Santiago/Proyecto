@@ -1,19 +1,13 @@
-
-#nav{
-    background-color: #023047;
+#nav {
+  background-color: #023047;
 }
 
+#button {
+  width: 130px;
+  height: 45px;
+  text-align: center;
 
-
-
-#button{
-    width: 130px;
-    height: 45px;
-    text-align: center;
-    
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-  
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
-

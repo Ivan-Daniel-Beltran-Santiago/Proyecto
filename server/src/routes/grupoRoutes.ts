@@ -14,7 +14,7 @@ class GrupoRoutes {
     this.router.get("/", validateToken, grupoController.list);
     this.router.get("/:id", validateToken, grupoController.listOne);
     this.router.put("/:id", validateToken, grupoController.updateGrupo);
-    this.router.delete("/:id", validateToken, grupoController.deleteGrupo); // Añadir esta línea
+    this.router.delete("/:id", validateToken, grupoController.deleteGrupo);
   }
 }
 

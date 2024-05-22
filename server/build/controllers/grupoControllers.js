@@ -45,7 +45,7 @@ class GrupoController {
                 }
                 else {
                     const grupo = yield database_1.default.query("INSERT INTO grupo SET ?", [req.body]);
-                    res.json({ message: "Grupo agregado Correctamente" });
+                    res.json({ message: "Grupo agregado correctamente" });
                 }
             }
             catch (error) {
@@ -59,7 +59,7 @@ class GrupoController {
             const id = req.params.id;
             const datos = req.body;
             yield database_1.default.query("UPDATE grupo SET ? WHERE id_grupo = ?", [datos, id]);
-            res.json({ message: "Grupo updated" });
+            res.json({ message: "Grupo actualizado" });
         });
     }
     deleteGrupo(req, res) {

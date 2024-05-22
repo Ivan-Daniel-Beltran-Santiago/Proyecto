@@ -31,7 +31,7 @@ class GrupoController {
       } else {
         const grupo = await db.query("INSERT INTO grupo SET ?", [req.body]);
 
-        res.json({ message: "Grupo agregado Correctamente" });
+        res.json({ message: "Grupo agregado correctamente" });
       }
     } catch (error) {
       console.error("Error al ejecutar la consulta MySQL:", error);
@@ -43,7 +43,7 @@ class GrupoController {
     const id = req.params.id;
     const datos = req.body;
     await db.query("UPDATE grupo SET ? WHERE id_grupo = ?", [datos, id]);
-    res.json({ message: "Grupo updated" });
+    res.json({ message: "Grupo actualizado" });
   }
 
   public async deleteGrupo(req: Request, res: Response): Promise<void> {

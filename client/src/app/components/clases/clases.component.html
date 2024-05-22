@@ -177,15 +177,44 @@
       <label
         for="email"
         class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
-        >Language</label
+        >Idioma</label
       >
       <div class="control">
         <div class="select">
-          <select [(ngModel)]="grupo.Idioma" name="idioma" required>
-            <option>Select Language</option>
+          <select [(ngModel)]="grupo.idioma" name="idioma" required>
+            <option>Selecciona idioma</option>
             <option value="English">English</option>
             <option value="Spanish">Spanish</option>
             <option value="French">French</option>
+          </select>
+        </div>
+      </div>
+      <label
+        for="email"
+        class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+        >Módulo de idioma</label
+      >
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="grupo.modulo_idioma" name="modulo_idioma" required>
+            <option>Selecciona módulo idioma</option>
+            <option value="Basic English">Inglés básico</option>
+            <option value="Intermediate English">Inglés intermedio</option>
+            <option value="Advanced English">Inglés avanzado</option>
+          </select>
+        </div>
+      </div>
+      <label
+        for="email"
+        class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+        >Submódulo de idioma</label
+      >
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="grupo.submodulo_idioma" name="submodulo_idioma" required>
+            <option>Selecciona submódulo de idioma</option>
+            <option value="English 1A">Inglés 1A</option>
+            <option value="English 1B">Inglés 1B</option>
           </select>
         </div>
       </div>

@@ -23,11 +23,13 @@ export class GruposComponent implements OnInit {
   grupo: Grupo = {
     nombre_grupo: '',
     categoria: '',
-    Idioma: '',
+    idioma: '',
     fecha_inicio: '',
     fecha_final: '',
     id_maestro: 0,
     id_maestro2: 0,
+    modulo_idioma: "",
+    submodulo_idioma: ""
   };
   constructor(
     private gruposService: GruposService,

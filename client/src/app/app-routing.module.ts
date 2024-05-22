@@ -10,7 +10,6 @@ import { HorariosComponent } from './components/horarios/horarios.component';
 import { UsersComponent } from './components/users/users.component';
 import { MaestrosListComponent } from './components/maestros-list/maestros-list.component';
 import { AlumnosListComponent } from './components/alumnos-list/alumnos-list.component';
-import { Error404Component } from './components/error404/error404.component';
 import { HorariosFormComponent } from './components/horarios-form/horarios-form.component';
 import { UpdateFormComponent } from './components/update-form/update-form.component';
 import { AdminListComponent } from './components/admin-list/admin-list.component';
@@ -18,6 +17,7 @@ import { CalificacionesFormComponent } from './components/calificaciones-form/ca
 import { CalificacionesComponent } from './components/calificaciones/calificaciones.component';
 import { CalificacionesListComponent } from './components/calificaciones-list/calificaciones-list.component';
 import { ClasesComponent } from './components/clases/clases.component';
+import { CursosComponent } from './components/cursos/cursos.component';
 import { GruposComponent } from './components/grupos/grupos.component';
 import { GrabacionesComponent } from './components/grabaciones/grabaciones.component';
 import { MaterialesComponent } from './components/materiales/materiales.component';
@@ -91,6 +91,11 @@ const routes: Routes = [
   {
     path: 'grupos',
     component: GruposComponent,
+    canActivate: [adminGuardGuard],
+  },
+  {
+    path: 'cursos',
+    component: CursosComponent,
     canActivate: [adminGuardGuard],
   },
   { path: 'grabaciones', component: GrabacionesComponent },

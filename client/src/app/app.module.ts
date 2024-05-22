@@ -61,6 +61,7 @@ import { TagManagerEditTagComponent } from './components/tag-manager/tag-manager
 import { TagManagerDeleteTagComponent } from './components/tag-manager/tag-manager-delete-tag/tag-manager-delete-tag.component';
 import { TagManagerAssignTagsComponent } from './components/tag-manager/tag-manager-assign-tags/tag-manager-assign-tags.component';
 import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
+import { CursosComponent } from './components/cursos/cursos.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { TagManagerService } from 'src/app/services/TagManager/tag-manager.servi
     TagManagerEditTagComponent,
     TagManagerAssignTagsComponent,
     TagManagerDeleteTagComponent,
+    CursosComponent,
   ],
   imports: [
     BrowserModule,

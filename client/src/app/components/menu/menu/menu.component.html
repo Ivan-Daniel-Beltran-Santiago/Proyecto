@@ -28,6 +28,7 @@
           </ul>
         </li>
         <li *ngIf="isAdmin"><a routerLink="/grupos">Grupos</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/cursos">Cursos</a></li>
         <li><a routerLink="/clases">Clases</a></li>
         <li *ngIf="isAdmin || isMaestro" class="has-dropdown">
           <a>Horarios</a>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Horario } from 'src/app/models/horarios';
-import { ClasesService } from 'src/app/services/clases/clases.service';
 import { HorariosService } from 'src/app/services/horarios/horarios.service';
 import { MaestrosService } from 'src/app/services/maestros/maestros.service';
 import { GruposService } from 'src/app/services/grupos/grupos.service';
@@ -24,8 +23,6 @@ export class HorariosFormComponent implements OnInit {
   arrayGrupos: any = [];
   edit: boolean = false;
   horario: Horario = {
-    //idioma:"",
-    //dia:"",
     Hora_inicio: '',
     Hora_final: '',
     semana: 0,
@@ -40,11 +37,13 @@ export class HorariosFormComponent implements OnInit {
   grupo: Grupo = {
     nombre_grupo: '',
     categoria: '',
-    Idioma: '',
+    idioma: '',
     fecha_inicio: '',
     fecha_final: '',
     id_maestro: 0,
     id_maestro2: 0,
+    modulo_idioma: "",
+    submodulo_idioma: ""
   };
   nombreUsuario = this.authService.getNameFromToken();
   isAdmin = this.authService.isAdmin();
@@ -106,8 +105,8 @@ export class HorariosFormComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   saveHorario() {
@@ -193,14 +192,9 @@ export class HorariosFormComponent implements OnInit {
     } else {
       return 'Maestros no cargados';
     }
-  }  
+  }
 
   obtenerNombreMaestro2(idMaestro: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-
     const maestro = this.arrayMaestros[0].find(
       (m: { id_user: number }) => m.id_user === idMaestro
     );

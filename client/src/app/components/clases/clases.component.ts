@@ -31,12 +31,14 @@ export class ClasesComponent implements OnInit {
   grupo: Grupo = {
     nombre_grupo: '',
     categoria: '',
-    Idioma: '',
+    idioma: '',
     id_maestro: 0,
     id_maestro2: 0,
     fecha_inicio: '',
     fecha_revision: '',
     fecha_final: '',
+    modulo_idioma: "",
+    submodulo_idioma: ""
   };
   clase: Clase = {
     id_grupo: 0,
