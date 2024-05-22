@@ -68,8 +68,6 @@
                 (click)="getAlumnos(clase.id_grupo)"
                 class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
               >
-                <!-- Heroicon name: solid/mail -->
-
                 <span class="ml-3">View list</span>
               </a>
             </div>
@@ -81,16 +79,12 @@
                 (click)="copiarGrupo(clase.id_grupo)"
                 class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
               >
-                <!-- Heroicon name: solid/mail -->
-
                 <span class="ml-3">Copiar Grupo</span>
               </a>
             </div>
           </div>
         </div>
       </li>
-
-      <!-- More people... -->
     </ul>
     <h6 *ngIf="agregarGrupo">Ingresar Nombre Nuevo del Grupo</h6>
     <input
@@ -230,7 +224,6 @@
                 <td
                   class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                 >
-                  <!-- component -->
                   <button
                     *ngIf="isAdmin"
                     (click)="borrarAlumno(alumno.id_user, alumno.id_grupo)"

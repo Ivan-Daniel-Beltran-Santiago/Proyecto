@@ -6,39 +6,39 @@
         <title>Document</title>
     </head>
     <body>
-        <app-menu></app-menu>
+      <app-menu></app-menu>
         <h4>Crear curso</h4>
-        <div>
-            <div class="relative border border-gray-300 rounded-md px-4 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600" style="margin-top: 10px;">
-              <label for="name" class="absolute -top-2 left-2 -mt-px inline-block px-1 bg-white text-xs font-medium text-gray-900">Nombre de la etiqueta</label>
-              <input type="text" name="name" id="name" class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="Inserte aquí el nombre de la etiqueta">
-            </div>
-            <div>
-              <label for="location" class="mb-1 mt-4 block text-sm font-medium text-gray-700 py-3">Selecciona la categoría de etiqueta: </label>
-              <select id="location" name="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+        <div class="course_creator">
+          <div class="relative border border-gray-300 rounded-md px-4 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600" style="margin-top: 10px;">
+            <label for="name" class="absolute -top-2 left-2 -mt-px inline-block px-1 bg-white text-xs font-medium text-gray-900">Nombre de la etiqueta</label>
+            <input type="text" name="name" id="name" class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="Inserte aquí el nombre de la etiqueta" autocomplete="name">
+          </div>
+          <div>
+            <label for="location" class="mb-1 mt-4 block text-sm font-medium text-gray-700 py-3">Selecciona la categoría de etiqueta: </label>
+            <select id="location" name="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+              <option disabled selected value="">Selecciona una opción</option>
+              <option>Nuevo curso de idiomas</option>
+              <option>Nuevo módulo para curso de idiomas</option>
+              <option>Nuevo submódulo para curso de idiomas</option>
+            </select>
+          </div>
+          <div *ngIf="selectedCategory === 'Nuevo módulo para curso de idiomas'">
+            <label for="course" class="mb-1 mt-4 block text-sm font-medium text-gray-700 py-3">Selecciona el curso al que pertenece el módulo: </label>
+            <select id="course" name="course" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" [(ngModel)]="selectedCourse">
+              <option disabled selected value="">Selecciona una opción</option>
+              <option *ngFor="let tag of parentTags">{{ tag }}</option>
+            </select>
+          </div>  
+          <div *ngIf="selectedCategory === 'Nuevo submódulo para curso de idiomas'">
+            <label for="module" class="mb-1 mt-4 block text-sm font-medium text-gray-700 py-3">Selecciona el módulo al que pertenece el submódulo: </label>
+            <select id="module" name="module" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" [(ngModel)]="selectedSubCategory">
                 <option disabled selected value="">Selecciona una opción</option>
-                <option>Nuevo curso de idiomas</option>
-                <option>Nuevo módulo para curso de idiomas</option>
-                <option>Nuevo submódulo para curso de idiomas</option>
-              </select>
-            </div>
-            <div>
-              <label for="course" class="mb-1 mt-4 block text-sm font-medium text-gray-700 py-3">Selecciona el curso al que pertenece el módulo: </label>
-              <select id="course" name="course" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                <option disabled selected value="">Selecciona una opción</option>
-                <option></option>
-              </select>
-            </div>  
-            <div>
-              <label for="module" class="mb-1 mt-4 block text-sm font-medium text-gray-700 py-3">Selecciona el módulo al que pertenece el submódulo: </label>
-              <select id="module" name="module" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                  <option disabled selected value="">Selecciona una opción</option>
-                  <option></option>
-              </select>
-            </div> 
-            <div style="margin-top: 25px;">
-              <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Crear</button>
-            </div>  
-        </div>
+                <option *ngFor="let module of modules">{{ module.nombre }}</option>
+            </select>
+          </div> 
+          <div *ngIf="selectedCategory === 'Nuevo curso de idiomas' || (selectedCategory === 'Nuevo módulo para curso de idiomas' && selectedCourse) || (selectedCategory === 'Nuevo submódulo para curso de idiomas' && selectedSubCategory)" style="margin-top: 25px;">
+            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="createTag()">Crear</button>
+          </div>
+        </div>  
     </body>
 </html>

@@ -18,12 +18,24 @@ class ClaseController {
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const clase = yield database_1.default.query("SELECT * FROM clase c JOIN grupo g ON c.id_grupo = g.id_grupo GROUP BY g.id_grupo;");
+                const clase = yield database_1.default.query(`SELECT g.id_grupo, 
+        MAX(c.id_clase) AS id_clase, 
+        MAX(c.id_alumno) AS id_alumno, 
+        MAX(c.fecha_inscripcion) AS fecha_inscripcion, 
+        MAX(c.fecha_baja) AS fecha_baja,
+        g.nombre_grupo, g.Idioma, g.categoria, g.id_maestro, g.id_maestro2, 
+        g.fecha_inicio, g.fecha_revision, g.fecha_final
+ FROM clase c
+ JOIN grupo g ON c.id_grupo = g.id_grupo
+ GROUP BY g.id_grupo, g.nombre_grupo, g.Idioma, g.categoria, g.id_maestro, g.id_maestro2, 
+          g.fecha_inicio, g.fecha_revision, g.fecha_final;`);
                 res.json(clase);
             }
             catch (error) {
+                console.error("Error en la consulta:", error);
                 res.status(400).json({
                     msg: "Error en la consulta",
+                    error: error.message,
                 });
             }
         });

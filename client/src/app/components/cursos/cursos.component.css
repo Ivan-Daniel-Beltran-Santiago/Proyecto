@@ -3,3 +3,7 @@ h4{
     display: flex;
     justify-content: center;
 }
+
+.course_creator{
+    padding: 2em;
+}

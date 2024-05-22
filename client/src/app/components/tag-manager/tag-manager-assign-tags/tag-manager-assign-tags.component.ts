@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MaterialesServicesService } from 'src/app/services/materiales/materiales-services.service';
 import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
 

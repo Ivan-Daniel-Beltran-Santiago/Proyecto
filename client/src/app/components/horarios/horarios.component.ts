@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HorariosService } from 'src/app/services/horarios/horarios.service';
 import { MaestrosService } from 'src/app/services/maestros/maestros.service';
 import { ClasesService } from 'src/app/services/clases/clases.service';
@@ -13,9 +7,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
-
-// Importar sin definiciones de tipo
-import * as XLSXStyle from 'xlsx-style';
 
 @Component({
   selector: 'app-horarios',
@@ -50,7 +41,7 @@ export class HorariosComponent implements OnInit {
   isAdmin = this.authService.isAdmin();
   isMaestro = this.authService.isMaestro();
   nombreUsuario = this.authService.getNameFromToken();
-  
+
   ngOnInit() {
     this.obtenerHorarios();
     this.obtenerClases();
@@ -59,13 +50,11 @@ export class HorariosComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   obtenerClases() {
-    let objeto: any = {};
-
     this.clasesService.getClases().subscribe(
       (res) => {
         this.arrayClases = res;
@@ -77,8 +66,6 @@ export class HorariosComponent implements OnInit {
   }
 
   obtenerMaestros() {
-    let objeto: any = {};
-
     this.maestrosService.getMaestros().subscribe(
       (res) => {
         this.arrayMaestros = res;
@@ -133,31 +120,6 @@ export class HorariosComponent implements OnInit {
     XLSX.writeFile(wb, 'horario.xlsx');
   }
 
-  private obtenerDatosParaExportar(): any[][] {
-    const datos: any[][] = [];
-
-    // Recorrer las filas de la tabla
-    for (let i = 0; i < this.tabla.nativeElement.rows.length; i++) {
-      const fila: any[] = [];
-      const celdas = this.tabla.nativeElement.rows[i].cells;
-
-      // Recorrer las celdas de cada fila
-      for (let j = 0; j < celdas.length; j++) {
-        // Excluir celdas con botones (o cualquier otro criterio que desees)
-        if (!celdas[j].querySelector('button')) {
-          fila.push(celdas[j].innerText);
-        }
-      }
-
-      // Agregar la fila al conjunto de datos si no está vacía
-      if (fila.length > 0) {
-        datos.push(fila);
-      }
-    }
-
-    return datos;
-  }
-
   obtenerGrupo(idGrupo: number): string {
     if (!this.arrayGrupos || this.arrayGrupos.length === 0) {
       return 'No hay grupos disponibles';
@@ -173,9 +135,8 @@ export class HorariosComponent implements OnInit {
     clases: any[],
     usuarios: any[]
   ): string {
-    // Encuentra la clase correspondiente al id_grupo
     if (!clases || !usuarios) {
-      return ''; // Manejo de caso donde clases o usuarios sean undefined
+      return '';
     }
 
     const clase = clases.find((c) => c.id_grupo === idGrupo);
@@ -183,7 +144,8 @@ export class HorariosComponent implements OnInit {
     if (clase) {
       const idMaestro = clase.id_maestro;
       const usuario = usuarios.find((u) => u.id_user === idMaestro);
-      return usuario ? usuario.first_nameU : '';
+      return usuario ? `${usuario.first_nameU} ${usuario.last_nameU}`
+      : 'Maestro no encontrado';;
     }
 
     return '';
@@ -194,12 +156,10 @@ export class HorariosComponent implements OnInit {
       return 'Datos no disponibles';
     }
 
-    // Encuentra la clase correspondiente al id_grupo
     const clase = this.arrayClases[0].find(
       (c: { id_grupo: number }) => c.id_grupo === idGrupo
     );
 
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
     if (clase) {
       const maestro = this.arrayMaestros[0].find(
         (m: { id_user: number }) => m.id_user === clase.id_maestro2

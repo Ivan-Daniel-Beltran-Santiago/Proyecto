@@ -79,8 +79,8 @@ export class MaterialesComponent {
   }
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   selectFiles(event: any) {
@@ -143,7 +143,7 @@ export class MaterialesComponent {
 
   viewFile(filename: string) {
     const fileUrl = this.getFileUrl(filename);
-    window.open(fileUrl, '_blank'); // Abre el archivo en una nueva pestaña del navegador
+    window.open(fileUrl, '_blank');
   }
 
   deleteFile(filename: string) {
@@ -375,7 +375,6 @@ export class MaterialesComponent {
         this.arrayFiles = this.processFiles(files);
       });
     } else {
-      // Si no se selecciona ninguna etiqueta, mostrar todos los archivos
       this.updateFiles();
     }
   }

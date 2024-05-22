@@ -104,50 +104,6 @@
                       </p>
                       <br />
                     </td>
-                    <td
-                      *ngIf="horario.semana == 1"
-                      class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap"
-                    >
-                      <p *ngIf="horario.dia === 'Monday-Thursday'">
-                        Group : {{ obtenerGrupo(horario.id_grupo) }}
-                      </p>
-                      <br />
-                      <p *ngIf="horario.dia === 'Monday-Thursday'">
-                        Teacher : {{ obtenerNombreMaestro(horario.id_grupo, arrayClases[0], arrayMaestros[0]) }}
-                      </p>
-                      <br />
-                    </td>
-                    <td
-                      *ngIf="horario.semana == 1"
-                      class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap"
-                    >
-                      <p *ngIf="horario.dia === 'Monday-Thursday'">
-                        Group : {{ obtenerGrupo(horario.id_grupo) }}
-                      </p>
-                      <br />
-                      <p *ngIf="horario.dia === 'Monday-Thursday'">
-                        Teacher : {{ obtenerNombreMaestro2(horario.id_grupo) }}
-                      </p>
-                      <br />
-                    </td>
-
-                    <td
-                      *ngIf="horario.semana == 1"
-                      class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap"
-                    ></td>
-                    <td
-                      *ngIf="horario.semana == 1"
-                      class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap"
-                    >
-                      <p *ngIf="horario.dia === 'Saturday'">
-                        Group : {{ obtenerGrupo(horario.id_grupo) }}
-                      </p>
-                      <br />
-                      <p *ngIf="horario.dia === 'Saturday'">
-                        Teacher : {{ obtenerNombreMaestro(horario.id_grupo, arrayClases[0], arrayMaestros[0]) }}
-                      </p>
-                      <br />
-                    </td>
                   </tr>
                 </tbody>
               </table>

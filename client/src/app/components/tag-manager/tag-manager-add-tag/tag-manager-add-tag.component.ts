@@ -16,7 +16,6 @@ export class TagManagerAddTagComponent {
   selectedModule: string | undefined;
 
   constructor(private tagManagerService: TagManagerService) {
-    // Asegúrate de inyectar correctamente el servicio
     this.selectedCategory = '';
     this.selectedSubCategory = '';
     this.selectedCourse = '';
@@ -32,25 +31,23 @@ export class TagManagerAddTagComponent {
 
   validateSubcategorySelector() {
     if (this.selectedCategory === 'Nuevo curso de idiomas') {
-      return true; // Permitir siempre que se seleccione 'Nuevo curso de idiomas'
+      return true;
     } else if (this.selectedCategory === 'Nuevo módulo para curso de idiomas') {
-      return true; // Permitir siempre que se seleccione 'Nuevo módulo para curso de idiomas'
+      return true;
     } else if (
       this.selectedCategory === 'Nuevo submódulo para curso de idiomas'
     ) {
-      return this.selectedSubCategory !== undefined; // Permitir solo si se selecciona un módulo
+      return this.selectedSubCategory !== undefined;
     }
-    return false; // Restringir para otros casos
+    return false;
   }
 
   onCategoryChange() {
     if (this.selectedCategory === 'Nuevo módulo para curso de idiomas') {
-      // Restablecer la selección del submódulo si se elige esta opción
       this.selectedSubCategory = '';
     } else if (
       this.selectedCategory === 'Nuevo submódulo para curso de idiomas'
     ) {
-      // Cargar los módulos solo si se elige esta opción
       this.loadModules();
     }
   }
@@ -71,8 +68,8 @@ export class TagManagerAddTagComponent {
         } else {
           const tagData = {
             name: tagName,
-            type: 'Curso', // Tipo de etiqueta predeterminado
-            parent_id: null as number | null, // No hay un padre para el curso
+            type: 'Curso',
+            parent_id: null as number | null,
           };
 
           if (this.selectedCategory === 'Nuevo módulo para curso de idiomas') {
@@ -80,14 +77,12 @@ export class TagManagerAddTagComponent {
               alert('Por favor, selecciona un curso.');
               return;
             }
-            // Obtener el ID del curso seleccionado
             this.tagManagerService
               .getTagIdByName(this.selectedCourse, 'Curso')
               .subscribe(
                 (courseId) => {
                   if (courseId) {
-                    // Comprueba si courseId existe (no es null o undefined)
-                    tagData.type = 'Módulo'; // Tipo de etiqueta
+                    tagData.type = 'Módulo';
                     tagData.parent_id = courseId;
                     this.createTagWithParent(tagData);
                   } else {
@@ -105,17 +100,14 @@ export class TagManagerAddTagComponent {
             this.selectedCategory === 'Nuevo submódulo para curso de idiomas'
           ) {
             if (!this.selectedSubCategory) {
-              // Cambio aquí
-              alert('Por favor, selecciona un módulo.'); // Cambio aquí
+              alert('Por favor, selecciona un módulo.');
               return;
             }
-            // Obtener el ID del módulo seleccionado
             this.tagManagerService
               .getTagIdByName(this.selectedSubCategory, 'Módulo')
               .subscribe(
                 (moduleId) => {
                   if (moduleId) {
-                    // Comprueba si moduleId existe (no es null o undefined)
                     tagData.type = 'Submódulo'; // Tipo de etiqueta
                     tagData.parent_id = moduleId;
                     this.createTagWithParent(tagData);
@@ -131,7 +123,6 @@ export class TagManagerAddTagComponent {
                 }
               );
           } else {
-            // Si no es 'Nuevo módulo para curso de idiomas' ni 'Nuevo submódulo para curso de idiomas'
             this.createTagWithParent(tagData);
           }
         }
