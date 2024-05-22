@@ -232,3 +232,38 @@ button:focus {
 h4{
   text-align: center;
 }
+
+.toggle-checkbox {
+  display: none;
+}
+
+.toggle-label {
+  display: block;
+  width: 50px; /* Ancho del botón deslizante */
+  height: 26px; /* Altura del botón deslizante */
+  background-color: #ccc;
+  border-radius: 20px; /* Radio de borde para hacerlo redondeado */
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle-label:before {
+  content: '';
+  position: absolute;
+  width: 22px; /* Ancho del botón deslizante circular */
+  height: 22px; /* Altura del botón deslizante circular */
+  border-radius: 50%; /* Radio de borde para hacerlo circular */
+  background-color: white;
+  top: 50%;
+  left: 2px;
+  transform: translateY(-50%);
+  transition: 0.2s;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #2196F3; /* Cambiar color de fondo cuando está activado */
+}
+
+.toggle-checkbox:checked + .toggle-label:before {
+  left: calc(100% - 24px); /* Mover el botón deslizante circular a la derecha cuando está activado */
+}
