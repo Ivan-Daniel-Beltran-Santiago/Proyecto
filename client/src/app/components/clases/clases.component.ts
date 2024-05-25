@@ -20,6 +20,7 @@ export class ClasesComponent implements OnInit {
   arrayAlumnos: any = [];
   arrayGrupos: any = [];
   arrayCursos: string[] = [];
+  arrayModulos: any[] = [];
 
   seleccion1: boolean = false;
   seleccion2: boolean = false;
@@ -97,6 +98,14 @@ export class ClasesComponent implements OnInit {
     this.tagManagerService.getCourses().subscribe(
       (res) => {
         this.arrayCursos = res;
+        console.log(res);
+      },
+      (err) => console.error(err)
+    );
+
+    this.tagManagerService.getModules().subscribe(
+      (res) => {
+        this.arrayModulos = res;
         console.log(res);
       },
       (err) => console.error(err)

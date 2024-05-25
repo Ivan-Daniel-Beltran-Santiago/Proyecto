@@ -16,6 +16,7 @@ export class GruposComponent implements OnInit {
   arrayGrupos: any = [];
   arrayMaestros: any = [];
   arrayCursos: string[] = [];
+  arrayModulos: any[] = [];
   edit: boolean = false;
   idG: any;
   isAdmin = this.authService.isAdmin();
@@ -62,6 +63,14 @@ export class GruposComponent implements OnInit {
     this.tagManagerService.getCourses().subscribe(
       (res) => {
         this.arrayCursos = res;
+        console.log(res);
+      },
+      (err) => console.error(err)
+    );
+
+    this.tagManagerService.getModules().subscribe(
+      (res) => {
+        this.arrayModulos = res;
         console.log(res);
       },
       (err) => console.error(err)

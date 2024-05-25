@@ -194,10 +194,8 @@
       <div class="control">
         <div class="select">
           <select [(ngModel)]="grupo.modulo_idioma" name="modulo_idioma" required>
-            <option disabled selected value="">Selecciona módulo idioma</option>
-            <option value="Basic English">Inglés básico</option>
-            <option value="Intermediate English">Inglés intermedio</option>
-            <option value="Advanced English">Inglés avanzado</option>
+            <option disabled selected value="">Selecciona submódulo de idioma</option>
+            <option *ngFor="let modulo of arrayModulos" [value]="modulo.nombre">{{ modulo.nombre }}</option>      
           </select>
         </div>
       </div>
