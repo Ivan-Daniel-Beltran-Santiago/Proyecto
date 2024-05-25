@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="document_viewer">
-        <div class="file-row"> <!-- Nuevo contenedor de fila -->
+        <div class="file-row">
           <div *ngFor="let file of arrayFiles; let i = index" class="new_document_viewer">
             <div class="image_box">
               <div class="images" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2338/2338582.png');" (click)="viewFile(file.name.nombre)" target="_blank"></div>
@@ -63,7 +63,7 @@
             <div class="text_box">
               <h2 class="item">{{ file.name.nombre }}</h2>
               <h3 class="file_type">{{ file.type }}</h3>
-              <div class="etiquetas"> <!-- Nuevo div para las etiquetas -->
+              <div class="etiquetas">
                 <p *ngFor="let etiqueta of file.etiquetas; let j = index" class="etiqueta">
                   {{ etiqueta }}
                   <span class="eliminar-etiqueta" (click)="eliminarEtiqueta(file, j)">X</span>

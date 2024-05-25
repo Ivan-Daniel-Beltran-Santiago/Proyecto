@@ -129,7 +129,6 @@
                 <td
                   class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                 >
-                  <!-- component -->
                   <button
                     (click)="escogerGrupo(grupo.id_grupo)"
                     data-ripple-light="true"
@@ -168,7 +167,7 @@
     <h5 *ngIf="agregarGrupo" style="margin-left: 30px">Categoria del Grupo</h5>
     <div class="select" *ngIf="agregarGrupo" style="margin-left: 30px">
       <select [(ngModel)]="grupo.categoria" name="horario.id_maestro" required>
-        <option>Select Category</option>
+        <option disabled selected value="">Selecciona Categoría</option>
         <option value="Monday-Thursday">Monday Thursday</option>
         <option value="Saturday">Saturday</option>
       </select>
@@ -183,9 +182,7 @@
         <div class="select">
           <select [(ngModel)]="grupo.idioma" name="idioma" required>
             <option disabled selected value="">Selecciona idioma</option>
-            <option value="English">English</option>
-            <option value="Spanish">Spanish</option>
-            <option value="French">French</option>
+            <option *ngFor="let curso of arrayCursos" [value]="curso">{{ curso }}</option> 
           </select>
         </div>
       </div>
@@ -409,7 +406,6 @@
                 <td
                   class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                 >
-                  <!-- component -->
                   <button
                     (click)="agregarClase(alumno.id_user)"
                     data-ripple-light="true"

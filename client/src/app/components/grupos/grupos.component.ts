@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { GruposService } from 'src/app/services/grupos/grupos.service';
 import { MaestrosService } from 'src/app/services/maestros/maestros.service';
 import { Grupo } from 'src/app/models/grupos';
+import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,6 +15,7 @@ import Swal from 'sweetalert2';
 export class GruposComponent implements OnInit {
   arrayGrupos: any = [];
   arrayMaestros: any = [];
+  arrayCursos: string[] = [];
   edit: boolean = false;
   idG: any;
   isAdmin = this.authService.isAdmin();
@@ -28,13 +30,14 @@ export class GruposComponent implements OnInit {
     fecha_final: '',
     id_maestro: 0,
     id_maestro2: 0,
-    modulo_idioma: "",
-    submodulo_idioma: ""
+    modulo_idioma: '',
+    submodulo_idioma: '',
   };
   constructor(
     private gruposService: GruposService,
     private maestrosService: MaestrosService,
     private authService: AuthService,
+    private tagManagerService: TagManagerService,
     private router: Router
   ) {}
 
@@ -51,6 +54,14 @@ export class GruposComponent implements OnInit {
     this.maestrosService.getMaestros().subscribe(
       (res) => {
         this.arrayMaestros = res;
+        console.log(res);
+      },
+      (err) => console.error(err)
+    );
+
+    this.tagManagerService.getCourses().subscribe(
+      (res) => {
+        this.arrayCursos = res;
         console.log(res);
       },
       (err) => console.error(err)

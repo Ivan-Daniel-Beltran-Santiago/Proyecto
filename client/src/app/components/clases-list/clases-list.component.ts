@@ -60,8 +60,8 @@ export class ClasesListComponent implements OnInit {
   nombreUsuario = this.authService.getNameFromToken();
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   fechaHoy() {
@@ -256,7 +256,6 @@ export class ClasesListComponent implements OnInit {
   }
 
   obtenerNombreMaestro(idMaestro: number): string {
-    // Verificar si arrayMaestros[0] está definido
     if (this.arrayMaestros && this.arrayMaestros[0]) {
       const maestro = this.arrayMaestros[0].find(
         (m: { id_user: number }) => m.id_user === idMaestro
@@ -270,7 +269,6 @@ export class ClasesListComponent implements OnInit {
   }
 
   obtenerNombreMaestro2(idMaestro: number): string {
-    // Verificar si arrayMaestros[0] está definido
     if (this.arrayMaestros && this.arrayMaestros[0]) {
       const maestro = this.arrayMaestros[0].find(
         (m: { id_user: number }) => m.id_user === idMaestro

@@ -105,7 +105,7 @@
             name="horario.id_maestro"
             required
           >
-            <option>Select Category</option>
+            <option disabled selected value="">Selecciona Categoría</option>
             <option value="Monday-Thursday">Monday Thursday</option>
             <option value="Saturday">Saturday</option>
           </select>
@@ -121,9 +121,7 @@
             <div class="select">
               <select [(ngModel)]="grupo.idioma" name="idioma" required>
                 <option disabled selected value="">Selecciona idioma</option>
-                <option value="English">English</option>
-                <option value="Spanish">Spanish</option>
-                <option value="French">French</option>
+                <option *ngFor="let curso of arrayCursos" [value]="curso">{{ curso }}</option>        
               </select>
             </div>
           </div>

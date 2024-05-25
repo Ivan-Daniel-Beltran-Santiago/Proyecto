@@ -8,6 +8,7 @@ import { GruposService } from 'src/app/services/grupos/grupos.service';
 import { ClasesService } from 'src/app/services/clases/clases.service';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
+import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
 
 @Component({
   selector: 'app-clases',
@@ -18,6 +19,7 @@ export class ClasesComponent implements OnInit {
   arrayMaestros: any = [];
   arrayAlumnos: any = [];
   arrayGrupos: any = [];
+  arrayCursos: string[] = [];
 
   seleccion1: boolean = false;
   seleccion2: boolean = false;
@@ -37,8 +39,8 @@ export class ClasesComponent implements OnInit {
     fecha_inicio: '',
     fecha_revision: '',
     fecha_final: '',
-    modulo_idioma: "",
-    submodulo_idioma: ""
+    modulo_idioma: '',
+    submodulo_idioma: '',
   };
   clase: Clase = {
     id_grupo: 0,
@@ -51,6 +53,7 @@ export class ClasesComponent implements OnInit {
     private authService: AuthService,
     private maestrosService: MaestrosService,
     private gruposService: GruposService,
+    private tagManagerService: TagManagerService,
     private router: Router
   ) {}
   ngOnInit(): void {
@@ -90,13 +93,21 @@ export class ClasesComponent implements OnInit {
 
       (err) => console.error(err)
     );
+
+    this.tagManagerService.getCourses().subscribe(
+      (res) => {
+        this.arrayCursos = res;
+        console.log(res);
+      },
+      (err) => console.error(err)
+    );
   }
 
   nombreUsuario = this.authService.getNameFromToken();
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   agregarGrupos() {
@@ -173,7 +184,6 @@ export class ClasesComponent implements OnInit {
         this.claseService.saveClase(this.clase).subscribe(
           (result) => {
             console.log(result);
-            //this.router.navigate(['/horario']);
             Swal.fire({
               title: 'Done!',
               text: 'The student has been added.',
@@ -205,7 +215,6 @@ export class ClasesComponent implements OnInit {
   }
 
   obtenerGrupo(idGrupo: number): any {
-    // Verificar si el arreglo arrayGrupos[0] está definido
     if (this.arrayGrupos[0]) {
       const grupo = this.arrayGrupos[0].find(
         (m: { id_grupo: number }) => m.id_grupo === idGrupo
