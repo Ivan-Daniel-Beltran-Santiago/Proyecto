@@ -15,7 +15,6 @@
               alt="logo"
               style="width: px; height: 62px; margin-left: 5px"
           /></a>
-
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"
             ><i class="material-icons">menu</i></a
           >
@@ -37,7 +36,6 @@
           <div class="flex items-center h-full px-20">
             <div>
               <h2 class="text-4xl font-bold text-white">Register</h2>
-
               <p class="max-w-xl mt-3 text-gray-300">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
                 autem ipsa, nulla laboriosam dolores, repellendus perferendis
@@ -46,7 +44,6 @@
             </div>
           </div>
         </div>
-
         <div
           class="flex items-center w-full px-6 mx-auto lg:w-2/6"
           style="margin-top: 80px"
@@ -84,7 +81,6 @@
                     class="block w-full px-4 py1 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
-
                 <div class="mt-1">
                   <div class="flex justify-between mb-2"></div>
                   <div class="flex justify-between mb-2">
@@ -108,7 +104,6 @@
                       >Telephone</label
                     >
                   </div>
-
                   <input
                     type="text"
                     name="telephone"
@@ -167,7 +162,6 @@
                   </div>
                   <div></div>
                 </div>
-
                 <div
                   *ngIf="isAdmin"
                   class="select"
@@ -190,7 +184,6 @@
                     <option value="Inactivo">Inactivo</option>
                   </select>
                 </div>
-
                 <div class="mt-3">
                   <button
                     (click)="edit ? updateUser() : saveUser()"

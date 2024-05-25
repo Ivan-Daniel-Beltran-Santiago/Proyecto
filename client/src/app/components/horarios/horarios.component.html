@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-
   <body>
     <app-menu></app-menu>
     <h4 style="text-align: center">Horarios</h4>
@@ -65,7 +64,6 @@
                       </button>
                       <br />
                       <br />
-
                       <button
                         data-ripple-light="true"
                         *ngIf="isAdmin && horario.semana == 1"
@@ -76,7 +74,6 @@
                         DELETE
                       </button>
                     </td>
-
                     <td
                       *ngIf="horario.semana == 1"
                       class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap"
@@ -85,7 +82,6 @@
                         Group : {{ obtenerGrupo(horario.id_grupo) }}
                       </p>
                       <br />
-
                       <p *ngIf="horario.dia === 'Monday-Thursday'">
                         Teacher : {{ obtenerNombreMaestro(horario.id_grupo, arrayClases[0], arrayMaestros[0]) }}
                       </p>

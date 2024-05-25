@@ -29,12 +29,10 @@
             <dt class="sr-only">Title</dt>
             <dd class="text-gray-500 text-sm">{{ clase.Idioma }} <br /></dd>
             <h4 class="mt-6 text-gray-900 text-sm font-medium">Category</h4>
-
             <dd class="text-gray-500 text-sm">{{ clase.categoria }} <br /></dd>
             <h4 *ngIf="isAdmin" class="mt-6 text-gray-900 text-sm font-medium">
               Teachers
             </h4>
-
             <dd *ngIf="isAdmin" class="mt-3">
               <span
                 class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full"
@@ -62,7 +60,6 @@
         </div>
       </li>
     </ul>
-
     <div *ngIf="obtenerGrab">
       <div *ngFor="let grabaciones of arrayGrabaciones[0]">
         <div class="bg-gray-100 lg:py-12">
@@ -113,7 +110,6 @@
         placeholder="Recording Title"
         class="block w-full px-4 py1 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
       />
-
       <h6 style="margin-left: 30p">Url de Zoom</h6>
       <input
         [(ngModel)]="grabacion.URL"
@@ -122,7 +118,6 @@
         placeholder="Recording URL"
         class="block w-full px-4 py1 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
       />
-
       <div>
         <label
           for="email"
@@ -140,13 +135,11 @@
           class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
         />
       </div>
-
       <div class="flex flex-col">
         <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div class="overflow-hidden">
               <h5 style="text-align: center">Clase</h5>
-
               <input
                 type="text"
                 style="height: 35px; width: 800px; margin-left: 20%"
@@ -189,7 +182,6 @@
                     >
                       Maestro 2
                     </th>
-
                     <th
                       scope="col"
                       class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
@@ -233,7 +225,6 @@
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                   >
-                    <!-- component -->
                     <button
                       (click)="escogerClase(clase.id_clase)"
                       data-ripple-light="true"
@@ -255,7 +246,6 @@
           {{ obtenerIdNombreGrupo(grabacion.id_clase) }}
         </div>
       </div>
-
       <br />
       <button
         (click)="guardarGrabaciones()"
@@ -313,10 +303,8 @@
                 >Haga click para ver la clase</a
               >
               <br />
-
               <br />
               <br />
-
               <button
                 data-ripple-light="true"
                 (click)="eliminarGrabacion(grabaciones.id_grabaciones)"

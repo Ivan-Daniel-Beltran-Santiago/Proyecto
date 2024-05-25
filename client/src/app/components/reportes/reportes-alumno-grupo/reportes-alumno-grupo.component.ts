@@ -7,10 +7,9 @@ import { ReportesService } from 'src/app/services/reportes/reportes.service';
 @Component({
   selector: 'app-reportes-alumno-grupo',
   templateUrl: './reportes-alumno-grupo.component.html',
-  styleUrls: ['./reportes-alumno-grupo.component.css']
+  styleUrls: ['./reportes-alumno-grupo.component.css'],
 })
 export class ReportesAlumnoGrupoComponent implements AfterViewInit {
-
   arrayAlumnos: any = [];
   arrayClases: any = [];
   arrayMaestros: any = [];
@@ -35,15 +34,11 @@ export class ReportesAlumnoGrupoComponent implements AfterViewInit {
     this.generarGrafica2();
   }
 
-  
-
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
   generarGrafica2() {
-    
-
     const objeto: any = {};
     this.reporteService.getAlumno_Grupos().subscribe(
       (res) => {
@@ -80,7 +75,6 @@ export class ReportesAlumnoGrupoComponent implements AfterViewInit {
             data: this.arrayNumeroAlumnosGrupo,
             backgroundColor: 'blue',
             borderColor: 'white',
-            //fill: false,
           },
         ],
       },
@@ -88,22 +82,20 @@ export class ReportesAlumnoGrupoComponent implements AfterViewInit {
         plugins: {
           title: {
             display: true,
-            text: 'Numero de Alumnos por Grupo ', // Aquí puedes especificar el título deseado
+            text: 'Numero de Alumnos por Grupo ',
             font: {
-              size: 16, // Tamaño de fuente del título
+              size: 16,
             },
           },
         },
         scales: {
           y: {
             beginAtZero: true,
-            min: 0, // Comienza en 0
-            max: 30, // Valor máximo en el eje Y
+            min: 0,
+            max: 30,
           },
         },
       },
     });
   }
-
-
 }

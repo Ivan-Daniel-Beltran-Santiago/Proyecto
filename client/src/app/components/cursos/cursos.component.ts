@@ -160,7 +160,7 @@ export class CursosComponent {
                   .subscribe(
                     (moduleId) => {
                       if (moduleId) {
-                        tagData.type = 'Submódulo'; // Tipo de etiqueta
+                        tagData.type = 'Submódulo';
                         tagData.parent_id = moduleId;
                         this.createTagWithParent(tagData);
                       } else {

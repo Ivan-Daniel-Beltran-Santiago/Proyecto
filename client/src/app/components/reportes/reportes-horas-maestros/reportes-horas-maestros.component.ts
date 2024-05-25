@@ -17,7 +17,7 @@ export class ReportesHorasMaestrosComponent {
   isMaestro = this.authService.isMaestro();
   isAlumno: boolean = false;
   mostrar: boolean = false;
-  sueldo : number = 0;
+  sueldo: number = 0;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -29,8 +29,8 @@ export class ReportesHorasMaestrosComponent {
   }
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   getMaestro() {
@@ -44,28 +44,22 @@ export class ReportesHorasMaestrosComponent {
     );
   }
 
-  getSueldo(){
+  getSueldo() {
     this.mostrar = true;
     console.log(this.sueldo);
     this.reportesService.getHoras_Maestro().subscribe(
       (res) => {
         this.arraySueldos = res;
-        
-       
+
         for (let index = 0; index < this.arraySueldos[0].length; index++) {
-          
-          this.arraySueldos[0][index].total_horas =this.arrayHorasMaestros[0][index].total_horas*this.sueldo; 
-          
-          
-          
+          this.arraySueldos[0][index].total_horas =
+            this.arrayHorasMaestros[0][index].total_horas * this.sueldo;
         }
-        
-        console.log(this.arraySueldos[0])
-        
+
+        console.log(this.arraySueldos[0]);
       },
 
       (err) => console.error(err)
     );
-    
   }
 }

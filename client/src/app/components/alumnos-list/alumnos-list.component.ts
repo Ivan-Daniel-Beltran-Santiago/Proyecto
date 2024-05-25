@@ -7,33 +7,31 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-alumnos-list',
   templateUrl: './alumnos-list.component.html',
-  styleUrls: ['./alumnos-list.component.css']
+  styleUrls: ['./alumnos-list.component.css'],
 })
 export class AlumnosListComponent implements OnInit {
-  arrayAlumnos: any = []; 
-  filterPost = ""
+  arrayAlumnos: any = [];
+  filterPost = '';
   isAdmin = this.authService.isAdmin();
-  isMaestro=this.authService.isMaestro();
-  id=this.authService.getIdFromToken();
+  isMaestro = this.authService.isMaestro();
+  id = this.authService.getIdFromToken();
   nombreUsuario = this.authService.getNameFromToken();
-  constructor(private alumnosService: AlumnosService , private router: Router,private authService: AuthService){
-    
-
-  }
+  constructor(
+    private alumnosService: AlumnosService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.getAlumnos();
-    
-
   }
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
-    
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
-  getAlumnos(){
+  getAlumnos() {
     this.alumnosService.getAlumnos().subscribe(
       (res) => {
         this.arrayAlumnos = res;
@@ -44,40 +42,31 @@ export class AlumnosListComponent implements OnInit {
     );
   }
 
-  deleteAlumno(id_alumno: string){
-    
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: '¡No podrás revertir esto!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminarlo',
-        cancelButtonText: 'Cancelar',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.alumnosService.deleteAlumno(id_alumno).subscribe(
-            (res) => {
+  deleteAlumno(id_alumno: string) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.alumnosService.deleteAlumno(id_alumno).subscribe(
+          (res) => {
             console.log(res);
             this.getAlumnos();
-            
-            } , 
-            (err) => {Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-             
+          },
+          (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
             });
-          } 
-            
-            
-      
-            
-            
-          )
-          Swal.fire('Eliminado', 'El elemento ha sido eliminado.', 'success');
-        }
-      });
-    
-    
+          }
+        );
+        Swal.fire('Eliminado', 'El elemento ha sido eliminado.', 'success');
+      }
+    });
   }
 }

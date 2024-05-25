@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-
   usuario: Users = {
     id_user: 0,
     first_nameU: '',
@@ -24,11 +23,11 @@ export class RegisterComponent implements OnInit {
   };
   generatedPassword: string = '';
   isLogin: boolean = this.authService.isLogin();
-  nombreUsuario : any = this.authService.getNameFromToken();
-  isAdmin : boolean = this.authService.isAdmin();
+  nombreUsuario: any = this.authService.getNameFromToken();
+  isAdmin: boolean = this.authService.isAdmin();
 
   generatePassword() {
-    const length = 12; // Longitud de la contraseña (ajusta según tus necesidades)
+    const length = 12;
     const charset =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_';
     let password = '';
@@ -44,7 +43,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,private authService: AuthService
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -113,7 +113,6 @@ export class RegisterComponent implements OnInit {
           confirmButtonText: 'Save',
           denyButtonText: `Don't save`,
         }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             Swal.fire('Saved!', '', 'success');
             this.router.navigate(['/usuarios-list']);

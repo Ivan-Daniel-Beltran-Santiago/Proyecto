@@ -1,7 +1,5 @@
 .has-dropdown .dropdown {
   display: none;
-  /* Oculta la lista desplegable por defecto */
-
   background-color: #1a1dbe;
 }
 
@@ -12,14 +10,12 @@
 
 .has-dropdown:hover .dropdown li {
   display: inline-flex;
-  /* Muestra la lista desplegable cuando se hace hover sobre el elemento padre */
   flex-direction: column;
   z-index: 0;
 }
 
 .has-dropdown:hover .dropdown a {
   display: block;
-  /* Muestra la lista desplegable cuando se hace hover sobre el elemento padre */
   z-index: 0;
   color: aqua;
   font-size: small;

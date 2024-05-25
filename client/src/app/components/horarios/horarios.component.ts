@@ -144,8 +144,9 @@ export class HorariosComponent implements OnInit {
     if (clase) {
       const idMaestro = clase.id_maestro;
       const usuario = usuarios.find((u) => u.id_user === idMaestro);
-      return usuario ? `${usuario.first_nameU} ${usuario.last_nameU}`
-      : 'Maestro no encontrado';;
+      return usuario
+        ? `${usuario.first_nameU} ${usuario.last_nameU}`
+        : 'Maestro no encontrado';
     }
 
     return '';

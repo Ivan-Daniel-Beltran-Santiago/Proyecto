@@ -59,8 +59,8 @@ export class CalificacionesComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   getAlumnos() {
@@ -99,9 +99,9 @@ export class CalificacionesComponent implements OnInit {
     let currentDate = new Date(startDate);
     let almostEndDate = new Date(checkDate);
     let endDate = new Date(examDate);
-    
-    console.log(examDate, checkDate)
-    console.log(almostEndDate, endDate)
+
+    console.log(examDate, checkDate);
+    console.log(almostEndDate, endDate);
 
     let courseDays;
     if (schedule === 'Monday-Thursday') {
@@ -129,7 +129,7 @@ export class CalificacionesComponent implements OnInit {
     courseDates.push({ date: almostEndDate, score: null });
     courseDates.push({ date: endDate, score: null });
 
-    console.log(almostEndDate, endDate)
+    console.log(almostEndDate, endDate);
 
     return courseDates;
   }
@@ -234,7 +234,7 @@ export class CalificacionesComponent implements OnInit {
             examDateValue,
             scheduleValue
           );
-          console.log(tmpDates)
+          console.log(tmpDates);
           for (let i = 0; i < this.calificaciones[0].length; i++) {
             objeto[i] = this.calificaciones[0][i];
             this.calificacionesAlumno.push(
@@ -291,7 +291,6 @@ export class CalificacionesComponent implements OnInit {
                   label: 'Calificaciones',
                   data: this.calificacionesAlumno,
                   borderColor: 'blue',
-                  //fill: false,
                 },
               ],
             },

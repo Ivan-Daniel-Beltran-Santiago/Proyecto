@@ -4,19 +4,18 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.css']
+  styleUrls: ['./inicio.component.css'],
 })
 export class InicioComponent {
-
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService) {}
 
   isAdmin: boolean = false;
-  isLogin : boolean=false;
+  isLogin: boolean = false;
   nombreUsuario: any;
-  ngOnInit(){
+  ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
     this.isLogin = this.authService.isLogin();
-    this.nombreUsuario=this.authService.getNameFromToken();
+    this.nombreUsuario = this.authService.getNameFromToken();
   }
 
   logout() {
@@ -24,4 +23,3 @@ export class InicioComponent {
     location.reload();
   }
 }
-

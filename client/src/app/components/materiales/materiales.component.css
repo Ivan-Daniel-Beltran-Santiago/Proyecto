@@ -1,12 +1,10 @@
-/* materiales.component.css */
-
 .tag-manager-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,8 +19,8 @@
 
 .grid_columns {
   display: flex;
-  grid-template-columns: 1fr 5fr; /* Cambia la proporción de columnas según tus necesidades */
-  gap: 20px; /* Ajusta el espacio entre columnas */
+  grid-template-columns: 1fr 5fr;
+  gap: 20px;
 }
 
 .filter_column {
@@ -45,12 +43,12 @@
 
 .search_icon {
   position: absolute;
-  right: 10px; /* Ajusta el espacio entre el icono y el borde derecho */
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px; /* Ajusta el tamaño del icono según tus necesidades */
+  width: 20px;
   height: 20px;
-  background-image: url("https://cdn3.iconfinder.com/data/icons/feather-5/24/search-512.png"); /* Enlace de imagen del icono de búsqueda */
+  background-image: url("https://cdn3.iconfinder.com/data/icons/feather-5/24/search-512.png");
   background-size: cover;
   cursor: pointer;
 }
@@ -188,19 +186,19 @@ button:focus {
 
 .file-row {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay suficiente espacio en la fila */
-  justify-content: space-between; /* Alinea los elementos a lo largo del contenedor con espacios entre ellos */
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .button-container {
-  margin-top: auto; /* Empuja el contenedor de botones hacia la parte inferior del text_box */
+  margin-top: auto;
   display: flex;
   flex-direction: column;
 }
 
 .button-container button {
-  width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
-  margin-bottom: 0.5em; /* Espacio entre los botones */
+  width: 100%;
+  margin-bottom: 0.5em;
 }
 
 .etiquetas {
@@ -224,12 +222,12 @@ button:focus {
   color: red;
 }
 
-.eliminar-etiqueta:hover{
+.eliminar-etiqueta:hover {
   transform: scale(1.2);
-  transition: transform 0.2s ease; /* Agrega una transición suave de 0.2 segundos */
+  transition: transform 0.2s ease;
 }
 
-h4{
+h4 {
   text-align: center;
 }
 
@@ -239,20 +237,20 @@ h4{
 
 .toggle-label {
   display: block;
-  width: 50px; /* Ancho del botón deslizante */
-  height: 26px; /* Altura del botón deslizante */
+  width: 50px;
+  height: 26px;
   background-color: #ccc;
-  border-radius: 20px; /* Radio de borde para hacerlo redondeado */
+  border-radius: 20px;
   position: relative;
   cursor: pointer;
 }
 
 .toggle-label:before {
-  content: '';
+  content: "";
   position: absolute;
-  width: 22px; /* Ancho del botón deslizante circular */
-  height: 22px; /* Altura del botón deslizante circular */
-  border-radius: 50%; /* Radio de borde para hacerlo circular */
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
   background-color: white;
   top: 50%;
   left: 2px;
@@ -261,9 +259,11 @@ h4{
 }
 
 .toggle-checkbox:checked + .toggle-label {
-  background-color: #2196F3; /* Cambiar color de fondo cuando está activado */
+  background-color: #2196f3;
 }
 
 .toggle-checkbox:checked + .toggle-label:before {
-  left: calc(100% - 24px); /* Mover el botón deslizante circular a la derecha cuando está activado */
+  left: calc(
+    100% - 24px
+  );
 }

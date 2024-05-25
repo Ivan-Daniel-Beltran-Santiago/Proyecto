@@ -43,7 +43,6 @@
               <tr class="bg-gray-100 border-b" *ngFor="let alumno of arrayAlumnos[0]|filter:filterPost">
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ alumno.first_nameU }}</td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  
                 {{ alumno.last_nameU }}
                 </td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
@@ -55,9 +54,7 @@
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   {{ alumno.email}}
                 </td>
-
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <!-- component -->
                   <button
                   [routerLink]="['/usuario/update',alumno.id_user]"
                   data-ripple-light="true"
@@ -67,7 +64,6 @@
                   Update
                   </button>
                 </td>
-
                 <td class="text-sm text-gray-900 font-light px-4 py-4 whitespace-nowrap">
                   <button
                   data-ripple-light="true"
@@ -79,7 +75,6 @@
                   </button>
                 </td>
               </tr>
-              
             </tbody>
           </table>
         </div>
@@ -88,151 +83,3 @@
   </div>
 </body>
 </html>
-<!--
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="overflow-hidden">
-              <table class="min-w-full">
-                <thead class="bg-white border-b">
-                  <tr>
-                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      #
-                    </th>
-                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      First
-                    </th>
-                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Last
-                    </th>
-                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Handle
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="bg-gray-100 border-b">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Mark
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Otto
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      @mdo
-                    </td>
-                  </tr>
-                  <tr class="bg-white border-b">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Jacob
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Dillan
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      @fat
-                    </td>
-                  </tr>
-                  <tr class="bg-gray-100 border-b">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Mark
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Twen
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      @twitter
-                    </td>
-                  </tr>    
-                  <tr class="bg-white border-b">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Bob
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Dillan
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      @fat
-                    </td>
-                  </tr>
-                  <tr class="bg-gray-100 border-b">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">5</td>
-                    <td colspan="2" class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                      Larry the Bird
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      @twitter
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <header>
-  <nav>
-    <div class="nav-wrapper" style="background-color: rgb(11, 34, 81);">
-      <a routerLink="/" class="brand-logo">Logo</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a routerLink="/alumnos-list">Alumnos</a></li>
-        <li><a routerLink="/maestros-list">Maestros</a></li>
-        <li><a routerLink="/horarios-list">Horarios</a></li>
-        <li><a routerLink="/usuarios-list">Users</a></li>
-      </ul>
-    </div>
-  </nav>
-</header>
-  
-  
-  <table style="border:solid 2px rgb(80, 228, 6)">
-    <tr>
-      <th>Nombre</th>
-      <th>Primer Apellido</th>
-      <th>Segundo Apellido</th>
-      <th>Telefono</th>
-      <th>Correo</th>
-    
-    </tr>
-    <tr *ngFor="let alumno of arrayAlumnos[0]">
-      <td>{{ alumno.first_name_A }}</td>
-      <td>{{ alumno.last_name_A }}</td>
-      <td>{{ alumno.last_name2_A }}</td>
-      <td>{{ alumno.telephone_A }}</td>
-      <td>{{ alumno.email_A}}</td>
-     
-      <td><button>Actualizar</button></td>
-      <td><button>Borrar</button></td>
-  
-  
-    </tr>
-  </table>
-</body>
-</html>
--->

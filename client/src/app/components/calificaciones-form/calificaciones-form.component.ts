@@ -53,7 +53,6 @@ export class CalificacionesFormComponent implements AfterViewInit {
     }
 
     if (this.myElements) {
-      // Acceder a cada input de manera individual
       this.myElements.forEach((element, index) => {
         console.log(
           `Valor del input ${index + 1}: ${element.nativeElement.value}`
@@ -63,8 +62,8 @@ export class CalificacionesFormComponent implements AfterViewInit {
   }
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   crearArrayDeFechas() {
@@ -101,14 +100,14 @@ export class CalificacionesFormComponent implements AfterViewInit {
                 console.log(this.arrayAlumnos[0][i]);
                 console.log(this.arrayAlumnos[0][i].id_user);
                 console.log(
-                  this.arrayAlumnos[0][i] !== null && this.arrayAlumnos[0][i].id_user !== null
+                  this.arrayAlumnos[0][i] !== null &&
+                    this.arrayAlumnos[0][i].id_user !== null
                 );
                 if (
                   this.arrayAlumnos[0][i] !== null &&
                   this.arrayAlumnos[0][i].id_user !== null
                 ) {
                   this.calificacion.id_alumno = this.arrayAlumnos[0][i].id_user;
-                  // Resto del código aquí
                   if (this.myElements && this.myElements.first) {
                     for (let i = 0; i < this.myElements.length; i++) {
                       const element =

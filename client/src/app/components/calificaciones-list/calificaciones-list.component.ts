@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Calificacion } from 'src/app/models/calificaciones';
 import { AlumnosService } from 'src/app/services/alumnos/alumnos.service';
 import { CalificacionesService } from 'src/app/services/calificaciones/calificaciones.service';
@@ -107,8 +102,8 @@ export class CalificacionesListComponent implements AfterViewInit {
   nombreUsuario = this.authService.getNameFromToken();
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
   getAlumnos(id: number) {
     this.click = true;
@@ -192,7 +187,6 @@ export class CalificacionesListComponent implements AfterViewInit {
         this.arrayCalificaciones = res;
         for (let i = 0; i < this.arrayCalificaciones[0].length; i++) {
           objeto[i] = this.arrayCalificaciones[0][i];
-          let fecha = objeto[i].fecha_calif;
 
           if (this.arrayFechas.length === 0) {
             this.arrayFechas.push(objeto[i].fecha_calif);

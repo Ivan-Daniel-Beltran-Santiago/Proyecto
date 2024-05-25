@@ -7,13 +7,17 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-admin-list',
   templateUrl: './admin-list.component.html',
-  styleUrls: ['./admin-list.component.css']
+  styleUrls: ['./admin-list.component.css'],
 })
-  export class AdminListComponent implements OnInit {
-  arrayAdmin : any = [];
-  filterPost = "";
+export class AdminListComponent implements OnInit {
+  arrayAdmin: any = [];
+  filterPost = '';
 
-  constructor(private adminService : AdminService,private authService: AuthService,private router: Router){}
+  constructor(
+    private adminService: AdminService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getAdmin();
@@ -21,24 +25,22 @@ import Swal from 'sweetalert2';
 
   nombreUsuario = this.authService.getNameFromToken();
 
-
-
-logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+  logout(): void {
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
-  getAdmin(){
+  getAdmin() {
     this.adminService.getAdmins().subscribe(
-      (res) =>{
+      (res) => {
         this.arrayAdmin = res;
         console.log(this.arrayAdmin[0]);
-      } , (err) => console.log(err)
+      },
+      (err) => console.log(err)
     );
   }
 
-  deleteAdmin(id_admin: string){
-
+  deleteAdmin(id_admin: string) {
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¡No podrás revertir esto!',
@@ -50,21 +52,15 @@ logout(): void {
       if (result.isConfirmed) {
         this.adminService.deleteAdmin(id_admin).subscribe(
           (res) => {
-          console.log(res);
-          this.getAdmin();
-          
-          } , 
-          (err) => {console.error(err);
-          
+            console.log(res);
+            this.getAdmin();
+          },
+          (err) => {
+            console.error(err);
           }
-    
-          
-          
-        )
+        );
         Swal.fire('Eliminado', 'El elemento ha sido eliminado.', 'success');
       }
     });
-  
   }
-
 }

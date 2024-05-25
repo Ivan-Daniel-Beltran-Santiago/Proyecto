@@ -7,9 +7,9 @@ import { Component, Output, EventEmitter, HostListener } from '@angular/core';
 })
 export class TagManagerComponent {
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
-  selectedTab: string = 'Crear etiqueta'; // Inicialmente seleccionado
-  popupWidth: number = 640; // Initial width of the popup
-  popupHeight: number = 460; // Initial height of the popup
+  selectedTab: string = 'Editar etiqueta';
+  popupWidth: number = 640;
+  popupHeight: number = 460;
   isResizing: boolean = false;
   startX: number = 0;
   startY: number = 0;
@@ -21,7 +21,7 @@ export class TagManagerComponent {
       this.isResizing = true;
       this.startX = event.clientX;
       this.startY = event.clientY;
-      event.preventDefault(); // Evita el comportamiento predeterminado del navegador
+      event.preventDefault();
     }
   }
 
@@ -31,20 +31,17 @@ export class TagManagerComponent {
       return;
     }
 
-    const deltaX = this.startX - event.clientX; // Invertir la dirección horizontal
-    const deltaY = this.startY - event.clientY; // Invertir la dirección vertical
+    const deltaX = this.startX - event.clientX;
+    const deltaY = this.startY - event.clientY;
 
-    // Calcula el cambio en el tamaño de la ventana emergente
     let newWidth = this.popupWidth + deltaX;
     let newHeight = this.popupHeight + deltaY;
 
-    // Limita el tamaño máximo basado en el tamaño de la pantalla
-    const maxWidth = window.innerWidth * 0.9; // Por ejemplo, el 80% del ancho de la pantalla
-    const maxHeight = window.innerHeight * 0.9; // Por ejemplo, el 80% de la altura de la pantalla
+    const maxWidth = window.innerWidth * 0.9;
+    const maxHeight = window.innerHeight * 0.9;
     newWidth = Math.min(newWidth, maxWidth);
     newHeight = Math.min(newHeight, maxHeight);
 
-    // Asegúrate de que la ventana emergente no se reduzca demasiado
     if (newWidth > 460 && newHeight > 400) {
       this.popupWidth = newWidth;
       this.popupHeight = newHeight;

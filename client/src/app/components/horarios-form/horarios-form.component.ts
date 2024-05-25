@@ -42,8 +42,8 @@ export class HorariosFormComponent implements OnInit {
     fecha_final: '',
     id_maestro: 0,
     id_maestro2: 0,
-    modulo_idioma: "",
-    submodulo_idioma: ""
+    modulo_idioma: '',
+    submodulo_idioma: '',
   };
   nombreUsuario = this.authService.getNameFromToken();
   isAdmin = this.authService.isAdmin();
@@ -158,7 +158,6 @@ export class HorariosFormComponent implements OnInit {
             confirmButtonText: 'Save',
             denyButtonText: `Don't save`,
           }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
               Swal.fire('Saved!', '', 'success');
               this.router.navigate(['/horarios']);

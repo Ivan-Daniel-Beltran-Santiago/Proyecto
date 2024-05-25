@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-
   <body>
     <app-menu></app-menu>
     <h4 style="text-align: center">Clases</h4>
@@ -43,11 +42,9 @@
                   : "Fecha final no definida"
               }}
             </dd>
-
             <h4 class="mt-6 text-gray-900 text-sm font-medium">Category</h4>
             <dd class="text-gray-500 text-sm">{{ clase.categoria }} <br /></dd>
             <h4 class="mt-6 text-gray-900 text-sm font-medium">Teachers</h4>
-
             <dd class="mt-3">
               <span
                 class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full"
@@ -72,7 +69,6 @@
               </a>
             </div>
           </div>
-
           <div *ngIf="isAdmin" class="-mt-px flex divide-x divide-gray-200">
             <div class="w-0 flex-1 flex">
               <a
@@ -115,7 +111,6 @@
         class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
       />
     </div>
-
     <div *ngIf="agregarGrupo" style="margin-left: 30px; margin-top: 20px">
       <label
         for="email"
@@ -133,7 +128,6 @@
         class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
       />
     </div>
-
     <div *ngIf="agregarGrupo" style="margin-left: 30px; margin-top: 20px">
       <label
         for="email"
@@ -162,7 +156,6 @@
       Copiar grupo
     </button>
     <br />
-
     <button
       *ngIf="isAdmin"
       routerLink="/clases-list"
@@ -173,7 +166,6 @@
       Agregar nuevas clases / Asignar alumnos
     </button>
     <br />
-
     <h6 *ngIf="click">Lista de Alumnos</h6>
     <div *ngIf="click" class="flex flex-col">
       <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
@@ -240,7 +232,6 @@
         </div>
       </div>
     </div>
-
     <h6>Alumnos de Baja</h6>
     <div *ngIf="isAdmin" class="flex flex-col">
       <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
@@ -255,21 +246,18 @@
                   >
                     First Name
                   </th>
-
                   <th
                     scope="col"
                     class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Last Name
                   </th>
-
                   <th
                     scope="col"
                     class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Second Last Name
                   </th>
-
                   <th
                     scope="col"
                     class="text-sm font-medium text-gray-900 px-6 py-4 text-left"

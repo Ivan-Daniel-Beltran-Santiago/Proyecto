@@ -65,8 +65,8 @@ export class GrabacionesComponent {
   nombreUsuario = this.authService.getNameFromToken();
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   obtenerGrabaciones() {
@@ -186,11 +186,13 @@ export class GrabacionesComponent {
       const maestro = this.arrayMaestros[0].find(
         (m: { id_user: number }) => m.id_user === idMaestro
       );
-      return maestro ? `${maestro.first_nameU} ${maestro.last_nameU}` : 'Maestro no encontrado';
+      return maestro
+        ? `${maestro.first_nameU} ${maestro.last_nameU}`
+        : 'Maestro no encontrado';
     } else {
       return 'Array de maestros no definido';
     }
-  }  
+  }
 
   obtenerNombreMaestro2(idMaestro: number): string {
     if (this.arrayMaestros && this.arrayMaestros.length > 0) {
@@ -204,13 +206,8 @@ export class GrabacionesComponent {
       return 'Array de maestros no definido';
     }
   }
-  
+
   obtenerNombreGrupo(idClase: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-
     const grupo = this.arrayClases[0].find(
       (m: { id_clase: number }) => m.id_clase === idClase
     );
@@ -218,11 +215,6 @@ export class GrabacionesComponent {
   }
 
   obtenerIdNombreGrupo(idClase: number): string {
-    // Encuentra la clase correspondiente al id_grupo
-    //const clase = this.arrayClases[0].find((c: {id_grupo:number})=> c.id_grupo === idGrupo);
-
-    // Si se encuentra la clase, encuentra el maestro correspondiente al id_maestro
-
     const grupo = this.arrayClases[0].find(
       (m: { id_clase: number }) => m.id_clase === idClase
     );

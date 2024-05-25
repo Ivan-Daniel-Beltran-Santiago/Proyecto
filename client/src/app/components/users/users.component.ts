@@ -3,7 +3,6 @@ import { UsersService } from '../../services/users/users.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
-import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-users',
@@ -22,12 +21,11 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
-    //this.authService.getIdFromToken();
   }
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   getUsers() {

@@ -4,18 +4,12 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-maestros',
   templateUrl: './maestros.component.html',
-  styleUrls: ['./maestros.component.css']
+  styleUrls: ['./maestros.component.css'],
 })
 export class MaestrosComponent {
-
   isAdmin: boolean = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService) {}
 
-  }
-
-  ngOnInit(): void {
-    // Obtener el estado de administrador desde el servicio de autenticación
-    
-  }
+  ngOnInit(): void {}
 }

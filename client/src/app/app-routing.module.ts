@@ -67,7 +67,6 @@ const routes: Routes = [
   {
     path: 'horarios',
     component: HorariosComponent,
-    //canActivate : [adminGuardGuard]
   },
 
   {
@@ -85,7 +84,6 @@ const routes: Routes = [
   {
     path: 'clases',
     component: ClasesListComponent,
-    //canActivate : [adminGuardGuard]
   },
 
   {
@@ -129,12 +127,10 @@ const routes: Routes = [
   {
     path: 'calificaciones-form/:id',
     component: CalificacionesFormComponent,
-    //canActivate : [adminGuardGuard]
   },
   {
     path: 'calificaciones-list',
     component: CalificacionesListComponent,
-    //canActivate : [adminGuardGuard]
   },
   {
     path: 'calificaciones/:idG/:id',
@@ -143,7 +139,6 @@ const routes: Routes = [
   {
     path: 'usuario/update/:id',
     component: RegisterComponent,
-    //canActivate: [adminGuardGuard],
   },
 
   {
@@ -168,9 +163,8 @@ const routes: Routes = [
     component: UpdateFormComponent,
   },
   {
-    path:'reportes',
+    path: 'reportes',
     component: ReportesComponent,
-
   },
 
   {
@@ -191,7 +185,6 @@ const routes: Routes = [
 
   {
     path: '**',
-    //component: Error404Component,
     redirectTo: 'login',
     pathMatch: 'full',
   },
