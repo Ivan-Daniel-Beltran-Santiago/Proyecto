@@ -44,6 +44,10 @@ export class TagManagerService {
     return this.http.get<string[]>(`${this.API_URL}/tags/courses`);
   }  
 
+  getSubmodules(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.API_URL}/tags/submodules`);
+  } 
+
   updateTagName(oldName: string, newName: string): Observable<any> {
     return this.http.put(`${this.API_URL}/tags/${oldName}`, { newName });
   }  

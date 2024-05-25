@@ -92,6 +92,18 @@ class TagController {
     }
   }
 
+  async getSubmodules(req, res) {
+    try {
+      const submodules = await db.query(
+        "SELECT nombre FROM Etiquetas WHERE tipo = 'Submódulo'"
+      );
+      res.json(submodules[0]);
+    } catch (error) {
+      console.error("Error al obtener los submódulos:", error);
+      res.status(500).json({ error: "Error interno del servidor" });
+    }
+  }
+
   async getAllTags(req, res) {
     try {
       const result = await db.query("SELECT nombre FROM Etiquetas");

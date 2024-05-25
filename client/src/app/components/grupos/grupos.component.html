@@ -153,8 +153,7 @@
             <div class="select">
               <select [(ngModel)]="grupo.submodulo_idioma" name="submodulo_idioma" required>
                 <option disabled selected value="">Selecciona submódulo de idioma</option>
-                <option value="English 1A">Inglés 1A</option>
-                <option value="English 1B">Inglés 1B</option>
+                <option *ngFor="let submodulo of arraySubmodulos" [value]="submodulo.nombre">{{ submodulo.nombre }}</option> 
               </select>
             </div>
           </div>

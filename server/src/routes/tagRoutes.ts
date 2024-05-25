@@ -14,6 +14,7 @@ router.get('/', tagController.getAllTags);
 router.delete('/:name', tagController.deleteTag);
 
 router.get('/courses', tagController.getCourses);
+router.get('/submodules', tagController.getSubmodules);
 
 router.put('/:oldName', tagController.updateTagName);
 router.put('/type-parent/:name', tagController.updateTagTypeAndParentId);
