@@ -60,8 +60,8 @@ export class GruposComponent implements OnInit {
   nombreUsuario = this.authService.getNameFromToken();
 
   logout(): void {
-    this.authService.removeToken(); // Elimina el token al cerrar sesión
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   obtenerGrupo(id: number) {
@@ -99,7 +99,6 @@ export class GruposComponent implements OnInit {
           confirmButtonText: 'Save',
           denyButtonText: `Don't save`,
         }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             Swal.fire('Saved!', '', 'success');
             setTimeout(() => {

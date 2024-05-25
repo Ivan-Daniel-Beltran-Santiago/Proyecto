@@ -84,8 +84,6 @@
             </div>
           </div>
         </li>
-
-        <!-- More people... -->
       </ul>
 
       <div *ngIf="edit">
@@ -119,7 +117,7 @@
             class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
             >Idioma</label
           >
-          <div class="control">
+          <div class="select_language">
             <div class="select">
               <select [(ngModel)]="grupo.idioma" name="idioma" required>
                 <option disabled selected value="">Selecciona idioma</option>
@@ -137,7 +135,7 @@
             class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
             >Módulo de idioma</label
           >
-          <div class="control">
+          <div class="select_language_module">
             <div class="select">
               <select [(ngModel)]="grupo.modulo_idioma" name="modulo_idioma" required>
                 <option disabled selected value="">Selecciona módulo idioma</option>
@@ -155,7 +153,7 @@
             class="block mb-2 text-sm text-gray-600 dark:text-gray-200"
             >Submódulo de idioma</label
           >
-          <div class="control">
+          <div class="select_language_submodule">
             <div class="select">
               <select [(ngModel)]="grupo.submodulo_idioma" name="submodulo_idioma" required>
                 <option disabled selected value="">Selecciona submódulo de idioma</option>

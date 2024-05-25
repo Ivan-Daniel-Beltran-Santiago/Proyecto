@@ -73,9 +73,7 @@
                 <label for="file_access_by_group" class="block text-sm font-medium text-gray-700" style="margin-bottom: 5px; margin-top: 12px;">Filtrar para: </label>
                 <select id="file_access_by_group" name="file_access_by_group" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                   <option></option>
-                  <option value="Documento Word">Documento Word</option>
-                  <option value="PDF">PDF</option>
-                  <option value="Audio">Audio</option>
+                  <option *ngFor="let group of groups" [value]="group.nombre_grupo">{{ group.nombre_grupo }}</option>
                 </select>
               </div>
               <div class="file_access_by_student" style="margin-left: 1em; margin-right: 1em; margin-bottom: .5em;">

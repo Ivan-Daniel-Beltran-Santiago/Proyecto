@@ -243,6 +243,16 @@ class MaterialController {
         .json({ error: "Error al obtener los archivos por etiqueta." });
     }
   };
+
+  getGroups = async (req: Request, res: Response) => {
+    try {
+      const groups = await db.query("SELECT * FROM grupo");
+      res.json(groups[0]);
+    } catch (error) {
+      console.error("Error al obtener los grupos:", error);
+      res.status(500).json({ error: "Error al obtener los grupos." });
+    }
+  };
 }
 export const materialController = new MaterialController();
 export default materialController;

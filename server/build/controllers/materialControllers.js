@@ -207,6 +207,16 @@ class MaterialController {
                     .json({ error: "Error al obtener los archivos por etiqueta." });
             }
         });
+        this.getGroups = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const groups = yield database_1.default.query("SELECT * FROM grupo");
+                res.json(groups[0]);
+            }
+            catch (error) {
+                console.error("Error al obtener los grupos:", error);
+                res.status(500).json({ error: "Error al obtener los grupos." });
+            }
+        });
     }
 }
 exports.materialController = new MaterialController();

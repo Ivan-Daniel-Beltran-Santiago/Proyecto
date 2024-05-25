@@ -86,4 +86,8 @@ export class MaterialesServicesService {
       })
     );
   }
+
+  getGroups(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_URL}/file/groups`);
+  }
 }

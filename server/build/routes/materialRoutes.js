@@ -11,4 +11,5 @@ router.get("/course-tags", materialControllers_1.materialController.getCourseTag
 router.get("/module-tags", materialControllers_1.materialController.getModuleTags);
 router.get("/submodule-tags", materialControllers_1.materialController.getSubmoduleTags);
 router.get("/tag/:tag", materialControllers_1.materialController.getFilesByTag);
+router.get("/groups", materialControllers_1.materialController.getGroups);
 exports.default = router;

@@ -29,6 +29,7 @@ export class MaterialesComponent {
   isMaestro = this.authService.isMaestro();
   isAlumno = this.authService.isAlumno();
   nombreUsuario = this.authService.getNameFromToken();
+  groups: any[] = [];
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -39,10 +40,22 @@ export class MaterialesComponent {
     this.getCourseTags();
     this.getModuleTags();
     this.getSubmoduleTags();
+    this.getGroups();
     this.materialService.getFiles().subscribe((files) => {
       this.arrayFiles = this.processFiles(files);
       this.allFiles = files;
     });
+  }
+
+  getGroups() {
+    this.materialService.getGroups().subscribe(
+      (groups) => {
+        this.groups = groups;
+      },
+      (error) => {
+        console.error('Error al obtener los grupos:', error);
+      }
+    );
   }
 
   getCourseTags() {

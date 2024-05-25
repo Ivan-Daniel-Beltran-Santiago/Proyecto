@@ -15,4 +15,6 @@ router.get("/submodule-tags", materialController.getSubmoduleTags);
 
 router.get("/tag/:tag", materialController.getFilesByTag);
 
+router.get("/groups", materialController.getGroups);
+
 export default router;
