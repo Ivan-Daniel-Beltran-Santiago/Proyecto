@@ -25,7 +25,7 @@ class TagController {
         "SELECT COUNT(*) as count FROM Etiquetas WHERE nombre = ?",
         [name]
       );
-      const exists = result[0][0].count > 0; // Accede al primer elemento del primer array
+      const exists = result[0][0].count > 0;
       res.json({ exists });
     } catch (error) {
       console.error("Error al verificar la existencia de la etiqueta:", error);
@@ -50,7 +50,6 @@ class TagController {
     try {
       const { name } = req.params;
       let query = "SELECT id FROM Etiquetas WHERE nombre = ?";
-      // Si el tipo es un curso o un módulo, agrega la condición del tipo
       if (req.query.type === "Curso" || req.query.type === "Módulo") {
         query += " AND tipo = ?";
         const result = await db.query<RowDataPacket[]>(query, [
@@ -61,7 +60,7 @@ class TagController {
         if (result[0].length > 0) {
           res.json(result[0][0].id);
         } else {
-          res.json(null); // Devuelve null si no se encuentra el curso o módulo
+          res.json(null);
         }
       } else {
         const result = await db.query<RowDataPacket[]>(query, [name]);
@@ -69,7 +68,7 @@ class TagController {
         if (result[0].length > 0) {
           res.json(result[0][0].id);
         } else {
-          res.json(null); // Devuelve null si no se encuentra el curso o módulo
+          res.json(null);
         }
       }
     } catch (error) {
@@ -113,9 +112,7 @@ class TagController {
     try {
       const { name } = req.params;
 
-      // Función recursiva para eliminar etiquetas hijo
       const deleteChildTags = async (tagId: number) => {
-        // Buscar y eliminar las etiquetas hijo
         const childTagsToDelete = await db.query<RowDataPacket[]>(
           "SELECT id FROM Etiquetas WHERE padre_id = ?",
           [tagId]
@@ -126,17 +123,14 @@ class TagController {
         }
       };
 
-      // Buscar el ID de la etiqueta a eliminar
       const tagToDelete = await db.query<RowDataPacket[]>(
         "SELECT id FROM Etiquetas WHERE nombre = ?",
         [name]
       );
-      const tagId = tagToDelete[0][0].id; // Accede al primer elemento del primer array
+      const tagId = tagToDelete[0][0].id;
 
-      // Llamar a la función recursiva para eliminar las etiquetas hijo
       await deleteChildTags(tagId);
 
-      // Eliminar la etiqueta principal
       await db.query("DELETE FROM Etiquetas WHERE nombre = ?", [name]);
 
       res
@@ -189,9 +183,7 @@ class TagController {
       const { name } = req.params;
       const { type, parentId } = req.body;
 
-      // Función recursiva para eliminar etiquetas hijo
       const deleteChildTags = async (tagId: number) => {
-        // Buscar y eliminar las etiquetas hijo
         const childTagsToDelete = await db.query<RowDataPacket[]>(
           "SELECT id FROM Etiquetas WHERE padre_id = ?",
           [tagId]
@@ -202,17 +194,14 @@ class TagController {
         }
       };
 
-      // Buscar el ID de la etiqueta a actualizar
       const tagToUpdate = await db.query<RowDataPacket[]>(
         "SELECT id FROM Etiquetas WHERE nombre = ?",
         [name]
       );
-      const tagId = tagToUpdate[0][0].id; // Accede al primer elemento del primer array
+      const tagId = tagToUpdate[0][0].id;
 
-      // Llamar a la función recursiva para eliminar las etiquetas hijo
       await deleteChildTags(tagId);
 
-      // Actualizar el tipo de etiqueta y el padre_id
       let query = "UPDATE Etiquetas SET tipo = ?";
       const params = [type];
 
@@ -244,7 +233,6 @@ class TagController {
     console.log(req.body);
     try {
       const { tagId, fileIds } = req.body;
-      // Obtener el tipo y el padre_id de la etiqueta
       const tagInfoResult = await db.query(
         "SELECT tipo, padre_id FROM Etiquetas WHERE id = ?",
         [tagId]
@@ -252,56 +240,45 @@ class TagController {
       const tagType = tagInfoResult[0][0].tipo;
       const parentId = tagInfoResult[0][0].padre_id;
 
-      // Iterar sobre los IDs de archivos y asignar etiquetas
       for (const fileId of fileIds) {
-        // Verificar si el archivo ya tiene asignada una etiqueta del mismo tipo
         const existingTag = await db.query(
           "SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = ?",
           [fileId, tagType]
         );
         if (existingTag[0][0].count === 0) {
-          // Si no tiene asignada una etiqueta del mismo tipo, permitir la asignación
           await db.query(
             "INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)",
             [fileId, tagId]
           );
-          // Verificar si la etiqueta tiene un padre y asignarla también si es necesario
           if (parentId) {
-            // Verificar si el archivo ya tiene asignada una etiqueta del tipo padre
             const parentTagAssigned = await db.query(
               "SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.id = ?",
               [fileId, parentId]
             );
             if (parentTagAssigned[0][0].count === 0) {
-              // Si no tiene asignada una etiqueta del tipo padre, asignarla
               await db.query(
                 "INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)",
                 [fileId, parentId]
               );
             }
           }
-          // Si la etiqueta asignada es un "Submódulo", también se deben asignar las etiquetas "Módulo" y "Curso"
           if (tagType === "Submódulo") {
-            // Obtener el ID del módulo asociado al submódulo
             const moduleTagResult = await db.query(
               "SELECT padre_id FROM Etiquetas WHERE id = ?",
               [parentId]
             );
             const moduleId = moduleTagResult[0][0].padre_id;
             if (moduleId) {
-              // Asignar la etiqueta "Módulo"
               await db.query(
                 "INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)",
                 [fileId, moduleId]
               );
-              // Obtener el ID del curso asociado al módulo
               const courseTagResult = await db.query(
                 "SELECT padre_id FROM Etiquetas WHERE id = ?",
                 [moduleId]
               );
               const courseId = courseTagResult[0][0].padre_id;
               if (courseId) {
-                // Asignar la etiqueta "Curso"
                 await db.query(
                   "INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)",
                   [fileId, courseId]
@@ -310,7 +287,6 @@ class TagController {
             }
           }
         } else {
-          // Si ya tiene asignada una etiqueta del mismo tipo, enviar un mensaje de advertencia
           res.status(400).json({
             error: `No se puede asignar más etiquetas de tipo '${tagType}' al archivo`,
           });

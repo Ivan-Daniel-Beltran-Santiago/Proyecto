@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,6 @@ export class TagManagerService {
   constructor(private http: HttpClient) {}
 
   postTag(tagData: any): Observable<any> {
-    console.log('Data de etiqueta:', tagData); // Agregado para depurar
     return this.http.post(`${this.API_URL}/tags`, tagData);
   }
 
@@ -54,8 +53,6 @@ export class TagManagerService {
   }  
 
   assignTags(tagId: number, fileIds: number[]): Observable<any> {
-    console.log(fileIds)
-    console.log(tagId)
     return this.http.post(`${this.API_URL}/tags/assign-tags`, { tagId, fileIds });
   }
 }

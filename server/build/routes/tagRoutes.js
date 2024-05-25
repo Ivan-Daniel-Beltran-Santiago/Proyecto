@@ -11,7 +11,6 @@ router.get('/check/:name', tagControllers_1.default.checkTagExists);
 router.get('/parent', tagControllers_1.default.getParentTags);
 router.get('/course/:name', tagControllers_1.default.getTagIdByName);
 router.get('/modules', tagControllers_1.default.getModules);
-// Nuevo endpoint para obtener todas las etiquetas
 router.get('/', tagControllers_1.default.getAllTags);
 router.delete('/:name', tagControllers_1.default.deleteTag);
 router.get('/courses', tagControllers_1.default.getCourses);

@@ -33,7 +33,7 @@ class TagController {
             try {
                 const { name } = req.params;
                 const result = yield database_1.default.query("SELECT COUNT(*) as count FROM Etiquetas WHERE nombre = ?", [name]);
-                const exists = result[0][0].count > 0; // Accede al primer elemento del primer array
+                const exists = result[0][0].count > 0;
                 res.json({ exists });
             }
             catch (error) {
@@ -60,7 +60,6 @@ class TagController {
             try {
                 const { name } = req.params;
                 let query = "SELECT id FROM Etiquetas WHERE nombre = ?";
-                // Si el tipo es un curso o un módulo, agrega la condición del tipo
                 if (req.query.type === "Curso" || req.query.type === "Módulo") {
                     query += " AND tipo = ?";
                     const result = yield database_1.default.query(query, [
@@ -71,7 +70,7 @@ class TagController {
                         res.json(result[0][0].id);
                     }
                     else {
-                        res.json(null); // Devuelve null si no se encuentra el curso o módulo
+                        res.json(null);
                     }
                 }
                 else {
@@ -80,7 +79,7 @@ class TagController {
                         res.json(result[0][0].id);
                     }
                     else {
-                        res.json(null); // Devuelve null si no se encuentra el curso o módulo
+                        res.json(null);
                     }
                 }
             }
@@ -124,21 +123,16 @@ class TagController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name } = req.params;
-                // Función recursiva para eliminar etiquetas hijo
                 const deleteChildTags = (tagId) => __awaiter(this, void 0, void 0, function* () {
-                    // Buscar y eliminar las etiquetas hijo
                     const childTagsToDelete = yield database_1.default.query("SELECT id FROM Etiquetas WHERE padre_id = ?", [tagId]);
                     for (const childTag of childTagsToDelete[0]) {
                         yield deleteChildTags(childTag.id);
                         yield database_1.default.query("DELETE FROM Etiquetas WHERE id = ?", [childTag.id]);
                     }
                 });
-                // Buscar el ID de la etiqueta a eliminar
                 const tagToDelete = yield database_1.default.query("SELECT id FROM Etiquetas WHERE nombre = ?", [name]);
-                const tagId = tagToDelete[0][0].id; // Accede al primer elemento del primer array
-                // Llamar a la función recursiva para eliminar las etiquetas hijo
+                const tagId = tagToDelete[0][0].id;
                 yield deleteChildTags(tagId);
-                // Eliminar la etiqueta principal
                 yield database_1.default.query("DELETE FROM Etiquetas WHERE nombre = ?", [name]);
                 res
                     .status(200)
@@ -192,21 +186,16 @@ class TagController {
             try {
                 const { name } = req.params;
                 const { type, parentId } = req.body;
-                // Función recursiva para eliminar etiquetas hijo
                 const deleteChildTags = (tagId) => __awaiter(this, void 0, void 0, function* () {
-                    // Buscar y eliminar las etiquetas hijo
                     const childTagsToDelete = yield database_1.default.query("SELECT id FROM Etiquetas WHERE padre_id = ?", [tagId]);
                     for (const childTag of childTagsToDelete[0]) {
                         yield deleteChildTags(childTag.id);
                         yield database_1.default.query("DELETE FROM Etiquetas WHERE id = ?", [childTag.id]);
                     }
                 });
-                // Buscar el ID de la etiqueta a actualizar
                 const tagToUpdate = yield database_1.default.query("SELECT id FROM Etiquetas WHERE nombre = ?", [name]);
-                const tagId = tagToUpdate[0][0].id; // Accede al primer elemento del primer array
-                // Llamar a la función recursiva para eliminar las etiquetas hijo
+                const tagId = tagToUpdate[0][0].id;
                 yield deleteChildTags(tagId);
-                // Actualizar el tipo de etiqueta y el padre_id
                 let query = "UPDATE Etiquetas SET tipo = ?";
                 const params = [type];
                 if (parentId === null || parentId === undefined) {
@@ -234,46 +223,33 @@ class TagController {
             console.log(req.body);
             try {
                 const { tagId, fileIds } = req.body;
-                // Obtener el tipo y el padre_id de la etiqueta
                 const tagInfoResult = yield database_1.default.query("SELECT tipo, padre_id FROM Etiquetas WHERE id = ?", [tagId]);
                 const tagType = tagInfoResult[0][0].tipo;
                 const parentId = tagInfoResult[0][0].padre_id;
-                // Iterar sobre los IDs de archivos y asignar etiquetas
                 for (const fileId of fileIds) {
-                    // Verificar si el archivo ya tiene asignada una etiqueta del mismo tipo
                     const existingTag = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.tipo = ?", [fileId, tagType]);
                     if (existingTag[0][0].count === 0) {
-                        // Si no tiene asignada una etiqueta del mismo tipo, permitir la asignación
                         yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, tagId]);
-                        // Verificar si la etiqueta tiene un padre y asignarla también si es necesario
                         if (parentId) {
-                            // Verificar si el archivo ya tiene asignada una etiqueta del tipo padre
                             const parentTagAssigned = yield database_1.default.query("SELECT COUNT(*) as count FROM Asignacion_Etiquetas ae INNER JOIN Etiquetas e ON ae.etiqueta_id = e.id WHERE ae.archivo_id = ? AND e.id = ?", [fileId, parentId]);
                             if (parentTagAssigned[0][0].count === 0) {
-                                // Si no tiene asignada una etiqueta del tipo padre, asignarla
                                 yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, parentId]);
                             }
                         }
-                        // Si la etiqueta asignada es un "Submódulo", también se deben asignar las etiquetas "Módulo" y "Curso"
                         if (tagType === "Submódulo") {
-                            // Obtener el ID del módulo asociado al submódulo
                             const moduleTagResult = yield database_1.default.query("SELECT padre_id FROM Etiquetas WHERE id = ?", [parentId]);
                             const moduleId = moduleTagResult[0][0].padre_id;
                             if (moduleId) {
-                                // Asignar la etiqueta "Módulo"
                                 yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, moduleId]);
-                                // Obtener el ID del curso asociado al módulo
                                 const courseTagResult = yield database_1.default.query("SELECT padre_id FROM Etiquetas WHERE id = ?", [moduleId]);
                                 const courseId = courseTagResult[0][0].padre_id;
                                 if (courseId) {
-                                    // Asignar la etiqueta "Curso"
                                     yield database_1.default.query("INSERT INTO Asignacion_Etiquetas (archivo_id, etiqueta_id) VALUES (?, ?)", [fileId, courseId]);
                                 }
                             }
                         }
                     }
                     else {
-                        // Si ya tiene asignada una etiqueta del mismo tipo, enviar un mensaje de advertencia
                         res.status(400).json({
                             error: `No se puede asignar más etiquetas de tipo '${tagType}' al archivo`,
                         });

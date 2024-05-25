@@ -50,16 +50,12 @@ class GrupoController {
     const { id } = req.params;
 
     try {
-      // Eliminar referencias en la tabla `calificaciones`
       await db.query("DELETE FROM calificaciones WHERE id_grupo = ?", [id]);
 
-      // Eliminar referencias en la tabla `horarios`
       await db.query("DELETE FROM horarios WHERE id_grupo = ?", [id]);
 
-      // Eliminar primero las referencias en la tabla `clase`
       await db.query("DELETE FROM clase WHERE id_grupo = ?", [id]);
 
-      // Ahora eliminar el grupo
       await db.query("DELETE FROM grupo WHERE id_grupo = ?", [id]);
 
       res.json({ message: "Grupo eliminado correctamente" });

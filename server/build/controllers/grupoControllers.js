@@ -66,13 +66,9 @@ class GrupoController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             try {
-                // Eliminar referencias en la tabla `calificaciones`
                 yield database_1.default.query("DELETE FROM calificaciones WHERE id_grupo = ?", [id]);
-                // Eliminar referencias en la tabla `horarios`
                 yield database_1.default.query("DELETE FROM horarios WHERE id_grupo = ?", [id]);
-                // Eliminar primero las referencias en la tabla `clase`
                 yield database_1.default.query("DELETE FROM clase WHERE id_grupo = ?", [id]);
-                // Ahora eliminar el grupo
                 yield database_1.default.query("DELETE FROM grupo WHERE id_grupo = ?", [id]);
                 res.json({ message: "Grupo eliminado correctamente" });
             }
