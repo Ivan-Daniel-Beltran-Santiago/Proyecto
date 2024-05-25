@@ -25,38 +25,51 @@ export class TagManagerService {
   }
 
   getTagIdByName(tagName: string, type: string): Observable<number | null> {
-    return this.http.get<number | null>(`${this.API_URL}/tags/course/${tagName}`, { params: { type } });
-  }  
+    return this.http.get<number | null>(
+      `${this.API_URL}/tags/course/${tagName}`,
+      { params: { type } }
+    );
+  }
 
   getModules(): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/tags/modules`);
-  }  
+  }
 
   getTags(): Observable<string[]> {
     return this.http.get<string[]>(`${this.API_URL}/tags`);
-  }  
+  }
 
   deleteTag(tagName: string): Observable<any> {
     return this.http.delete(`${this.API_URL}/tags/${tagName}`);
-  }  
+  }
 
   getCourses(): Observable<string[]> {
     return this.http.get<string[]>(`${this.API_URL}/tags/courses`);
-  }  
+  }
 
   getSubmodules(): Observable<string[]> {
     return this.http.get<string[]>(`${this.API_URL}/tags/submodules`);
-  } 
+  }
 
   updateTagName(oldName: string, newName: string): Observable<any> {
     return this.http.put(`${this.API_URL}/tags/${oldName}`, { newName });
-  }  
+  }
 
-  updateTagTypeAndParentId(tagName: string, type: string, parentId: number | null): Observable<any> {
-    return this.http.put(`${this.API_URL}/tags/type-parent/${tagName}`, { type, parentId });
-  }  
+  updateTagTypeAndParentId(
+    tagName: string,
+    type: string,
+    parentId: number | null
+  ): Observable<any> {
+    return this.http.put(`${this.API_URL}/tags/type-parent/${tagName}`, {
+      type,
+      parentId,
+    });
+  }
 
   assignTags(tagId: number, fileIds: number[]): Observable<any> {
-    return this.http.post(`${this.API_URL}/tags/assign-tags`, { tagId, fileIds });
+    return this.http.post(`${this.API_URL}/tags/assign-tags`, {
+      tagId,
+      fileIds,
+    });
   }
 }

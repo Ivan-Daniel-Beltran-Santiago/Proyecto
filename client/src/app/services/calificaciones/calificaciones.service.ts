@@ -1,73 +1,76 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders } from '@angular/common/http';
-import {Calificacion} from '../../models/calificaciones';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Calificacion } from '../../models/calificaciones';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CalificacionesService {
-
   API_URL = 'http://localhost:3000';
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
 
-   }
-
-   //OBTENER TODOS LOS USUARIOS 
-   getCalificaciones(id : string) {
+  getCalificaciones(id: string) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-      return this.http.get(`${this.API_URL}/calificacion/${id}`,{ headers:header });
-   }
+    return this.http.get(`${this.API_URL}/calificacion/${id}`, {
+      headers: header,
+    });
+  }
 
-   getAllCalificaciones() {
+  getAllCalificaciones() {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-      return this.http.get(`${this.API_URL}/calificacion`,{ headers:header });
-   }
+    return this.http.get(`${this.API_URL}/calificacion`, { headers: header });
+  }
 
-
-
-   //OBTENER UN USUARIO 
-
-   getCalificacion(idG:string,id : string) {
+  getCalificacion(idG: string, id: string) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.get(`${this.API_URL}/calificacion/${idG}/${id}`,{ headers:header });
-   }
+    return this.http.get(`${this.API_URL}/calificacion/${idG}/${id}`, {
+      headers: header,
+    });
+  }
 
-   getCalificacionFecha(id : string) {
+  getCalificacionFecha(id: string) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.get(`${this.API_URL}/calificacion/${id}`,{ headers:header });
-   }
+    return this.http.get(`${this.API_URL}/calificacion/${id}`, {
+      headers: header,
+    });
+  }
 
-   //GUARDAR USUARIO 
-
-   saveCalificacion(calificacion:Calificacion){
+  saveCalificacion(calificacion: Calificacion) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.post(`${this.API_URL}/calificacion`,calificacion,{ headers:header });
-   }
+    return this.http.post(`${this.API_URL}/calificacion`, calificacion, {
+      headers: header,
+    });
+  }
 
-   //BORRAR USUARIO 
+  deleteCalificacion(id: string) {
+    const token = localStorage.getItem('token');
 
-    deleteCalificacion(id : string) {
-      const token = localStorage.getItem('token');
+    const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
+    return this.http.delete(`${this.API_URL}/calificacion/${id}`, {
+      headers: header,
+    });
+  }
 
-      const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-      return this.http.delete(`${this.API_URL}/calificacion/${id}`,{ headers:header });
-    }
+  updateCalificacion(
+    id: undefined | number,
+    updatedCalificacion: Calificacion
+  ) {
+    const token = localStorage.getItem('token');
 
-    //ACTUALIZAR USUARIO
-
-    updateCalificacion(id : undefined|number , updatedCalificacion:Calificacion){
-      const token = localStorage.getItem('token');
-
-      const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-      return this.http.put(`${this.API_URL}/calificacion/${id}`,updatedCalificacion,{ headers:header });
-    }
+    const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
+    return this.http.put(
+      `${this.API_URL}/calificacion/${id}`,
+      updatedCalificacion,
+      { headers: header }
+    );
+  }
 }

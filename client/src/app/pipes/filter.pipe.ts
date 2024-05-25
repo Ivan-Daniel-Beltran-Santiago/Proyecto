@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
   transform(value: any, args: any): any {
     if (!Array.isArray(value)) {
-      return value; // Si no es un array, devolver tal cual
+      return value;
     }
 
     let resultPost = [];

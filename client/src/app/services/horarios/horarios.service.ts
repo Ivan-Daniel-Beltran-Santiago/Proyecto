@@ -9,8 +9,6 @@ export class HorariosService {
   API_URL = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
-  //OBTENER HORARIOS
-
   getHorarios() {
     const token = localStorage.getItem('token');
 
@@ -18,7 +16,6 @@ export class HorariosService {
     return this.http.get(`${this.API_URL}/horario`, { headers: header });
   }
 
-  //OBTENER HORARIO ESPECIFICO
   getHorario(id: string) {
     const token = localStorage.getItem('token');
 
@@ -35,8 +32,6 @@ export class HorariosService {
     });
   }
 
-  //GUARDAR HORARIO
-
   saveHorario(horario: Horario) {
     const token = localStorage.getItem('token');
 
@@ -46,7 +41,6 @@ export class HorariosService {
     });
   }
 
-  //BORRAR HORARIO
   deleteHorario(id: string) {
     const token = localStorage.getItem('token');
 
@@ -55,8 +49,6 @@ export class HorariosService {
       headers: header,
     });
   }
-
-  //ACTUALIZAR HORARIO
 
   updateHorario(id: number | undefined, updatedHorario: Horario) {
     const token = localStorage.getItem('token');

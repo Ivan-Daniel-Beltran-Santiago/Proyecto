@@ -12,7 +12,7 @@ export class FilterHorarioPipe implements PipeTransform {
     grupos: any
   ): any {
     if (!Array.isArray(value)) {
-      return []; // Otra acción adecuada en caso de que value no sea un array
+      return [];
     }
 
     let resultPost = [];
@@ -46,9 +46,8 @@ export class FilterHorarioPipe implements PipeTransform {
     clases: any[],
     usuarios: any[]
   ): string {
-    // Verificar si clases y usuarios tienen datos
     if (!clases || !usuarios) {
-      return ''; // Manejo de caso donde clases o usuarios sean undefined
+      return '';
     }
 
     const clase = clases.find((c) => c.id_grupo === idGrupo);
@@ -67,9 +66,8 @@ export class FilterHorarioPipe implements PipeTransform {
     clases: any[],
     usuarios: any[]
   ): string {
-    // Verificar si clases y usuarios tienen datos
     if (!clases || !usuarios) {
-      return ''; // Manejo de caso donde clases o usuarios sean undefined
+      return '';
     }
 
     const clase = clases.find((c) => c.id_grupo === idGrupo);
@@ -83,12 +81,15 @@ export class FilterHorarioPipe implements PipeTransform {
     return '';
   }
 
-  obtenerNombreGrupo(idGrupo: number, grupos: { id_grupo: number, nombre_grupo: string }[][]): string {
+  obtenerNombreGrupo(
+    idGrupo: number,
+    grupos: { id_grupo: number; nombre_grupo: string }[][]
+  ): string {
     if (!grupos || grupos.length === 0 || !Array.isArray(grupos[0])) {
       return 'Datos de grupos no disponibles o en formato incorrecto';
     }
-  
+
     const grupo = grupos[0].find((g) => g.id_grupo === idGrupo);
     return grupo ? `${grupo.nombre_grupo}` : 'Grupo no encontrado';
-  }  
+  }
 }

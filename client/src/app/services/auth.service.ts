@@ -34,7 +34,7 @@ export class AuthService {
       try {
         const decoded: any = jwtDecode(token);
 
-        return decoded.nombre; // Ajusta esto según la estructura de tu token
+        return decoded.nombre;
       } catch (error) {
         console.error('Error al decodificar el token:', error);
         return null;
@@ -44,13 +44,12 @@ export class AuthService {
   }
 
   getRoleFromToken(): string | null | number {
-    //const token = localStorage.getItem('token');
     let token = this.getToken();
     if (token) {
       try {
         const decoded: any = jwtDecode(token);
 
-        return decoded.rol; // Ajusta esto según la estructura de tu token
+        return decoded.rol;
       } catch (error) {
         console.error('Error al decodificar el token:', error);
         return null;
@@ -65,7 +64,7 @@ export class AuthService {
     if (token) {
       try {
         const decoded: any = jwtDecode(token);
-        return decoded.id; // Ajusta esto según la estructura de tu token
+        return decoded.id;
       } catch (error) {
         console.error('Error al decodificar el token:', error);
         return null;
@@ -87,7 +86,7 @@ export class AuthService {
     const role = this.getRoleFromToken();
     return role !== null && role === 2;
   }
-  
+
   isAlumno(): boolean {
     const role = this.getRoleFromToken();
     return role !== null && role === 1;

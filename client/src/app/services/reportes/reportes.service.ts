@@ -2,21 +2,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReportesService {
-
   API_URL = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
-  //OBTENER TODOS LOS MAESTROS
   getAlumno_Maestros() {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
 
-    return this.http.get(`${this.API_URL}/reporte/alumnoMaestro`, { headers: header });
-    
+    return this.http.get(`${this.API_URL}/reporte/alumnoMaestro`, {
+      headers: header,
+    });
   }
 
   getAlumno_Grupos() {
@@ -24,8 +23,9 @@ export class ReportesService {
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
 
-    return this.http.get(`${this.API_URL}/reporte/alumnoGrupo`, { headers: header });
-    
+    return this.http.get(`${this.API_URL}/reporte/alumnoGrupo`, {
+      headers: header,
+    });
   }
 
   getHoras_Maestro() {
@@ -33,7 +33,8 @@ export class ReportesService {
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
 
-    return this.http.get(`${this.API_URL}/reporte/horaMaestro`, { headers: header });
-    
+    return this.http.get(`${this.API_URL}/reporte/horaMaestro`, {
+      headers: header,
+    });
   }
 }

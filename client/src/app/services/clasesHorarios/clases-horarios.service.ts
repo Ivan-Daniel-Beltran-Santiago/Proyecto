@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Grupo } from 'src/app/models/grupos';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClasesHorariosService {
   API_URL = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-    //OBTENER TODOS LOS USUARIOS 
-    getClasesHorarios() {
-      const token = localStorage.getItem('token');
-
-      const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-      return this.http.get(`${this.API_URL}/claseHorario`,{ headers:header });
-   }
-
-   //OBTENER UN USUARIO 
-
-   getClaseHorario(id : string) {
+  getClasesHorarios() {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.get(`${this.API_URL}/claseHorario/${id}`,{ headers:header });
-   }
+    return this.http.get(`${this.API_URL}/claseHorario`, { headers: header });
+  }
 
-
-   postNuevoGrupoCopiado(id : string,grupo:Grupo){
+  getClaseHorario(id: string) {
     const token = localStorage.getItem('token');
 
     const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-    return this.http.post(`${this.API_URL}/claseHorario/${id}`,grupo,{ headers:header });
-   }
+    return this.http.get(`${this.API_URL}/claseHorario/${id}`, {
+      headers: header,
+    });
+  }
+
+  postNuevoGrupoCopiado(id: string, grupo: Grupo) {
+    const token = localStorage.getItem('token');
+
+    const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
+    return this.http.post(`${this.API_URL}/claseHorario/${id}`, grupo, {
+      headers: header,
+    });
+  }
 }
