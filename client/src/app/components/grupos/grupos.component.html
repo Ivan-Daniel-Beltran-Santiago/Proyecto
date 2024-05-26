@@ -14,7 +14,7 @@
       data-ripple-light="true"
       data-popover-target="popover"
       class="middle none center rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-    >
+    > 
       Agregar nuevo grupo
     </button>
     <div class="flex flex-col">
@@ -101,9 +101,9 @@
             name="horario.id_maestro"
             required
           >
-            <option disabled selected value="">Selecciona Categoría</option>
-            <option value="Monday-Thursday">Monday Thursday</option>
-            <option value="Saturday">Saturday</option>
+            <option disabled selected value="">Selecciona categoría</option>
+            <option value="Monday-Thursday">Lunes a Jueves</option>
+            <option value="Saturday">Sábado</option>
           </select>
         </div>
         <div class="field">
@@ -130,7 +130,7 @@
           <div class="select_language_module">
             <div class="select">
               <select [(ngModel)]="grupo.modulo_idioma" name="modulo_idioma" required>
-                <option disabled selected value="">Selecciona submódulo de idioma</option>
+                <option disabled selected value="">Selecciona módulo de idioma</option>
                 <option *ngFor="let modulo of arrayModulos" [value]="modulo.nombre">{{ modulo.nombre }}</option>          
               </select>
             </div>
@@ -146,7 +146,7 @@
             <div class="select">
               <select [(ngModel)]="grupo.submodulo_idioma" name="submodulo_idioma" required>
                 <option disabled selected value="">Selecciona submódulo de idioma</option>
-                <option *ngFor="let submodulo of arraySubmodulos" [value]="submodulo.nombre">{{ submodulo.nombre }}</option> 
+                <option *ngFor="let submodulo of arraySubmodulos" [value]="submodulo.id">{{ submodulo.nombre }}</option> 
               </select>
             </div>
           </div>

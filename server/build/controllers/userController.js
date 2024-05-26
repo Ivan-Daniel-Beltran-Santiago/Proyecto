@@ -18,7 +18,6 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const nodemailer_config_1 = __importDefault(require("../nodemailer-config"));
 class UserController {
-    //SENTENCIA PARA LISTAR TODOS LOS USUARIOS
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -31,7 +30,6 @@ class UserController {
             }
         });
     }
-    //SENTENCIA PARA OBTENER UN USUARIO
     getOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
@@ -45,22 +43,19 @@ class UserController {
             }
         });
     }
-    //SENTENCIA PARA CREAR UN USUARIO
     createUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const pass = req.body.password;
-            const password = yield bcrypt_1.default.hash(req.body.password, 10); //ENCRIPTA LA CONTRASEÑA INGRESADA
+            const password = yield bcrypt_1.default.hash(req.body.password, 10);
             req.body.password = password;
             const id = req.body.id;
             const email = req.body.email;
             try {
-                yield database_1.default.query("INSERT INTO users SET ?", [req.body]); //SENTENCIA PARA INGRESAR NUEVO USUARIO
-                let rol = req.body.id_rol;
+                yield database_1.default.query("INSERT INTO users SET ?", [req.body]);
                 console.log(req.body);
                 res.json({ text: "User saved" });
-                // Después de registrar al usuario con éxito, envía un correo electrónico
                 const mailOptions = {
-                    from: "kenalexmv@gmail.com", //INGRESAR SU CORREO PARA LA NOTIFICACION DE REGISTRO
+                    from: "kenalexmv@gmail.com",
                     to: email,
                     subject: "Registro Exitoso",
                     text: `Gracias por ser parte  de Innova Language Solutions 
@@ -75,7 +70,6 @@ class UserController {
                         return res.status(400).send("Error al enviar el correo electrónico");
                     }
                     console.log("Correo electrónico enviado: " + info.response);
-                    // Envío de la respuesta al cliente solo después de enviar el correo electrónico
                     res.status(200).send("Registro exitoso, correo electrónico enviado");
                 });
             }
@@ -85,7 +79,6 @@ class UserController {
             }
         });
     }
-    //SENTENCIA PARA ELIMINAR USUARIO
     deleteUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
@@ -99,7 +92,6 @@ class UserController {
             }
         });
     }
-    //SENTENCIA PARA ACTUALIZAR USUARIO
     updateUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
@@ -110,7 +102,6 @@ class UserController {
             try {
                 yield database_1.default.query("UPDATE users SET ? WHERE id_user = ?", [datos, id]);
                 let email = req.body.email;
-                let pass = req.body.password;
                 const mailOptions = {
                     from: "kenalexmv@gmail.com",
                     to: email,
@@ -126,7 +117,6 @@ class UserController {
                         return res.status(500).send("Error al enviar el correo electrónico");
                     }
                     console.log("Correo electrónico enviado: " + info.response);
-                    // Envío de la respuesta al cliente solo después de enviar el correo electrónico
                     res.status(200).send("Registro exitoso, correo electrónico enviado");
                 });
                 res.json({ message: "User updated" });
@@ -138,11 +128,8 @@ class UserController {
             }
         });
     }
-    //SENTENCIA PARA INICIAR SESION
     loginUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //validar contraseña
-            let id = req.body.id;
             try {
                 const correo = req.body.email;
                 const contraseña = req.body.password;
@@ -172,7 +159,6 @@ class UserController {
                         msg: "Password incorrecta",
                     });
                 }
-                //Generamos Token
                 const token = jsonwebtoken_1.default.sign({
                     email: correo,
                     nombre: JSON.parse(JSON.stringify(nombreU[0].first_nameU + "  " + nombreU[0].last_nameU)),

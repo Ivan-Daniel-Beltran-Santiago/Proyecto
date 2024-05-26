@@ -43,7 +43,7 @@ export class HorariosFormComponent implements OnInit {
     id_maestro: 0,
     id_maestro2: 0,
     modulo_idioma: '',
-    submodulo_idioma: '',
+    submodulo_idioma: 0,
   };
   nombreUsuario = this.authService.getNameFromToken();
   isAdmin = this.authService.isAdmin();

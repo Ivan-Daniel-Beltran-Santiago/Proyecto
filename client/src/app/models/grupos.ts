@@ -9,5 +9,5 @@ export interface Grupo {
   fecha_revision?: string;
   fecha_final: string;
   modulo_idioma?: string;
-  submodulo_idioma?: string;
+  submodulo_idioma?: number;
 }

@@ -33,7 +33,7 @@ export class GruposComponent implements OnInit {
     id_maestro: 0,
     id_maestro2: 0,
     modulo_idioma: '',
-    submodulo_idioma: '',
+    submodulo_idioma: 0,
   };
   constructor(
     private gruposService: GruposService,

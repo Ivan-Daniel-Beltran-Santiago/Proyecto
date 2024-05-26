@@ -104,7 +104,7 @@ class TagController {
     getSubmodules(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const submodules = yield database_1.default.query("SELECT nombre FROM Etiquetas WHERE tipo = 'Submódulo'");
+                const submodules = yield database_1.default.query("SELECT id, nombre FROM Etiquetas WHERE tipo = 'Submódulo'");
                 res.json(submodules[0]);
             }
             catch (error) {

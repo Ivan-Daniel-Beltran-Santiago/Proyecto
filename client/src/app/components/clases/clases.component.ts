@@ -42,7 +42,7 @@ export class ClasesComponent implements OnInit {
     fecha_revision: '',
     fecha_final: '',
     modulo_idioma: '',
-    submodulo_idioma: '',
+    submodulo_idioma: 0,
   };
   clase: Clase = {
     id_grupo: 0,

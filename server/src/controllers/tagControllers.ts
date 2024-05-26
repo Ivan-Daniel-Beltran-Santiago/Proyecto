@@ -95,7 +95,7 @@ class TagController {
   async getSubmodules(req, res) {
     try {
       const submodules = await db.query(
-        "SELECT nombre FROM Etiquetas WHERE tipo = 'Submódulo'"
+        "SELECT id, nombre FROM Etiquetas WHERE tipo = 'Submódulo'"
       );
       res.json(submodules[0]);
     } catch (error) {

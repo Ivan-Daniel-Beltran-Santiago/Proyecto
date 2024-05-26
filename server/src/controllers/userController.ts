@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 import transporter from "../nodemailer-config";
 
 class UserController {
-  //SENTENCIA PARA LISTAR TODOS LOS USUARIOS
   public async list(req: Request, res: Response) {
     try {
       const user = await db.query("SELECT * FROM users");
@@ -15,7 +14,7 @@ class UserController {
       res.status(500).send("Error interno del servidor");
     }
   }
-  //SENTENCIA PARA OBTENER UN USUARIO
+
   public async getOne(req: Request, res: Response) {
     const { id } = req.params;
 
@@ -28,23 +27,20 @@ class UserController {
     }
   }
 
-  //SENTENCIA PARA CREAR UN USUARIO
   public async createUser(req: Request, res: Response) {
     const pass = req.body.password;
-    const password = await bycrypt.hash(req.body.password, 10); //ENCRIPTA LA CONTRASEÑA INGRESADA
+    const password = await bycrypt.hash(req.body.password, 10);
     req.body.password = password;
     const id = req.body.id;
     const email = req.body.email;
 
     try {
-      await db.query("INSERT INTO users SET ?", [req.body]); //SENTENCIA PARA INGRESAR NUEVO USUARIO
-      let rol = req.body.id_rol;
+      await db.query("INSERT INTO users SET ?", [req.body]);
       console.log(req.body);
 
       res.json({ text: "User saved" });
-      // Después de registrar al usuario con éxito, envía un correo electrónico
       const mailOptions = {
-        from: "kenalexmv@gmail.com", //INGRESAR SU CORREO PARA LA NOTIFICACION DE REGISTRO
+        from: "kenalexmv@gmail.com",
         to: email,
         subject: "Registro Exitoso",
         text:
@@ -65,7 +61,6 @@ class UserController {
         }
         console.log("Correo electrónico enviado: " + info.response);
 
-        // Envío de la respuesta al cliente solo después de enviar el correo electrónico
         res.status(200).send("Registro exitoso, correo electrónico enviado");
       });
     } catch (error) {
@@ -73,7 +68,7 @@ class UserController {
       res.status(500).send("Error interno del servidor");
     }
   }
-  //SENTENCIA PARA ELIMINAR USUARIO
+
   public async deleteUser(req: Request, res: Response) {
     const { id } = req.params;
     try {
@@ -84,7 +79,7 @@ class UserController {
       res.status(500).send("Error interno del servidor");
     }
   }
-  //SENTENCIA PARA ACTUALIZAR USUARIO
+
   public async updateUser(req: Request, res: Response) {
     const { id } = req.params;
     const contraNueva = req.body.password;
@@ -94,7 +89,6 @@ class UserController {
     try {
       await db.query("UPDATE users SET ? WHERE id_user = ?", [datos, id]);
       let email = req.body.email;
-      let pass = req.body.password;
 
       const mailOptions = {
         from: "kenalexmv@gmail.com",
@@ -117,7 +111,6 @@ class UserController {
         }
         console.log("Correo electrónico enviado: " + info.response);
 
-        // Envío de la respuesta al cliente solo después de enviar el correo electrónico
         res.status(200).send("Registro exitoso, correo electrónico enviado");
       });
 
@@ -128,10 +121,8 @@ class UserController {
       });
     }
   }
-  //SENTENCIA PARA INICIAR SESION
+
   public async loginUser(req: Request, res: Response) {
-    //validar contraseña
-    let id = req.body.id;
     try {
       const correo = req.body.email;
 
@@ -172,7 +163,6 @@ class UserController {
           msg: "Password incorrecta",
         });
       }
-      //Generamos Token
 
       const token = jwt.sign(
         {
