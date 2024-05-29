@@ -23,7 +23,6 @@ const grabacionesRoutes_1 = __importDefault(require("./routes/grabacionesRoutes"
 const horarioMaestrosRoutes_1 = __importDefault(require("./routes/horarioMaestrosRoutes"));
 const reporteRoutes_1 = __importDefault(require("./routes/reporteRoutes"));
 const materialRoutes_1 = __importDefault(require("./routes/materialRoutes"));
-// Importa tu archivo de rutas para las etiquetas
 const tagRoutes_1 = __importDefault(require("./routes/tagRoutes"));
 class Server {
     constructor() {
@@ -56,7 +55,6 @@ class Server {
         this.app.use("/horarioMaestro", horarioMaestrosRoutes_1.default);
         this.app.use("/reporte", reporteRoutes_1.default);
         this.app.use("/file", materialRoutes_1.default);
-        //Direcciones para la subida de archivos
         const uploadsDirectory = path_1.default.join(__dirname, "./../uploads");
         this.app.use("/uploads", express_1.default.static(uploadsDirectory));
         this.app.use("/tags", tagRoutes_1.default);

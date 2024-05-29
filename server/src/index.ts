@@ -18,7 +18,6 @@ import grabacionesRoutes from "./routes/grabacionesRoutes";
 import horarioMaestrosRoutes from "./routes/horarioMaestrosRoutes";
 import reporteRoutes from "./routes/reporteRoutes";
 import materialRoutes from "./routes/materialRoutes";
-// Importa tu archivo de rutas para las etiquetas
 import tagRoutes from "./routes/tagRoutes";
 
 class Server {
@@ -56,7 +55,6 @@ class Server {
     this.app.use("/horarioMaestro", horarioMaestrosRoutes);
     this.app.use("/reporte", reporteRoutes);
     this.app.use("/file", materialRoutes);
-    //Direcciones para la subida de archivos
     const uploadsDirectory = path.join(__dirname, "./../uploads");
     this.app.use("/uploads", express.static(uploadsDirectory));
     this.app.use("/tags", tagRoutes);
