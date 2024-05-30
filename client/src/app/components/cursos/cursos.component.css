@@ -1,9 +1,27 @@
-h4{
-    font-size: 2em;
-    display: flex;
-    justify-content: center;
+h4 {
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
 }
 
-.course_creator{
-    padding: 2em;
+.course_creator_panel,
+.course_eraser_panel,
+.course_editor_panel,
+.course_assigner_panel {
+  padding: 2em;
+}
+
+.course_editor,
+.course_assigner {
+  background-color: #e4e4e4;
+}
+
+.course_editor h4,
+.course_assigner h4{
+    margin-top: 0;
+    padding-top: .6em;
+}
+
+.separator {
+  box-shadow: 4px 0 0 4px #2575a6;
 }

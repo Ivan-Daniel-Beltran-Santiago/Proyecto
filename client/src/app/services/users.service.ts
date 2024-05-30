@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Users } from '../models/users';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
   API_URL = 'http://localhost:3000';
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService,
-    private httpHeaders: HttpHeaders
-  ) {}
+  constructor(private http: HttpClient) {}
 
   getUsers() {
-    const token = localStorage.getItem('token');
-
     const header = new HttpHeaders().set('authorization', `asdasd`);
     console.log('Headers:', header);
 

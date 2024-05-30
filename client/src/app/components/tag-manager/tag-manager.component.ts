@@ -7,7 +7,7 @@ import { Component, Output, EventEmitter, HostListener } from '@angular/core';
 })
 export class TagManagerComponent {
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
-  selectedTab: string = 'Editar etiqueta';
+  selectedTab: string = 'Borrar etiqueta';
   popupWidth: number = 640;
   popupHeight: number = 460;
   isResizing: boolean = false;

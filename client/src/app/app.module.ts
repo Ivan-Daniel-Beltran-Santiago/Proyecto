@@ -56,7 +56,6 @@ import { MaterialesServicesService } from './services/materiales/materiales-serv
 import { MenuComponent } from './components/menu/menu/menu.component';
 import { TagManagerComponent } from './components/tag-manager/tag-manager.component';
 import { VisualizadorHorariosComponent } from './components/visualizador-horarios/visualizador-horarios.component';
-import { TagManagerEditTagComponent } from './components/tag-manager/tag-manager-edit-tag/tag-manager-edit-tag.component';
 import { TagManagerDeleteTagComponent } from './components/tag-manager/tag-manager-delete-tag/tag-manager-delete-tag.component';
 import { TagManagerAssignTagsComponent } from './components/tag-manager/tag-manager-assign-tags/tag-manager-assign-tags.component';
 import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
@@ -102,7 +101,6 @@ import { CursosComponent } from './components/cursos/cursos.component';
     MenuComponent,
     TagManagerComponent,
     VisualizadorHorariosComponent,
-    TagManagerEditTagComponent,
     TagManagerAssignTagsComponent,
     TagManagerDeleteTagComponent,
     CursosComponent,

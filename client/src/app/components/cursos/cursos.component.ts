@@ -12,9 +12,14 @@ export class CursosComponent {
   selectedCategory: string | undefined;
   selectedSubCategory: string | undefined;
   isSubcategorySelectorValid: boolean = false;
-  selectedCourse: string | undefined;
+  selectedCourse: string;
   modules: any[] = [];
-  selectedModule: string | undefined;
+  selectedModule: string;
+  optionSelected: boolean = false;
+  originalSelectedTag: string = '';
+  selectedTag: string = '';
+  tags: string[] = [];
+  courses: string[] = [];
 
   constructor(private tagManagerService: TagManagerService) {
     this.selectedCategory = '';
@@ -27,6 +32,12 @@ export class CursosComponent {
     this.loadParentTags();
     this.tagManagerService.getParentTags().subscribe((tags) => {
       this.parentTags = tags;
+    });
+    this.tagManagerService.getTags().subscribe(tags => {
+      this.tags = tags;
+    });
+    this.tagManagerService.getModules().subscribe(modules => {
+      this.modules = modules;
     });
   }
 
@@ -216,4 +227,57 @@ export class CursosComponent {
       }
     );
   }
+
+  onSelectOption() {
+    this.optionSelected = true;
+    this.originalSelectedTag = this.selectedTag;
+    this.selectedCategory = '';
+    this.selectedCourse = '';
+    this.selectedModule = '';
+  }
+
+  onInputChange(event: any) {
+    this.selectedTag = this.originalSelectedTag;
+  }
+
+  saveChanges() {
+    const newName = (document.getElementById('new_tag_name') as HTMLInputElement).value;
+    console.log(newName)
+    this.tagManagerService.checkTagExists(newName).subscribe(result => {
+      if (result.exists && newName !== this.selectedTag) {
+        alert('El nombre de etiqueta ya existe. Por favor, elige otro nombre.');
+      } else {
+        if (this.selectedCategory === 'Nuevo curso de idiomas') {
+          this.tagManagerService.updateTagTypeAndParentId(this.selectedTag, 'Curso', null).subscribe(() => {
+            this.updateTagNameAndRefreshList(newName);
+          });
+        } else if (this.selectedCategory === 'Nuevo módulo para curso de idiomas') {
+          this.tagManagerService.getTagIdByName(this.selectedCourse, 'Curso').subscribe(courseId => {
+            this.tagManagerService.updateTagTypeAndParentId(this.selectedTag, 'Módulo', courseId).subscribe(() => {
+              this.updateTagNameAndRefreshList(newName);
+            });
+          });
+        } else if (this.selectedCategory === 'Nuevo submódulo para curso de idiomas') {
+          const moduleId = this.modules.find(module => module.nombre === this.selectedModule).id;
+          this.tagManagerService.updateTagTypeAndParentId(this.selectedTag, 'Submódulo', moduleId).subscribe(() => {
+            this.updateTagNameAndRefreshList(newName);
+          });
+        } else {
+          this.updateTagNameAndRefreshList(newName);
+        }
+      }
+    });
+  }  
+  
+  updateTagNameAndRefreshList(newName: string) {
+    this.tagManagerService.updateTagName(this.selectedTag, newName).subscribe(() => {
+      this.tagManagerService.getTags().subscribe(tags => {
+        this.tags = tags;
+      });
+      this.selectedCategory = '';
+      this.selectedCourse = '';
+      this.selectedModule = '';
+      this.optionSelected = false;
+    });
+  }   
 }
