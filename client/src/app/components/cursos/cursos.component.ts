@@ -33,10 +33,10 @@ export class CursosComponent {
     this.tagManagerService.getParentTags().subscribe((tags) => {
       this.parentTags = tags;
     });
-    this.tagManagerService.getTags().subscribe(tags => {
+    this.tagManagerService.getTags().subscribe((tags) => {
       this.tags = tags;
     });
-    this.tagManagerService.getModules().subscribe(modules => {
+    this.tagManagerService.getModules().subscribe((modules) => {
       this.modules = modules;
     });
   }
@@ -241,43 +241,146 @@ export class CursosComponent {
   }
 
   saveChanges() {
-    const newName = (document.getElementById('new_tag_name') as HTMLInputElement).value;
-    console.log(newName)
-    this.tagManagerService.checkTagExists(newName).subscribe(result => {
-      if (result.exists && newName !== this.selectedTag) {
-        alert('El nombre de etiqueta ya existe. Por favor, elige otro nombre.');
-      } else {
-        if (this.selectedCategory === 'Nuevo curso de idiomas') {
-          this.tagManagerService.updateTagTypeAndParentId(this.selectedTag, 'Curso', null).subscribe(() => {
-            this.updateTagNameAndRefreshList(newName);
-          });
-        } else if (this.selectedCategory === 'Nuevo módulo para curso de idiomas') {
-          this.tagManagerService.getTagIdByName(this.selectedCourse, 'Curso').subscribe(courseId => {
-            this.tagManagerService.updateTagTypeAndParentId(this.selectedTag, 'Módulo', courseId).subscribe(() => {
-              this.updateTagNameAndRefreshList(newName);
-            });
-          });
-        } else if (this.selectedCategory === 'Nuevo submódulo para curso de idiomas') {
-          const moduleId = this.modules.find(module => module.nombre === this.selectedModule).id;
-          this.tagManagerService.updateTagTypeAndParentId(this.selectedTag, 'Submódulo', moduleId).subscribe(() => {
-            this.updateTagNameAndRefreshList(newName);
-          });
-        } else {
-          this.updateTagNameAndRefreshList(newName);
-        }
+    const newName = (
+      document.getElementById('new_tag_name') as HTMLInputElement
+    ).value.trim();
+    if (!newName) {
+      Swal.fire(
+        'Error',
+        'El nombre de la etiqueta no puede estar vacío.',
+        'error'
+      );
+      return;
+    }
+
+    Swal.fire({
+      title: '¿Deseas editar la etiqueta?',
+      text: 'Estás a punto de editar la etiqueta.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, editar etiqueta',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.tagManagerService.checkTagExists(newName).subscribe(
+          (result) => {
+            if (result.exists && newName !== this.selectedTag) {
+              Swal.fire(
+                'Error',
+                'El nombre de etiqueta ya existe. Por favor, elige otro nombre.',
+                'error'
+              );
+            } else {
+              if (this.selectedCategory === 'Nuevo curso de idiomas') {
+                this.tagManagerService
+                  .updateTagTypeAndParentId(this.selectedTag, 'Curso', null)
+                  .subscribe(
+                    () => {
+                      this.updateTagNameAndRefreshList(newName);
+                    },
+                    (error) => {
+                      Swal.fire(
+                        'Error',
+                        'Error al actualizar la etiqueta.',
+                        'error'
+                      );
+                    }
+                  );
+              } else if (
+                this.selectedCategory === 'Nuevo módulo para curso de idiomas'
+              ) {
+                this.tagManagerService
+                  .getTagIdByName(this.selectedCourse, 'Curso')
+                  .subscribe(
+                    (courseId) => {
+                      this.tagManagerService
+                        .updateTagTypeAndParentId(
+                          this.selectedTag,
+                          'Módulo',
+                          courseId
+                        )
+                        .subscribe(
+                          () => {
+                            this.updateTagNameAndRefreshList(newName);
+                          },
+                          (error) => {
+                            Swal.fire(
+                              'Error',
+                              'Error al actualizar la etiqueta.',
+                              'error'
+                            );
+                          }
+                        );
+                    },
+                    (error) => {
+                      Swal.fire(
+                        'Error',
+                        'Error al obtener el ID del curso.',
+                        'error'
+                      );
+                    }
+                  );
+              } else if (
+                this.selectedCategory ===
+                'Nuevo submódulo para curso de idiomas'
+              ) {
+                const moduleId = this.modules.find(
+                  (module) => module.nombre === this.selectedModule
+                ).id;
+                this.tagManagerService
+                  .updateTagTypeAndParentId(
+                    this.selectedTag,
+                    'Submódulo',
+                    moduleId
+                  )
+                  .subscribe(
+                    () => {
+                      this.updateTagNameAndRefreshList(newName);
+                    },
+                    (error) => {
+                      Swal.fire(
+                        'Error',
+                        'Error al actualizar la etiqueta.',
+                        'error'
+                      );
+                    }
+                  );
+              } else {
+                this.updateTagNameAndRefreshList(newName);
+              }
+            }
+          },
+          (error) => {
+            Swal.fire(
+              'Error',
+              'Error al verificar la existencia de la etiqueta.',
+              'error'
+            );
+          }
+        );
       }
     });
-  }  
-  
+  }
+
   updateTagNameAndRefreshList(newName: string) {
-    this.tagManagerService.updateTagName(this.selectedTag, newName).subscribe(() => {
-      this.tagManagerService.getTags().subscribe(tags => {
-        this.tags = tags;
-      });
-      this.selectedCategory = '';
-      this.selectedCourse = '';
-      this.selectedModule = '';
-      this.optionSelected = false;
-    });
-  }   
+    this.tagManagerService.updateTagName(this.selectedTag, newName).subscribe(
+      () => {
+        Swal.fire('Éxito', 'Etiqueta editada exitosamente.', 'success');
+        this.tagManagerService.getTags().subscribe((tags) => {
+          this.tags = tags;
+        });
+        this.selectedCategory = '';
+        this.selectedCourse = '';
+        this.selectedModule = '';
+        this.optionSelected = false;
+      },
+      (error) => {
+        Swal.fire(
+          'Error',
+          'Error al actualizar el nombre de la etiqueta.',
+          'error'
+        );
+      }
+    );
+  }
 }
