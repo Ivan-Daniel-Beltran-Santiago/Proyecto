@@ -31,7 +31,6 @@ class UserController {
     const pass = req.body.password;
     const password = await bycrypt.hash(req.body.password, 10);
     req.body.password = password;
-    const id = req.body.id;
     const email = req.body.email;
 
     try {

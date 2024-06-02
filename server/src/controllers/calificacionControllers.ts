@@ -85,7 +85,7 @@ class CalificacionController {
         });
       } else {
         let numero: string = "";
-        let num: number = 0; //numero para saber si hay calificacion repetido al mismo alumno en la misma fecha
+        let num: number = 0;
 
         for (numero in calificacion[0]) {
           num = parseInt(numero) + 1;
@@ -101,12 +101,10 @@ class CalificacionController {
             res
               .status(400)
               .json({ msg: "Error en las calificaciones o fecha" });
-            //console.log(req.body);
           } else {
             try {
               await db.query("INSERT INTO calificaciones SET ?", [req.body]);
               res.json({ text: "Grade added" });
-              //console.log(req.body);
             } catch (error) {
               console.error("Error al ejecutar la consulta MySQL:", error);
               res.status(500).send("Error al insertar calificacion");

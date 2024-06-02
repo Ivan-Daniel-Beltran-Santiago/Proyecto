@@ -29,6 +29,7 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { ReportesAlumnoMaestroComponent } from './components/reportes/reportes-alumno-maestro/reportes-alumno-maestro.component';
 import { ReportesAlumnoGrupoComponent } from './components/reportes/reportes-alumno-grupo/reportes-alumno-grupo.component';
 import { ReportesHorasMaestrosComponent } from './components/reportes/reportes-horas-maestros/reportes-horas-maestros.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -63,29 +64,24 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate: [adminGuardGuard],
   },
-
   {
     path: 'horarios',
     component: HorariosComponent,
   },
-
   {
     path: 'horarios-form',
     component: HorariosFormComponent,
     canActivate: [adminGuardGuard],
   },
-
   {
     path: 'clases-list',
     component: ClasesComponent,
     canActivate: [adminGuardGuard],
   },
-
   {
     path: 'clases',
     component: ClasesListComponent,
   },
-
   {
     path: 'grupos',
     component: GruposComponent,
@@ -97,23 +93,18 @@ const routes: Routes = [
     canActivate: [adminGuardGuard],
   },
   { path: 'grabaciones', component: GrabacionesComponent },
-
   { path: 'grabaciones/:id/:id2', component: GrabacionesComponent },
-
   { path: 'materiales', component: MaterialesComponent },
-
   {
     path: 'usuarios-list',
     component: UsersComponent,
     canActivate: [adminGuardGuard],
   },
-
   {
     path: 'admins-list',
     component: AdminListComponent,
     canActivate: [adminGuardGuard],
   },
-
   {
     path: 'maestros-list',
     component: MaestrosListComponent,
@@ -140,24 +131,20 @@ const routes: Routes = [
     path: 'usuario/update/:id',
     component: RegisterComponent,
   },
-
   {
     path: 'horarios/update/:id',
     component: HorariosFormComponent,
     canActivate: [adminGuardGuard],
   },
-
   {
     path: 'admin/update/:id',
     component: UpdateFormComponent,
     canActivate: [adminGuardGuard],
   },
-
   {
     path: 'alumno/update/:id',
     component: UpdateFormComponent,
   },
-
   {
     path: 'maestro/update/:id',
     component: UpdateFormComponent,
@@ -166,7 +153,6 @@ const routes: Routes = [
     path: 'reportes',
     component: ReportesComponent,
   },
-
   {
     path: 'reportes/alumnoGpo',
     component: ReportesAlumnoGrupoComponent,
@@ -182,7 +168,6 @@ const routes: Routes = [
     component: ReportesHorasMaestrosComponent,
     canActivate: [adminGuardGuard],
   },
-
   {
     path: '**',
     redirectTo: 'login',

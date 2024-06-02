@@ -30,7 +30,6 @@ class ClaseHorarioController {
     agregarNuevoGrupo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            //const {idC} = req.params;
             let nombre_grupo = req.body.nombre_grupo;
             let fecha_inicio = req.body.fecha_inicio;
             let fecha_revision = req.body.fecha_revision;

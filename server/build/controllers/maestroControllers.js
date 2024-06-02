@@ -17,7 +17,6 @@ const database_1 = __importDefault(require("../database"));
 class MaestroController {
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //const maestro = await db.query("SELECT first_nameU,last_nameU,last_nameU2,telephoneU,email FROM users WHERE id_rol=2");
             try {
                 const maestro = yield database_1.default.query("SELECT * from users WHERE id_rol=2 AND status='Activo'");
                 res.json(maestro);
@@ -38,7 +37,7 @@ class MaestroController {
             catch (error) {
                 console.error("Error al ejecutar la consulta MySQL:", error);
                 res.status(500).json({
-                    msg: 'Error al consultar'
+                    msg: "Error al consultar",
                 });
             }
         });

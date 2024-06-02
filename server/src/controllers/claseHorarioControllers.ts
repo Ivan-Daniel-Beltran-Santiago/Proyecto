@@ -15,7 +15,6 @@ class ClaseHorarioController {
 
   public async agregarNuevoGrupo(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    //const {idC} = req.params;
     let nombre_grupo = req.body.nombre_grupo;
     let fecha_inicio = req.body.fecha_inicio;
     let fecha_revision = req.body.fecha_revision;

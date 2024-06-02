@@ -2,14 +2,13 @@ import { Request, Response } from "express";
 import db from "../database";
 class MaestroController {
   public async list(req: Request, res: Response): Promise<void> {
-    //const maestro = await db.query("SELECT first_nameU,last_nameU,last_nameU2,telephoneU,email FROM users WHERE id_rol=2");
     try {
       const maestro = await db.query(
         "SELECT * from users WHERE id_rol=2 AND status='Activo'"
       );
       res.json(maestro);
     } catch (error) {
-      console.error("Error al ejecutar la consulta MySQL:", error)
+      console.error("Error al ejecutar la consulta MySQL:", error);
       res.status(500).send("Error interno del servidor");
     }
   }
@@ -25,8 +24,8 @@ class MaestroController {
     } catch (error) {
       console.error("Error al ejecutar la consulta MySQL:", error);
       res.status(500).json({
-        msg:'Error al consultar'
-    })
+        msg: "Error al consultar",
+      });
     }
   }
 

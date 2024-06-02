@@ -48,7 +48,6 @@ class UserController {
             const pass = req.body.password;
             const password = yield bcrypt_1.default.hash(req.body.password, 10);
             req.body.password = password;
-            const id = req.body.id;
             const email = req.body.email;
             try {
                 yield database_1.default.query("INSERT INTO users SET ?", [req.body]);
