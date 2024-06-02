@@ -62,6 +62,7 @@ export class MaterialesComponent {
     this.materialService.getCourseTags().subscribe(
       (tags) => {
         this.courseTags = tags;
+        console.log(tags)
       },
       (error) => {
         console.error('Error al obtener las etiquetas de curso:', error);

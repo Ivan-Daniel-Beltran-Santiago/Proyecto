@@ -9,6 +9,7 @@ import { ClasesService } from 'src/app/services/clases/clases.service';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
+import { MaterialesServicesService } from 'src/app/services/materiales/materiales-services.service';
 
 @Component({
   selector: 'app-clases',
@@ -19,10 +20,9 @@ export class ClasesComponent implements OnInit {
   arrayMaestros: any = [];
   arrayAlumnos: any = [];
   arrayGrupos: any = [];
-  arrayCursos: string[] = [];
+  arrayCursos: any[] = [];
   arrayModulos: any[] = [];
   arraySubmodulos: any[] = [];
-
   seleccion1: boolean = false;
   seleccion2: boolean = false;
   agregarGrupo: boolean = false;
@@ -30,18 +30,17 @@ export class ClasesComponent implements OnInit {
   isAdmin = this.authService.isAdmin();
   isMaestro = this.authService.isMaestro();
   id = this.authService.getIdFromToken();
-
   filterPost = '';
   grupo: Grupo = {
     nombre_grupo: '',
     categoria: '',
-    idioma: '',
+    idioma: 0,
     id_maestro: 0,
     id_maestro2: 0,
     fecha_inicio: '',
     fecha_revision: '',
     fecha_final: '',
-    modulo_idioma: '',
+    modulo_idioma: 0,
     submodulo_idioma: 0,
   };
   clase: Clase = {
@@ -56,6 +55,7 @@ export class ClasesComponent implements OnInit {
     private maestrosService: MaestrosService,
     private gruposService: GruposService,
     private tagManagerService: TagManagerService,
+    private materialService: MaterialesServicesService,
     private router: Router
   ) {}
   ngOnInit(): void {
@@ -74,7 +74,6 @@ export class ClasesComponent implements OnInit {
         this.arrayMaestros = res;
         console.log(res);
       },
-
       (err) => console.error(err)
     );
 
@@ -83,7 +82,6 @@ export class ClasesComponent implements OnInit {
         this.arrayAlumnos = res;
         console.log(res);
       },
-
       (err) => console.error(err)
     );
 
@@ -92,16 +90,17 @@ export class ClasesComponent implements OnInit {
         this.arrayGrupos = res;
         console.log(res);
       },
-
       (err) => console.error(err)
     );
 
-    this.tagManagerService.getCourses().subscribe(
+    this.materialService.getCourseTags().subscribe(
       (res) => {
         this.arrayCursos = res;
         console.log(res);
       },
-      (err) => console.error(err)
+      (error) => {
+        console.error('Error al obtener las etiquetas de curso:', error);
+      }
     );
 
     this.tagManagerService.getModules().subscribe(
@@ -155,7 +154,6 @@ export class ClasesComponent implements OnInit {
               icon: 'success',
             });
           },
-
           (err) => {
             Swal.fire({
               icon: 'error',
@@ -219,7 +217,6 @@ export class ClasesComponent implements OnInit {
         );
       }
     });
-
     console.log('ID del alumno: ' + id);
   }
 

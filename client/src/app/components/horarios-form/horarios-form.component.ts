@@ -37,12 +37,12 @@ export class HorariosFormComponent implements OnInit {
   grupo: Grupo = {
     nombre_grupo: '',
     categoria: '',
-    idioma: '',
+    idioma: 0,
     fecha_inicio: '',
     fecha_final: '',
     id_maestro: 0,
     id_maestro2: 0,
-    modulo_idioma: '',
+    modulo_idioma: 0,
     submodulo_idioma: 0,
   };
   nombreUsuario = this.authService.getNameFromToken();

@@ -182,7 +182,7 @@
         <div class="select">
           <select [(ngModel)]="grupo.idioma" name="idioma" required>
             <option disabled selected value="">Selecciona idioma</option>
-            <option *ngFor="let curso of arrayCursos" [value]="curso">{{ curso }}</option> 
+            <option *ngFor="let curso of arrayCursos" [value]="curso.id">{{ curso.nombre }}</option> 
           </select>
         </div>
       </div>
@@ -195,7 +195,7 @@
         <div class="select">
           <select [(ngModel)]="grupo.modulo_idioma" name="modulo_idioma" required>
             <option disabled selected value="">Selecciona módulo de idioma</option>
-            <option *ngFor="let modulo of arrayModulos" [value]="modulo.nombre">{{ modulo.nombre }}</option>      
+            <option *ngFor="let modulo of arrayModulos" [value]="modulo.id">{{ modulo.nombre }}</option>      
           </select>
         </div>
       </div>

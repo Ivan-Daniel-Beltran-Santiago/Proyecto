@@ -5,6 +5,7 @@ import { GruposService } from 'src/app/services/grupos/grupos.service';
 import { MaestrosService } from 'src/app/services/maestros/maestros.service';
 import { Grupo } from 'src/app/models/grupos';
 import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
+import { MaterialesServicesService } from 'src/app/services/materiales/materiales-services.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,7 +16,7 @@ import Swal from 'sweetalert2';
 export class GruposComponent implements OnInit {
   arrayGrupos: any = [];
   arrayMaestros: any = [];
-  arrayCursos: string[] = [];
+  arrayCursos: any[] = [];
   arrayModulos: any[] = [];
   arraySubmodulos: any[] = [];
   edit: boolean = false;
@@ -27,12 +28,12 @@ export class GruposComponent implements OnInit {
   grupo: Grupo = {
     nombre_grupo: '',
     categoria: '',
-    idioma: '',
+    idioma: 0,
     fecha_inicio: '',
     fecha_final: '',
     id_maestro: 0,
     id_maestro2: 0,
-    modulo_idioma: '',
+    modulo_idioma: 0,
     submodulo_idioma: 0,
   };
   constructor(
@@ -40,6 +41,7 @@ export class GruposComponent implements OnInit {
     private maestrosService: MaestrosService,
     private authService: AuthService,
     private tagManagerService: TagManagerService,
+    private materialService: MaterialesServicesService,
     private router: Router
   ) {}
 
@@ -61,12 +63,13 @@ export class GruposComponent implements OnInit {
       (err) => console.error(err)
     );
 
-    this.tagManagerService.getCourses().subscribe(
+    this.materialService.getCourseTags().subscribe(
       (res) => {
         this.arrayCursos = res;
-        console.log(res);
       },
-      (err) => console.error(err)
+      (error) => {
+        console.error('Error al obtener las etiquetas de curso:', error);
+      }
     );
 
     this.tagManagerService.getModules().subscribe(
