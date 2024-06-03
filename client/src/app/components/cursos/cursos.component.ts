@@ -366,9 +366,6 @@ export class CursosComponent {
     this.tagManagerService.updateTagName(this.selectedTag, newName).subscribe(
       () => {
         Swal.fire('Éxito', 'Etiqueta editada exitosamente.', 'success');
-        this.tagManagerService.getTags().subscribe((tags) => {
-          this.tags = tags;
-        });
         this.selectedCategory = '';
         this.selectedCourse = '';
         this.selectedModule = '';
@@ -382,5 +379,17 @@ export class CursosComponent {
         );
       }
     );
+  }
+
+  deleteSelectedTag(): void {
+    if (this.selectedTag) {
+      this.tagManagerService.deleteTag(this.selectedTag).subscribe(() => {
+        console.log("Etiqueta eliminada exitosamente");
+        this.selectedTag = '';
+        this.tags;
+      }, error => {
+        console.error("Error al eliminar la etiqueta:", error);
+      });
+    }
   }
 }
