@@ -54,9 +54,7 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { ReportesHorasMaestrosComponent } from './components/reportes/reportes-horas-maestros/reportes-horas-maestros.component';
 import { MaterialesServicesService } from './services/materiales/materiales-services.service';
 import { MenuComponent } from './components/menu/menu/menu.component';
-import { TagManagerComponent } from './components/tag-manager/tag-manager.component';
 import { VisualizadorHorariosComponent } from './components/visualizador-horarios/visualizador-horarios.component';
-import { TagManagerAssignTagsComponent } from './components/tag-manager/tag-manager-assign-tags/tag-manager-assign-tags.component';
 import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
 import { CursosComponent } from './components/cursos/cursos.component';
 
@@ -98,9 +96,7 @@ import { CursosComponent } from './components/cursos/cursos.component';
     ReportesHorasMaestrosComponent,
     ReportesComponent,
     MenuComponent,
-    TagManagerComponent,
     VisualizadorHorariosComponent,
-    TagManagerAssignTagsComponent,
     CursosComponent,
   ],
   imports: [

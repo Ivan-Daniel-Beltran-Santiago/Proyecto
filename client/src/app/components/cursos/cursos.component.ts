@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TagManagerService } from 'src/app/services/TagManager/tag-manager.service';
+import { MaterialesServicesService } from 'src/app/services/materiales/materiales-services.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,8 +21,17 @@ export class CursosComponent {
   selectedTag: string = '';
   tags: string[] = [];
   courses: string[] = [];
+  selectedFileType: string | null = null;
+  filteredFiles: any[] = [];
+  arrayFiles: any[] = [];
+  searchTerm: string = '';
+  atLeastOneChecked: boolean = false;
+  tagSelected: number | null = null;
 
-  constructor(private tagManagerService: TagManagerService) {
+  constructor(
+    private materialesService: MaterialesServicesService,
+    private tagManagerService: TagManagerService
+  ) {
     this.selectedCategory = '';
     this.selectedSubCategory = '';
     this.selectedCourse = '';
@@ -39,6 +49,7 @@ export class CursosComponent {
     this.tagManagerService.getModules().subscribe((modules) => {
       this.modules = modules;
     });
+    this.getFiles();
   }
 
   loadParentTags() {
@@ -383,13 +394,154 @@ export class CursosComponent {
 
   deleteSelectedTag(): void {
     if (this.selectedTag) {
-      this.tagManagerService.deleteTag(this.selectedTag).subscribe(() => {
-        console.log("Etiqueta eliminada exitosamente");
-        this.selectedTag = '';
-        this.tags;
-      }, error => {
-        console.error("Error al eliminar la etiqueta:", error);
-      });
+      this.tagManagerService.deleteTag(this.selectedTag).subscribe(
+        () => {
+          console.log('Etiqueta eliminada exitosamente');
+          this.selectedTag = '';
+          this.tags;
+        },
+        (error) => {
+          console.error('Error al eliminar la etiqueta:', error);
+        }
+      );
     }
+  }
+
+  onSelectedOption(event: any) {
+    if (event && event.target) {
+      const selectedOption = event.target.value;
+      this.tagSelected = event.target.value;
+      const selectedIndex = this.tags.findIndex(
+        (tag) => tag === selectedOption
+      );
+      const selectedTagType = this.tags[selectedIndex];
+      if (selectedTagType) {
+        this.tagManagerService
+          .getTagIdByName(selectedOption, selectedOption)
+          .subscribe(
+            (tagId) => {
+              console.log('ID de la etiqueta:', tagId);
+              console.log('Nombre de la etiqueta:', selectedOption);
+              this.tagSelected = tagId;
+            },
+            (err) => console.error(err)
+          );
+      }
+      this.optionSelected = true;
+      this.checkIfChecked();
+    }
+  }
+
+  toggleCheckbox(file: any) {
+    file.checked = !file.checked;
+    this.checkIfChecked();
+  }
+
+  filterFiles(event: Event) {
+    const query = (event.target as HTMLInputElement).value.toLowerCase();
+    this.applyFilters(query);
+  }
+
+  filterByFileType(event: Event) {
+    const selectedFileType = (event.target as HTMLSelectElement).value;
+    this.selectedFileType = selectedFileType;
+    this.applyFilters(this.searchTerm);
+  }
+
+  checkIfChecked() {
+    this.atLeastOneChecked = this.filteredFiles.some((file) => file.checked);
+  }
+
+  applyFilters(query: string) {
+    if (query.trim() === '') {
+      if (this.selectedFileType) {
+        const fileExtensions = this.getFileExtension(this.selectedFileType);
+        if (fileExtensions) {
+          const extensions = fileExtensions.split(',');
+          this.filteredFiles = this.arrayFiles.filter((file) =>
+            extensions.some((extension) =>
+              file.name.toLowerCase().endsWith(`.${extension}`)
+            )
+          );
+        }
+      } else {
+        this.filteredFiles = [...this.arrayFiles];
+      }
+    } else {
+      if (this.selectedFileType) {
+        const fileExtensions = this.getFileExtension(this.selectedFileType);
+        if (fileExtensions) {
+          const extensions = fileExtensions.split(',');
+          this.filteredFiles = this.arrayFiles.filter((file) =>
+            extensions.some(
+              (extension) =>
+                file.name.toLowerCase().endsWith(`.${extension}`) &&
+                file.name.toLowerCase().includes(query)
+            )
+          );
+        }
+      } else {
+        this.filteredFiles = this.arrayFiles.filter((file) =>
+          file.name.toLowerCase().includes(query)
+        );
+      }
+    }
+  }
+
+  getFileExtension(fileType: string): string | null {
+    switch (fileType) {
+      case 'Documento Word':
+        return 'docx';
+      case 'PDF':
+        return 'pdf';
+      case 'Audio':
+        return 'mp3';
+      case 'Video':
+        return 'mp4';
+      case 'PowerPoint':
+        return 'pptx';
+      case 'Imagen':
+        return 'jpg,png';
+      default:
+        return null;
+    }
+  }
+
+  assignTags() {
+    const selectedFiles = this.filteredFiles.filter((file) => file.checked);
+    if (selectedFiles.length === 0 || !this.tagSelected) return;
+
+    const tagData = {
+      tagName: this.tagSelected,
+      fileIds: selectedFiles.map((file) => file.id),
+    };
+
+    this.tagManagerService
+      .assignTags(
+        this.tagSelected,
+        selectedFiles.map((file) => file.id)
+      )
+      .subscribe(
+        () => {
+          console.log('Etiquetas asignadas exitosamente');
+        },
+        (error) => {
+          console.error('Error al asignar etiquetas:', error);
+        }
+      );
+  }
+
+  getFiles() {
+    this.materialesService.getFiles().subscribe(
+      (files) => {
+        this.arrayFiles = files.map((file) => ({
+          id: file.name.id,
+          name: file.name.nombre,
+        }));
+        this.filteredFiles = [...this.arrayFiles];
+        this.checkIfChecked();
+      },
+      (err) => console.error(err)
+    );
   }
 }

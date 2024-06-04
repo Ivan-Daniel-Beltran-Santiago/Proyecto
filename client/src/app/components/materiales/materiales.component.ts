@@ -17,7 +17,6 @@ export class MaterialesComponent {
   allFiles: any = [];
   files: any;
   filesSelected: boolean = false;
-  showTagManager: boolean = false;
   id: number = 0;
   idU: any = this.authService.getIdFromToken();
   rol = this.authService.getRoleFromToken();
@@ -302,10 +301,6 @@ export class MaterialesComponent {
         );
       }
     }
-  }
-
-  toggleTagManager() {
-    this.showTagManager = !this.showTagManager;
   }
 
   getFileType(filename: string): string {

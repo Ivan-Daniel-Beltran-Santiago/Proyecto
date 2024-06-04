@@ -119,18 +119,6 @@
     >
       Descargar todos los archivos
     </button>
-    <button
-      (click)="toggleTagManager()"
-      style="margin-left: 30px"
-      class="middle none center rounded-lg bg-gradient-to-tr from-yellow-600 to-yellow-400 py-3 px-5 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-    >
-      Etiquetas
-    </button>
-    <div *ngIf="showTagManager" class="tag-manager-modal">
-      <div class="tag-manager-content">
-        <app-tag-manager (close)="toggleTagManager()"></app-tag-manager>
-      </div>
-    </div>
   </body>
   <br />
 </html>
