@@ -7,7 +7,6 @@ import { UsersComponent } from './components/users/users.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { UsersService } from './services/users/users.service';
 import { HttpClientModule } from '@angular/common/http';
-
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

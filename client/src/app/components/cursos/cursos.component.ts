@@ -394,16 +394,31 @@ export class CursosComponent {
 
   deleteSelectedTag(): void {
     if (this.selectedTag) {
-      this.tagManagerService.deleteTag(this.selectedTag).subscribe(
-        () => {
-          console.log('Etiqueta eliminada exitosamente');
-          this.selectedTag = '';
-          this.tags;
-        },
-        (error) => {
-          console.error('Error al eliminar la etiqueta:', error);
+      Swal.fire({
+        title: '¿Deseas eliminar la etiqueta?',
+        text: 'Estás a punto de eliminar esta etiqueta.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar etiqueta',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.tagManagerService.deleteTag(this.selectedTag).subscribe(
+            () => {
+              Swal.fire('Éxito', 'Etiqueta eliminada exitosamente.', 'success');
+              this.selectedTag = '';
+              this.loadParentTags();
+              this.tagManagerService.getTags().subscribe((tags) => {
+                this.tags = tags;
+              });
+            },
+            (error) => {
+              console.error('Error al eliminar la etiqueta:', error);
+              Swal.fire('Error', 'Error al eliminar la etiqueta.', 'error');
+            }
+          );
         }
-      );
+      });
     }
   }
 
@@ -508,27 +523,41 @@ export class CursosComponent {
   }
 
   assignTags() {
-    const selectedFiles = this.filteredFiles.filter((file) => file.checked);
-    if (selectedFiles.length === 0 || !this.tagSelected) return;
-
-    const tagData = {
-      tagName: this.tagSelected,
-      fileIds: selectedFiles.map((file) => file.id),
-    };
-
-    this.tagManagerService
-      .assignTags(
-        this.tagSelected,
-        selectedFiles.map((file) => file.id)
-      )
-      .subscribe(
-        () => {
-          console.log('Etiquetas asignadas exitosamente');
-        },
-        (error) => {
-          console.error('Error al asignar etiquetas:', error);
+    Swal.fire({
+      title: '¿Deseas asignar la etiqueta?',
+      text: 'Estás a punto de asignar la etiqueta a los archivos seleccionados.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, asignar etiqueta',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const selectedFiles = this.filteredFiles.filter((file) => file.checked);
+        if (selectedFiles.length === 0 || !this.tagSelected) {
+          Swal.fire(
+            'Error',
+            'Debes seleccionar al menos un archivo y una etiqueta.',
+            'error'
+          );
+          return;
         }
-      );
+
+        this.tagManagerService
+          .assignTags(
+            this.tagSelected,
+            selectedFiles.map((file) => file.id)
+          )
+          .subscribe(
+            () => {
+              Swal.fire('Éxito', 'Etiqueta asignada exitosamente.', 'success');
+            },
+            (error) => {
+              console.error('Error al asignar etiquetas:', error);
+              Swal.fire('Error', 'Error al asignar etiquetas.', 'error');
+            }
+          );
+      }
+    });
   }
 
   getFiles() {
